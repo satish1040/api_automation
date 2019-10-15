@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="AGENCY_Air_Search_Results" allow-return-values="true"
+	parallel="classes" thread-count="2">
+
+	<listeners>
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+		<listener class-name="com.cleartrip.common.RemoveDuplicateResults"/>
+		<listener class-name="com.cleartrip.common.RetryAnalyzer"/>
+	</listeners>
+
+
+	<test name="search">
+
+		<classes>
+			<!-- <class name="com.cleartrip.agency.air.search.AgencyDomOneWaySearchTest" />
+			<class name="com.cleartrip.agency.air.search.AgencyDomRoundTripSearchTest" />
+			 --><class name="com.cleartrip.agency.air.search.AgencyDomMultiCitySearchTest" />
+
+			<!-- <class name="com.cleartrip.agency.air.search.AgencyIntlOneWaySearchTest" />
+			<class
+				name="com.cleartrip.agency.air.search.AgencyIntlRoundTripSearchTest" />
+			 --><class
+				name="com.cleartrip.agency.air.search.AgencyIntlMultiCitySearchTest" />
+		</classes>
+	</test>
+
+
+
+</suite> 
+	

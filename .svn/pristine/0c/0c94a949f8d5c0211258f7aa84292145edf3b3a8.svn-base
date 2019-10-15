@@ -1,0 +1,47 @@
+package com.cleartrip.air.in.search;
+
+import static com.jayway.restassured.RestAssured.given;
+import static org.testng.Assert.assertEquals;
+
+import java.util.concurrent.TimeUnit;
+
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.air.common.AirCommonUtil;
+import com.cleartrip.common.dataproviders.AirInDataProvider;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.parsing.Parser;
+import com.jayway.restassured.response.Response;
+
+
+
+public class IntlOneWaySearchTest extends AirCommonUtil{
+	
+	@Test(dataProviderClass=AirInDataProvider.class, dataProvider="intlows")
+	public void domOneWaySearch(String from,String to,String carrier,String aCount,String cCount,String iCount, String flightclass) throws Exception{
+		
+		Response resp;
+		RestAssured.defaultParser = Parser.JSON;
+		String departdate=putDate(getAirData("onwardsearch_date"));
+		
+	    resp = given().log().path().request().
+	    		get(getAirData("protocol")+getAirData("env")+getAirData("baseurl")+getAirData("domain")+
+	    		getAirUrl("flightsearch")+"from="+from+"&to="+to+"&depart_date="+departdate+"&adults="
+	    		+ ""+aCount+"&childs="+cCount+"&infants="+iCount+"&class="+flightclass+"&airline=&carrier="
+	    		+ ""+carrier+"&intl=n&type=json&search_ver=V2");
+		
+		assertEquals(resp.getStatusCode(), 200);
+		
+		Reporter.log("ReponseTime in MilliSecs : "+resp.getTimeIn(TimeUnit.MILLISECONDS));
+		
+		String responseBody = resp.getBody().asString();
+		Reporter.log("responseBody :"+ responseBody);
+		
+		//Rest assured parser needs to be added here
+		
+		
+	}
+	
+
+}

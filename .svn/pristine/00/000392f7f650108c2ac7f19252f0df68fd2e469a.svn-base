@@ -1,0 +1,96 @@
+package com.cleartrip.platform.tripservice;
+
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.jayway.restassured.path.json.JsonPath;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+public class TripservicePutcall_Local extends TripserviceCommon
+{
+	String tripref;
+
+
+	@Test(groups={"Regression"})
+	public void Tripservicehotelpostcall() throws IOException
+	{
+		Response resp;
+		String url =  Service_Url("TRIPSERVICE_POST_CALL");
+
+
+		HashMap<String, Object> headers =new HashMap<>();
+		headers = headersForTripservicepostcall();
+
+		/*HashMap<String, Object> params= new HashMap<>();
+		params= TripservicePostcall();*/
+
+		TripserviceCommon common  = new TripserviceCommon();
+		resp = common.TripservicePostcall(params, headers, url);
+
+
+		if(resp.statusCode()==200){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+
+			System.out.println("Status code == "+ url+  "is :: " + resp.statusCode());
+
+
+			ResponseBody body= resp.getBody();
+			String bodyAsString = body.asString();
+			System.out.println("-------------------"+bodyAsString+"-----------------");
+			Assert.assertEquals(bodyAsString.contains("trip_ref"), true ,"Response boday contains  tripRef");
+
+			JsonPath jsonPath = new JsonPath(bodyAsString);
+			tripref = jsonPath.getJsonObject("trip_ref");
+
+
+			System.out.println("------------"+tripref+"------------------");
+		}else{
+			assertTrue(false);
+		}
+
+	}
+
+
+	String params = "{\"activity\":1,\"amount\":2240,\"booked_user_id\":7144,\"booking_status\":\"Z\",\"company_id\":110340,\"contact_detail\":{\"address\":\"Unit No 001, Ground Floor, DTC Bldg, Sitaram Mills Compound, N.M. Joshi Marg, Delisle Road, Lower Parel (E)\",\"city_name\":\"Mumbai\",\"country_name\":\"India\",\"email\":\"test@gmail.com\",\"first_name\":\"test\",\"last_name\":\"test\",\"mobile\":\"8765432123\",\"pin_code\":\"400011\",\"state_name\":\"Maharashtra\",\"title\":\"Mr\"},\"currency\":\"INR\",\"domain\":\"cleartrip.com\",\"email_id\":\"test@gmail.com\",\"end_date_time\":\"2018-08-31T18:00:00.000+0530\",\"gst_detail\":{\"gst_holder_statecode\":\"27\",\"gst_holder_statename\":\"Maharashtra\"},\"itinerary_id\":\"15bd002221-209d-459e-ba7d-000dcdf0f574\",\"local_bookings\":[{\"seq_no\":1,\"adults\":2,\"children\":1,\"booking_status\":\"Z\",\"total_guests\":3,\"total_fare\":2240,\"start_date_time\":\"2018-08-31T09:00:00.000+0530\",\"end_date_time\":\"2018-08-31T18:00:00.000+0530\",\"sup_currency\":\"INR\",\"local_type\":\"Activity\",\"sup_gstin\":\"27ABCDE1234P0Z9\",\"sup_state\":\"Maharashtra\",\"mer_gstin\":\"27ABCDE1234P0Z9\",\"sup_gst_applicable\":1,\"inv_prefix\":\"INVS\",\"sup_tax_type\":\"GST\",\"cus_tax_type\":\"GST\",\"external_references\":[{\"name\":\"Coupon:WALLPLUS\",\"value\":\"Promocode:INSTA\"},{\"name\":\"Coupon:WALLPLUS\",\"value\":\"Promocode:WALLPLUS\"},{\"name\":\"RateRuleIds:\",\"value\":\"5900914,5900916\"},{\"name\":\"Convenience_Fee_Rule_Id:\",\"value\":\"5774792\"}],\"activity_booking_infos\":[{\"activity_seq_no\":1,\"local_rate_seq_no\":1,\"pax_info_seq_no\":1,\"booking_status\":\"Z\",\"seq_no\":1,\"category_type\":\"Activity\"}],\"activity_rates\":[{\"seq_no\":1,\"total_fare\":2240,\"total_base_fare\":1540,\"total_markup\":660,\"total_mkp_sup\":660,\"total_tax_st\":0,\"total_dis_st\":0,\"total_tax_ecess\":0,\"total_tax_dis_ecess\":0,\"total_tax_shecess\":0,\"total_tax_dis_shecess\":0,\"total_dis_suptax\":0,\"total_cb_suptax\":0,\"total_tax_unknown\":0,\"total_dis_bf\":0,\"total_cb_bf\":0,\"total_dis_supd\":0,\"total_tax\":131.2,\"total_fee_gw\":35,\"total_fee\":125,\"total_discount\":-166.2,\"total_cashback\":-50,\"total_tax_sbc\":0,\"total_dis_sbc\":0,\"total_wallet_cashback\":50,\"total_tax_kkc\":0,\"total_dis_kkc\":0,\"total_dis_gw\":-35,\"total_fee_con\":90,\"total_mkp_wl\":0,\"total_tax_ct_sup_cgst\":62.55,\"total_tax_ct_sup_sgst\":62.55,\"total_tax_ct_sup_igst\":0,\"total_tax_ct_con_cgst\":3.05,\"total_tax_ct_con_sgst\":3.05,\"total_tax_ct_con_igst\":0,\"total_dis_ct_sup_cgst\":-62.55,\"total_dis_ct_sup_sgst\":-62.55,\"total_dis_ct_sup_igst\":0,\"total_dis_ct_con_cgst\":-3.05,\"total_dis_ct_con_sgst\":-3.05,\"total_dis_ct_con_igst\":0,\"total_dis_agency_commission\":0,\"total_fee_nc\":0,\"total_dis_ct_fund\":0,\"total_mkp_wlparent\":0,\"total_ct_tax_wl_mkp_vat\":0,\"total_tax_ct_mkp_vat\":0,\"total_tax_ct_gw_vat\":0,\"total_tax_ct_bf_vat\":0,\"total_tax_ct_plb_vat\":0,\"total_tax_ct_con_vat\":0,\"total_tax_ct_wl_mkp_vat\":0,\"total_tax_ct_wlparent_mkp_vat\":0,\"total_dis_ct_mkp_vat\":0,\"total_dis_ct_gw_vat\":0,\"total_dis_ct_plb_vat\":0,\"total_dis_ct_bf_vat\":0,\"total_dis_ct_con_vat\":0,\"total_dis_ct_wl_mkp_vat\":0,\"total_dis_ct_wlparent_mkp_vat\":0,\"pricing_elements\":[{\"amount\":1540,\"category\":\"BF\"},{\"amount\":660,\"category\":\"MKP\",\"code\":\"SUP\"},{\"amount\":-50,\"category\":\"CB\",\"code\":\"INSTA\"},{\"amount\":50,\"category\":\"WT\",\"code\":\"WALLPLUS\"},{\"amount\":90,\"category\":\"FEE\",\"code\":\"CON\"},{\"amount\":35,\"category\":\"FEE\",\"code\":\"GW\"},{\"amount\":-35,\"category\":\"DIS\",\"code\":\"GW\"},{\"amount\":3.15,\"category\":\"TAX\",\"code\":\"CT_GW_CGST\"},{\"amount\":-3.15,\"category\":\"DIS\",\"code\":\"CT_GW_CGST\"},{\"amount\":59.4,\"category\":\"TAX\",\"code\":\"CT_MKP_CGST\"},{\"amount\":-59.4,\"category\":\"DIS\",\"code\":\"CT_MKP_CGST\"},{\"amount\":3.15,\"category\":\"TAX\",\"code\":\"CT_GW_SGST\"},{\"amount\":-3.15,\"category\":\"DIS\",\"code\":\"CT_GW_SGST\"},{\"amount\":3.05,\"category\":\"TAX\",\"code\":\"CT_CON_CGST\"},{\"amount\":-3.05,\"category\":\"DIS\",\"code\":\"CT_CON_CGST\"},{\"amount\":59.4,\"category\":\"TAX\",\"code\":\"CT_MKP_SGST\"},{\"amount\":-59.4,\"category\":\"DIS\",\"code\":\"CT_MKP_SGST\"},{\"amount\":3.05,\"category\":\"TAX\",\"code\":\"CT_CON_SGST\"},{\"amount\":-3.05,\"category\":\"DIS\",\"code\":\"CT_CON_SGST\"}],\"cost_activity_rate\":{\"total_fare\":2200,\"total_base_fare\":1540,\"total_markup\":660,\"total_mkp_sup\":660,\"total_tax_st\":0,\"total_dis_st\":0,\"total_tax_ecess\":0,\"total_tax_dis_ecess\":0,\"total_tax_shecess\":0,\"total_tax_dis_shecess\":0,\"total_dis_suptax\":0,\"total_cb_suptax\":0,\"total_tax_unknown\":0,\"total_dis_bf\":0,\"total_cb_bf\":0,\"total_dis_supd\":0,\"total_cashback\":0,\"total_discount\":-131.2,\"total_fee\":0,\"total_tax\":131.2,\"total_tax_sup\":0,\"total_tax_sbc\":0,\"total_dis_sbc\":0,\"total_tax_kkc\":0,\"total_dis_kkc\":0,\"total_dis_plb\":0,\"total_fee_nc\":0,\"pricing_elements\":[{\"amount\":1540,\"category\":\"BF\"},{\"amount\":660,\"category\":\"MKP\",\"code\":\"SUP\"},{\"amount\":3.15,\"category\":\"TAX\",\"code\":\"CT_GW_CGST\"},{\"amount\":-3.15,\"category\":\"DIS\",\"code\":\"CT_GW_CGST\"},{\"amount\":59.4,\"category\":\"TAX\",\"code\":\"CT_MKP_CGST\"},{\"amount\":-59.4,\"category\":\"DIS\",\"code\":\"CT_MKP_CGST\"},{\"amount\":3.15,\"category\":\"TAX\",\"code\":\"CT_GW_SGST\"},{\"amount\":-3.15,\"category\":\"DIS\",\"code\":\"CT_GW_SGST\"},{\"amount\":3.05,\"category\":\"TAX\",\"code\":\"CT_CON_CGST\"},{\"amount\":-3.05,\"category\":\"DIS\",\"code\":\"CT_CON_CGST\"},{\"amount\":59.4,\"category\":\"TAX\",\"code\":\"CT_MKP_SGST\"},{\"amount\":-59.4,\"category\":\"DIS\",\"code\":\"CT_MKP_SGST\"},{\"amount\":3.05,\"category\":\"TAX\",\"code\":\"CT_CON_SGST\"},{\"amount\":-3.05,\"category\":\"DIS\",\"code\":\"CT_CON_SGST\"}]}}],\"activities\":[{\"seq_no\":1,\"name\":\"VAT Inclusive adult child Act\",\"activity_id\":810536,\"address\":\"Bengaluru, Karnataka, India,\",\"city\":\"Bangalore,Karnataka,India\",\"part_pay\":0,\"activity_type\":\"Standard\",\"start_date_time\":\"2018-08-31T09:00:00.000+0530\",\"end_date_time\":\"2018-08-31T18:00:00.000+0530\",\"cancellation_charges\":\"[{\\\"0h-6h\\\":\\\"100\\\",\\\"charge_type_code\\\":\\\"percent\\\"},{\\\"6h-24h\\\":\\\"0\\\",\\\"charge_type_code\\\":\\\"percent\\\"},{\\\"24h-48h\\\":\\\"0\\\",\\\"charge_type_code\\\":\\\"percent\\\"},{\\\"48h\\\":\\\"0\\\",\\\"charge_type_code\\\":\\\"percent\\\"}]\",\"inclusions\":\"--- \\ninclusion: \\n- ndhhcfd\",\"partial_cancellation_allowed\":0,\"booking_status\":\"Z\",\"refundable\":\"Y\",\"open_activity\":\"Y\",\"total_discount\":-166.2,\"total_cashback\":-50,\"total_base_fare\":1540,\"total_tax\":131.2,\"total_markup\":660,\"total_fee\":125,\"total_fare\":2240,\"open_activity_start_hour\":\"2018-08-31T09:00:00.000+0530\",\"sup_currency\":\"INR\",\"rate_id\":40571,\"variant_id\":8536,\"rate_name\":\"vat1\",\"variant_name\":\"Standard-Variant\",\"pricing_details\":\"{\\\"ADT\\\":\\\"800\\\",\\\"CHD\\\":\\\"600\\\"}\"}],\"pax_infos\":[{\"first_name\":\"test\",\"last_name\":\"test\",\"pax_type_code\":\"ADT\",\"seq_no\":1,\"title\":\"Mr\",\"total_fare\":2240}]}],\"notes\":[{\"note\":\"Booking attempted with coupon:WALLPLUS\",\"subject\":\"Booking attempted with coupon:WALLPLUS\",\"user_id\":7144}],\"start_date_time\":\"2018-08-31T09:00:00.000+0530\",\"tag_masters\":[{\"tag_name\":\"COUPON:WALLPLUS\"}],\"travellers\":\"--- \\nADT: 2\\nCHD: 1\",\"trip_name\":\"VAT Inclusive adult child Act Bangalore\",\"trip_type\":16,\"txn_source_type\":\"ACCOUNT\",\"txns\":[{\"source_id\":\"127.0.0.1\",\"source_type\":\"ACCOUNT\",\"status\":\"O\",\"txn_type\":1,\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36\",\"user_id\":7144}],\"user_id\":7144}";
+	
+	@Test(groups={"Regression"})
+	public void Tripservicehotelputcall() throws IOException
+
+	{		
+		Response resp1;
+		String url1 = ("http://trip-service.cltp.com:9001/r3/trips/"+tripref+"/local-bookings/1/booking-info-list");
+
+		HashMap<String, Object> headers =new HashMap<>();
+		headers = headersForTripserviceputcall();
+
+		TripserviceCommon common  = new TripserviceCommon();
+		String params="{\"activity_booking_infos\":[{\"activity_seq_no\":1,\"local_rate_seq_no\":1,\"pax_info_seq_no\":1,\"booking_status\":\"P\",\"voucher_number\":\"CAMP-219207\",\"seq_no\":1,\"category_type\":\"Activity\"}]}";
+
+		resp1 = common.TripserviceHotelsPutcall(params, headers, url1);
+
+
+		if(resp1.statusCode()==200){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp1.asString());
+
+			System.out.println("Status code == "+ url1+  "is :: " + resp1.statusCode());
+
+			ResponseBody body1= resp1.getBody();
+			String bodyAsString1 = body1.asString();
+			Assert.assertEquals(bodyAsString1.contains("trip_ref"), true ,"Response boday contains  tripRef");
+		}else{
+			assertTrue(false);
+		}
+
+	}
+	
+}

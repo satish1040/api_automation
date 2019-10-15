@@ -1,0 +1,40 @@
+package com.cleartrip.common.headers;
+
+import java.util.HashMap;
+
+public class MobileWebHeaders {
+
+	/*
+	 * headers.put("api-version", "1.0"); headers.put("adv-id",
+	 * "742c0dcb-2a9d-45cc-a64e-819271d24d90"); headers.put("device-id",
+	 * "ab67b2857ab7eb52"); headers.put("Cookie2", "$Version=1");
+	 * headers.put("app-version", "139"); headers.put("ct-ab", "");
+	 * headers.put("app-version-number", "139"); headers.put("device-token", "");
+	 * headers.put("device-type", "SU-Xiaomi-santoni"); headers.put("app-platform",
+	 * "6.0.1"); headers.put("network_type", "WIFI");
+	 * 
+	 * headers.put("Accept-Encoding", "gzip, deflate, br");
+	 * headers.put("User-Agent",
+	 * "Mozilla/5.0 (Linux; Android 7.1.1; Moto E (4) Plus Build/NMA26.42-113) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.84 Mobile Safari/537.36"
+	 * ); // headers.put("X-CT-SOURCETYPE", "MOBILE");
+	 * 
+	 * return headers;
+	 */
+
+	public HashMap<String, Object> localHeaders(String param) {
+		HashMap<String, Object> headers = new HashMap<>();
+		if (param.contains("mobileWeb")) {
+			headers.put("Accept-Encoding", "gzip, deflate, br");
+			headers.put("User-Agent",
+					"Mozilla/5.0 (Linux; Android 7.1.1; Moto E (4) Plus Build/NMA26.42-113) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.84 Mobile Safari/537.36");
+		} else if (param.contains("desktop")) {
+			headers.put("Accept-Encoding", "gzip, deflate, br");
+			headers.put("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
+
+		}
+		return headers;
+
+	}
+
+}

@@ -1,0 +1,75 @@
+package com.cleartrip.platform.sms;
+
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import org.codehaus.groovy.util.ListHashMap;
+
+import org.testng.annotations.Test;
+
+
+import com.cleartrip.platform.whatsapp.WhatsappCommon;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+import com.cleartrip.common.Main;
+import com.cleartrip.common.RestUtil;
+import com.jayway.restassured.response.Response;
+
+
+public class PlatformSMSservice extends SmsCommon
+{
+	
+	@Test(groups={"Regression"})
+	public void smsservice() throws IOException{
+		Response resp ;
+		/*String url ="";
+		String Environment = Main.getEnv("env");
+		String Environment1 = getPlatformData("sms_qa2");
+		System.out.println("Environment1 : " +Environment1);
+		if(Environment.equals("www")) {
+			url = "http://smsapi.cltp.com:9001/sms";
+		}else if (Environment.equals("qa2")) {
+			url = getPlatformData("sms_qa2");
+		}*/
+		
+		String url = Service_Url("SMS");	
+
+		System.out.println("sms_Url : "+ url);
+		
+		HashMap<String, Object> headers =new HashMap<>();
+		headers = headersForsms();
+		
+		
+		HashMap<String, Object> params= new HashMap<>();
+		params= paramsForSMSservice();
+	
+	
+	SmsCommon common  = new SmsCommon();
+	resp = common.paramsForSMSservice(params, headers, url);		
+
+	if(resp.statusCode()==201){
+		assertTrue(true);
+		System.out.println("Test case passed");
+		System.out.println(resp.asString());
+	
+		System.out.println("Status code == "+ url+  "is :: " + resp.statusCode());
+		
+		ResponseBody body= resp.getBody();
+		String bodyAsString = body.asString();
+		Assert.assertEquals(bodyAsString.contains("smsId"), true ,"Response boday contains  smsId");
+	}else{
+
+		System.out.println(resp.asString());
+		assertTrue(false);
+	}
+}
+
+	
+
+}

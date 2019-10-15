@@ -1,0 +1,67 @@
+package com.cleartrip.platform.tripservice;
+
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+public class TripservicePostcall_AIR extends TripserviceCommon
+{
+	
+	@Test(groups={"Regression"})
+	public void TripserviceAirpostcall() throws IOException
+	{
+	Response resp;
+	 String url =  Service_Url("TRIPSERVICE_POST_CALL");
+		
+	 
+		HashMap<String, Object> headers =new HashMap<>();
+		headers = headersForTripservicepostcall();
+		
+		/*HashMap<String, Object> params= new HashMap<>();
+		params= TripservicePostcall();*/
+		
+		TripserviceCommon common  = new TripserviceCommon();
+		resp = common.TripservicePostcall(params, headers, url);
+		
+		
+		if(resp.statusCode()==200){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+		
+			System.out.println("Status code == "+ url+  "is :: " + resp.statusCode());
+			
+			
+			ResponseBody body= resp.getBody();
+			String bodyAsString = body.asString();
+			Assert.assertEquals(bodyAsString.contains("trip_ref"), true ,"Response boday contains  tripRef");
+		}else{
+			assertTrue(false);
+		}
+			
+	}
+		/*public HashMap< String, Object> TripservicePostcall(){
+			HashMap<String,Object> params= new HashMap<>();
+			params.put("mobileNumber", "7799964888");
+			params.put("message","HI");
+			params.put("ctUserId","1234");
+			params.put("ccid", "Q1234567890");
+			return params;
+		}
+		*/
+		
+		
+		String params = "{\"air_bookings\":[{\"id\":0,\"air_booking_type\":\"D\",\"hold_inventory\":\"false\",\"journey_type\":\"O\",\"price_watch\":\"Y\",\"total_fare\":2083,\"external_references\":[{\"name\":\"Supplier_BLR_COK_1540688700000\",\"value\":\"production_staging_IN_search_indigo_newskies_LCT\"},{\"name\":\"TotalCost_BLR_COK\",\"value\":\"1933.0000000\"},{\"name\":\"SessionID_BLR_COK_1540688700000\",\"value\":\"dkdG03cF7m4=|jKKPnSCsVZxoMO+FatDHIL1nXQPjYnda3uh4qeUhKZklVYxOfWxldeRYReUIBdJ6ZELSQ2WyGRJwTBTUpQy0t0NhD5kUHTPS6idS3GVJrEvkxzWhZU4E\\/Jm6GYKruH+H4Hz2t8aAV9Q=\"},{\"name\":\"DESIGN_VERSION\",\"value\":\"v2\"},{\"name\":\"HOLD\",\"value\":\"true\"},{\"name\":\"HOLD\",\"value\":\"true\"},{\"name\":\"HOLD\",\"value\":\"true\"}],\"flights\":[{\"arrival_airport\":\"COK\",\"arrival_date_time\":\"2018-10-28T06:35:00.000+0530\",\"departure_airport\":\"BLR\",\"departure_date_time\":\"2018-10-28T06:35:00.000+0530\",\"flight_index\":1,\"routed\":\"N\",\"segments\":[{\"arrival_airport\":\"COK\",\"arrival_date_time\":\"2018-10-28T07:45:00.000+0530\",\"arrival_terminal\":\"2\",\"departure_airport\":\"BLR\",\"departure_date_time\":\"2018-10-28T06:35:00.000+0530\",\"departure_terminal\":\"\",\"duration\":4200,\"flight_number\":\"536\",\"marketing_airline\":\"6E\",\"operating_airline\":\"6E\",\"seat_available\":3,\"seq_no\":1,\"stopover_count\":0,\"sup_currency\":\"INR\",\"sup_total_currency_rate\":1,\"supplier\":\"6E\",\"vendor_no\":\"VEND03541\"}]}],\"pax_infos\":[{\"first_name\":\"test\",\"last_name\":\"test\",\"pax_type_code\":\"ADT\",\"person_id\":13937176,\"seq_no\":1,\"title\":\"Mr\",\"total_fare\":2083}],\"air_booking_infos\":[{\"auto_refund\":\"N\",\"booking_class\":\"R\",\"booking_status\":\"Z\",\"cabin_type\":\"E\",\"pax_info_seq_no\":1,\"pricing_object_seq_no\":1,\"seat_number\":\"\",\"segment_seq_no\":1,\"seq_no\":1,\"status_history\":0,\"ticket_type\":\"E\",\"multipcc_rev\":0}],\"air_booking_detail\":{\"customer_booking_status\":\"true\",\"first_flight_detail\":\"{\\\"oa\\\":\\\"6E\\\",\\\"opr\\\":1933,\\\"oac\\\":\\\"6965\\\"}\",\"is_apis_required\":\"false\",\"searched_sector\":\"BLR-COK\",\"segments_count\":1,\"product_by_domain\":\"India Domestic\"},\"pricing_objects\":[{\"cleartrip_sbc\":0,\"congestion_charge\":523,\"fare_basis_code\":\"R020AP\",\"fare_category\":\"retail\",\"fare_key\":\"fk_retail_6E_536_1540688700000_R020AP_false_\",\"fare_sub_type\":\"\",\"net_agency_commission\":0,\"net_taxable_value\":150,\"segment_amount\":2083,\"seq_no\":1,\"service_tax\":0,\"tax_base_st\":0,\"tax_ecess\":0,\"tax_shecess\":0,\"total_base_fare\":760,\"total_bos_dis_svc\":0,\"total_bos_tax_svc\":0,\"total_cashback\":0,\"total_dis_agency_commission\":0,\"total_dis_agency_discount\":0,\"total_discount\":0,\"total_fare\":2083,\"total_fee\":150,\"total_fee_agency_markup\":0,\"total_fee_airl_amd\":0,\"total_fee_amd\":0,\"total_fee_baggage\":0,\"total_fee_bundle\":0,\"total_fee_cncl\":0,\"total_fee_con\":0,\"total_fee_gw\":150,\"total_fee_meal\":0,\"total_fee_pgc\":0,\"total_fee_price_watch\":0,\"total_fee_seat\":0,\"total_fee_unknown\":0,\"total_markup\":0,\"total_mkp_mcmkp\":0,\"total_nc\":0,\"total_nc_agency_trans_fee\":0,\"total_nc_fee\":0,\"total_tax\":1173,\"total_tax_agency_comm_gst\":0,\"total_tax_agency_comm_tax\":0,\"total_tax_agency_trans_fee_tax\":0,\"total_tax_airline_msc\":100,\"total_tax_airline_vat\":0,\"total_tax_amd_oct\":0,\"total_tax_cgst\":34,\"total_tax_cleartrip_kkc\":0,\"total_tax_cleartrip_sbc\":0,\"total_tax_ct_cgst\":11.5,\"total_tax_ct_igst\":0,\"total_tax_ct_sgst\":11.5,\"total_tax_ct_utgst\":0,\"total_tax_ct_vat\":0,\"total_tax_cute\":0,\"total_tax_igst\":0,\"total_tax_jn\":0,\"total_tax_kkc\":0,\"total_tax_oct\":0,\"total_tax_psf\":150,\"total_tax_sbc\":0,\"total_tax_sgst\":34,\"total_tax_svc\":0,\"total_tax_ttf\":0,\"total_tax_unknown\":355,\"total_tax_utgst\":0,\"total_tax_yq\":500,\"total_tax_yr\":0,\"total_wallet_cashback\":0,\"cost_pricing_object\":{\"congestion_charge\":523,\"fare_basis_code\":\"R020AP\",\"fare_category\":\"retail\",\"fare_key\":\"supp_INDIGO|si-bc-v2-7ddc900d-c596-4888-a5cf-ec1f1d40e25e|fk_retail_6E_536_1540688700000_R020AP_false_\",\"fare_sub_type\":\"\",\"seq_no\":1,\"total_bf\":760,\"total_fare\":1933,\"total_fee_baggage\":0,\"total_fee_con\":0,\"total_fee_meal\":0,\"total_fee_seat\":0,\"total_mkp\":0,\"total_tax\":1173,\"total_tax_airline_msc\":100,\"total_tax_airline_vat\":0,\"total_tax_amd_oct\":0,\"total_tax_cgst\":34,\"total_tax_ct_cgst\":0,\"total_tax_ct_igst\":0,\"total_tax_ct_sgst\":0,\"total_tax_ct_utgst\":0,\"total_tax_ct_vat\":0,\"total_tax_cute\":0,\"total_tax_igst\":0,\"total_tax_jn\":0,\"total_tax_oct\":0,\"total_tax_psf\":150,\"total_tax_sbc\":0,\"total_tax_sgst\":34,\"total_tax_ttf\":0,\"total_tax_udf\":355,\"total_tax_unknown\":0,\"total_tax_utgst\":0,\"total_tax_yq\":500,\"total_tax_yr\":0,\"pricing_elements\":[{\"amount\":760,\"category\":\"BF\",\"chnl_charge\":\"false\",\"chnl_display\":\"false\",\"chnl_refund\":\"false\",\"code\":\"\",\"usr_charge\":\"false\",\"usr_display\":\"false\",\"usr_refund\":\"false\",\"wp_check\":\"false\"},{\"amount\":100,\"category\":\"TAX\",\"chnl_charge\":\"false\",\"chnl_display\":\"false\",\"chnl_refund\":\"false\",\"code\":\"AIRLINE-MSC\",\"usr_charge\":\"false\",\"usr_display\":\"false\",\"usr_refund\":\"false\",\"wp_check\":\"false\"},{\"amount\":500,\"category\":\"TAX\",\"chnl_charge\":\"false\",\"chnl_display\":\"false\",\"chnl_refund\":\"false\",\"code\":\"YQ\",\"usr_charge\":\"false\",\"usr_display\":\"false\",\"usr_refund\":\"false\",\"wp_check\":\"false\"},{\"amount\":150,\"category\":\"TAX\",\"chnl_charge\":\"false\",\"chnl_display\":\"false\",\"chnl_refund\":\"false\",\"code\":\"PSF\",\"usr_charge\":\"false\",\"usr_display\":\"false\",\"usr_refund\":\"false\",\"wp_check\":\"false\"},{\"amount\":355,\"category\":\"TAX\",\"chnl_charge\":\"false\",\"chnl_display\":\"false\",\"chnl_refund\":\"false\",\"code\":\"UDF\",\"usr_charge\":\"false\",\"usr_display\":\"false\",\"usr_refund\":\"false\",\"wp_check\":\"false\"},{\"amount\":34,\"category\":\"TAX\",\"chnl_charge\":\"false\",\"chnl_display\":\"false\",\"chnl_refund\":\"false\",\"code\":\"CGST\",\"usr_charge\":\"false\",\"usr_display\":\"false\",\"usr_refund\":\"false\",\"wp_check\":\"false\"},{\"amount\":34,\"category\":\"TAX\",\"chnl_charge\":\"false\",\"chnl_display\":\"false\",\"chnl_refund\":\"false\",\"code\":\"SGST\",\"usr_charge\":\"false\",\"usr_display\":\"false\",\"usr_refund\":\"false\",\"wp_check\":\"false\"},{\"amount\":0,\"category\":\"TAX\",\"chnl_charge\":\"false\",\"chnl_display\":\"false\",\"chnl_refund\":\"false\",\"code\":\"JN\",\"usr_charge\":\"false\",\"usr_display\":\"false\",\"usr_refund\":\"false\",\"wp_check\":\"false\"},{\"amount\":0,\"category\":\"TAX\",\"chnl_charge\":\"false\",\"chnl_display\":\"false\",\"chnl_refund\":\"false\",\"code\":\"YR\",\"usr_charge\":\"false\",\"usr_display\":\"false\",\"usr_refund\":\"false\",\"wp_check\":\"false\"},{\"amount\":0,\"category\":\"TAX\",\"chnl_charge\":\"false\",\"chnl_display\":\"false\",\"chnl_refund\":\"false\",\"code\":\"CUTE\",\"usr_charge\":\"false\",\"usr_display\":\"false\",\"usr_refund\":\"false\",\"wp_check\":\"false\"},{\"amount\":0,\"category\":\"TAX\",\"chnl_charge\":\"false\",\"chnl_display\":\"false\",\"chnl_refund\":\"false\",\"code\":\"OCT\",\"usr_charge\":\"false\",\"usr_display\":\"false\",\"usr_refund\":\"false\",\"wp_check\":\"false\"}]},\"pricing_elements\":[{\"amount\":760,\"category\":\"BF\",\"chnl_charge\":\"true\",\"chnl_display\":\"true\",\"chnl_refund\":\"true\",\"code\":\"\",\"usr_charge\":\"true\",\"usr_display\":\"true\",\"usr_refund\":\"true\",\"wp_check\":\"true\"},{\"amount\":100,\"category\":\"TAX\",\"chnl_charge\":\"true\",\"chnl_display\":\"true\",\"chnl_refund\":\"false\",\"code\":\"AIRLINE-MSC\",\"usr_charge\":\"true\",\"usr_display\":\"true\",\"usr_refund\":\"false\",\"wp_check\":\"true\"},{\"amount\":500,\"category\":\"TAX\",\"chnl_charge\":\"true\",\"chnl_display\":\"true\",\"chnl_refund\":\"false\",\"code\":\"YQ\",\"usr_charge\":\"true\",\"usr_display\":\"true\",\"usr_refund\":\"false\",\"wp_check\":\"true\"},{\"amount\":150,\"category\":\"TAX\",\"chnl_charge\":\"true\",\"chnl_display\":\"true\",\"chnl_refund\":\"false\",\"code\":\"PSF\",\"usr_charge\":\"true\",\"usr_display\":\"true\",\"usr_refund\":\"false\",\"wp_check\":\"true\"},{\"amount\":355,\"category\":\"TAX\",\"chnl_charge\":\"true\",\"chnl_display\":\"true\",\"chnl_refund\":\"false\",\"code\":\"UDF\",\"usr_charge\":\"true\",\"usr_display\":\"true\",\"usr_refund\":\"false\",\"wp_check\":\"true\"},{\"amount\":34,\"category\":\"TAX\",\"chnl_charge\":\"true\",\"chnl_display\":\"true\",\"chnl_refund\":\"false\",\"code\":\"CGST\",\"usr_charge\":\"true\",\"usr_display\":\"true\",\"usr_refund\":\"false\",\"wp_check\":\"true\"},{\"amount\":34,\"category\":\"TAX\",\"chnl_charge\":\"true\",\"chnl_display\":\"true\",\"chnl_refund\":\"false\",\"code\":\"SGST\",\"usr_charge\":\"true\",\"usr_display\":\"true\",\"usr_refund\":\"false\",\"wp_check\":\"true\"},{\"amount\":0,\"category\":\"TAX\",\"chnl_charge\":\"true\",\"chnl_display\":\"true\",\"chnl_refund\":\"false\",\"code\":\"JN\",\"usr_charge\":\"true\",\"usr_display\":\"true\",\"usr_refund\":\"false\",\"wp_check\":\"true\"},{\"amount\":0,\"category\":\"TAX\",\"chnl_charge\":\"true\",\"chnl_display\":\"true\",\"chnl_refund\":\"false\",\"code\":\"YR\",\"usr_charge\":\"true\",\"usr_display\":\"true\",\"usr_refund\":\"false\",\"wp_check\":\"true\"},{\"amount\":0,\"category\":\"TAX\",\"chnl_charge\":\"true\",\"chnl_display\":\"true\",\"chnl_refund\":\"false\",\"code\":\"CUTE\",\"usr_charge\":\"true\",\"usr_display\":\"true\",\"usr_refund\":\"false\",\"wp_check\":\"true\"},{\"amount\":0,\"category\":\"TAX\",\"chnl_charge\":\"true\",\"chnl_display\":\"true\",\"chnl_refund\":\"false\",\"code\":\"OCT\",\"usr_charge\":\"true\",\"usr_display\":\"true\",\"usr_refund\":\"false\",\"wp_check\":\"true\"},{\"amount\":150,\"category\":\"FEE\",\"chnl_charge\":\"true\",\"chnl_display\":\"true\",\"chnl_refund\":\"false\",\"code\":\"GW\",\"usr_charge\":\"true\",\"usr_display\":\"true\",\"usr_refund\":\"false\",\"wp_check\":\"false\"},{\"amount\":0,\"category\":\"TAX\",\"chnl_charge\":\"true\",\"chnl_display\":\"true\",\"chnl_refund\":\"false\",\"code\":\"GWST\",\"usr_charge\":\"true\",\"usr_display\":\"true\",\"usr_refund\":\"false\",\"wp_check\":\"false\"}]}]}],\"amount\":2083,\"bkg_type\":\"D\",\"booked_user_id\":4172698,\"company_id\":110340,\"contact_detail\":{\"address\":\"\",\"email\":\"chithira.jose@cleartrip.com\",\"first_name\":\"test\",\"last_name\":\"test\",\"mobile\":\"9686155445\",\"title\":\"Mr\"},\"currency\":\"INR\",\"customer_confirmation_eligible\":\"true\",\"customer_no\":\"CUST03954\",\"domain\":\"cleartrip.com\",\"email_id\":\"chithira.jose@cleartrip.com\",\"end_date_time\":\"2018-10-28T07:45:00.000+0530\",\"express_checkout\":\"false\",\"external_references\":[],\"gst_detail\":{\"gst_holder_statecode\":\"29\",\"gst_holder_statename\":\"Karnataka\"},\"itinerary_id\":\"6861009250-f6a5-4f4a-9107-eab21a04da59\",\"site_language\":\"en\",\"start_date_time\":\"2018-10-28T06:35:00.000+0530\",\"travellers\":\"ADT: 1\\n\",\"trip_name\":\"Bangalore - Kochi one-way\",\"trip_type\":1,\"txn_source_type\":\"ACCOUNT\",\"txns\":[{\"referer_domain\":\"qa2.cleartrip.com\",\"rreferer\":\"https:\\/\\/qa2.cleartrip.com\\/\",\"source_id\":\"119.82.106.204\",\"source_type\":\"ACCOUNT\",\"status\":\"O\",\"txn_type\":1,\"user_id\":4172698}]}";
+		
+				
+		
+		
+
+}

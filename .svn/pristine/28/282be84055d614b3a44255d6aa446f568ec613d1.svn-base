@@ -1,0 +1,227 @@
+package com.cleartrip.local.mobileapp.search;
+
+
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.common.headers.MobileAppHeaders;
+import com.cleartrip.local.common.LocalCommonUtil;
+import com.jayway.restassured.response.Response;
+
+
+public class Activity extends LocalCommonUtil {
+	
+	private String latitude;
+	private String longitude;
+	private String cityId;
+	private String collectionId;
+    private String collectionName;
+	private String variantId;
+	private String rateId;
+	private Response respDetails;
+
+	@Test(groups = {"Regression" }, dataProvider = "citystate", dataProviderClass = com.cleartrip.common.dataproviders.LocalDataProvider.class)
+	public void getLatLong(HashMap<String, Object> params) throws IOException {
+		Response resp;
+
+		// We dont require a header for getting a latlong from google api.
+		String url = getLocalUrl("googlelatlong");
+
+		HashMap<String, Object> headers = new HashMap<>();
+
+		resp = RestUtil.httpMethodExternal(params, headers, url);
+		Assert.assertEquals(resp.statusCode(), 200);
+
+		setLatitude(resp.then().extract().path("results[0].geometry.location.lat").toString());
+		setLongitude(resp.then().extract().path("results[0].geometry.location.lng").toString());
+		System.out.println(getLatitude() + " : " + getLongitude());
+	}
+
+	@Test(dependsOnMethods = "getLatLong", groups = { "Regression" })
+	public void mobileAutoComplete() throws IOException {
+
+		Response resp;
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties = commonLocal("autocomplete", "get", false);
+
+		HashMap<String, Object> headers = new HashMap<String, Object>();
+		MobileAppHeaders mHeaders = new MobileAppHeaders();
+		headers = mHeaders.mobileHeader();
+
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("latitude", getLatitude());
+		params.put("longitude", getLongitude());
+
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+		Assert.assertEquals(resp.statusCode(), 200);
+		System.out.println(resp.asString());
+
+		Reporter.log("Autocomplete is working");
+	}
+
+	@Test(dependsOnMethods = "mobileAutoComplete",groups = {"Regression" }, dataProvider = "searchCollectionsMobile", dataProviderClass = com.cleartrip.common.dataproviders.LocalDataProvider.class)
+	public void thingsToDoSearchCollectionsMobile(HashMap<String, Object> params) throws IOException {
+
+		Response resp;
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties = commonLocal("ttdsearchcollections", "get", false);
+
+		HashMap<String, Object> headers = new HashMap<String, Object>();
+		MobileAppHeaders mHeaders = new MobileAppHeaders();
+		headers = mHeaders.mobileHeader();
+
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+		Assert.assertEquals(resp.statusCode(), 200);
+		System.out.println(resp.asString());
+
+		setCityId(resp.then().extract().path("city.id").toString());
+		setCollectionId(resp.then().extract().path("collections[0].id").toString());
+		setCollectionName(resp.then().extract().path("collections[0].collection_name"));
+
+		Reporter.log("Mobile app TTD Search collections API is passed");
+
+	}
+	@Test(dependsOnMethods="thingsToDoSearchCollectionsMobile",groups = {"Regression", "Smoke"})
+	public void thingsToDoActivityListingMobile() throws IOException {
+
+		Response resp;
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String,Object>();
+		commonUrlProperties = commonLocal("ttdlisting", "get", false);
+		commonUrlProperties.put("url", commonUrlProperties.get("url")+getCityId()+"/collection/"+getCollectionId());
+		
+		HashMap<String, Object> headers = new HashMap<String, Object>();
+		MobileAppHeaders mHeaders = new MobileAppHeaders();
+		headers = mHeaders.mobileHeader();
+		
+		HashMap<String, Object> params = new HashMap<>();
+		
+		resp = RestUtil.httpMethod(params,commonUrlProperties,headers);
+		Assert.assertEquals(resp.getStatusCode(), 200);
+		
+		setVariantId(resp.then().extract().path("result[0].id").toString());
+		
+		Reporter.log("Mobile app TTD Listing  API is passed");
+		
+	}
+	
+	@Test(dependsOnMethods="thingsToDoActivityListingMobile",groups={"Regression", "Smoke"})
+	public void thingsToDoVariantDetailsMobile() throws IOException{
+		
+		Response resp;
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String,Object>();
+		commonUrlProperties = commonLocal("ttddetails", "get", false);
+		commonUrlProperties.put("url", commonUrlProperties.get("url")+getCityId()+"/variant/"+getVariantId());
+		
+		HashMap<String, Object> headers = new HashMap<String, Object>();
+		MobileAppHeaders mHeaders = new MobileAppHeaders();
+		headers = mHeaders.mobileHeader();
+		
+		HashMap<String, Object> params = new HashMap<>();
+		
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+		Assert.assertEquals(resp.statusCode(), 200);
+		
+		setRespDetails(resp);
+		
+		setRateId(resp.then().extract().path("details.rates[0].rate_id").toString());
+		Reporter.log("Rate id is : "+getRateId());
+		System.out.println(getRateId());
+		
+		Reporter.log("Mobile app TTD variant details  API is passed");
+	}
+	
+	@Test(dependsOnMethods = "thingsToDoVariantDetailsMobile", groups = {"Regression","Smoke"}, dataProvider="searchCollectionsMobile",dataProviderClass=com.cleartrip.common.dataproviders.LocalDataProvider.class)
+	public void homePage(HashMap<String, Object> params) throws IOException{
+		
+		Response resp;
+		params.remove("editorial");
+		
+		HashMap<String, Object> commonUrlProperties = new HashMap<String,Object>();
+		commonUrlProperties = commonLocal("homepage", "get", false);
+				
+		HashMap<String, Object> headers = new HashMap<String, Object>();
+		MobileAppHeaders mHeaders = new MobileAppHeaders();
+		headers = mHeaders.mobileHeader();
+		
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+		Assert.assertEquals(resp.statusCode(), 200);
+		
+	}
+	
+	
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(String cityId) {
+		this.cityId = cityId;
+	}
+
+	public String getCollectionId() {
+		return collectionId;
+	}
+
+	public void setCollectionId(String collectionId) {
+		this.collectionId = collectionId;
+	}
+
+	public String getVariantId() {
+		return variantId;
+	}
+
+	public void setVariantId(String variantId) {
+		this.variantId = variantId;
+	}
+
+	public String getRateId() {
+		return rateId;
+	}
+
+	public void setRateId(String rateId) {
+		this.rateId = rateId;
+	}
+
+	public Response getRespDetails() {
+		return respDetails;
+	}
+
+	public void setRespDetails(Response respDetails) {
+		this.respDetails = respDetails;
+	}
+	public String getCollectionName() {
+		return collectionName;
+	}
+
+	public void setCollectionName(String collectionName) {
+		this.collectionName = collectionName;
+	}
+
+	
+
+}

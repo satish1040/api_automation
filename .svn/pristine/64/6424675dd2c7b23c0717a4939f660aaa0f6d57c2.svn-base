@@ -1,0 +1,57 @@
+package com.cleartrip.local.mobileapp.misc;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.common.headers.MobileAppHeaders;
+import com.cleartrip.local.common.LocalCommonUtil;
+import com.jayway.restassured.response.Response;
+
+public class GuidedNavigation extends LocalCommonUtil {
+
+	@Test(groups = { "Regression" })
+	public void getTags() throws IOException {
+
+		Response resp;
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties = commonLocal("gettags", "get", false);
+
+		HashMap<String, Object> headers = new HashMap<String, Object>();
+		MobileAppHeaders mHeaders = new MobileAppHeaders();
+		headers = mHeaders.mobileHeader();
+
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("category", "activity");
+		
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+		Assert.assertEquals(resp.statusCode(), 200);
+		
+		Reporter.log("Get tags is working");
+	}
+	
+	@Test(groups = { "Regression" },dataProvider = "guidedNavigation",dataProviderClass = com.cleartrip.common.dataproviders.LocalDataProvider.class)
+	public void guidedContent(HashMap<String, Object> params) throws IOException {
+
+		Response resp;
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties = commonLocal("guidedcontent", "post", false);
+
+		HashMap<String, Object> headers = new HashMap<String, Object>();
+		MobileAppHeaders mHeaders = new MobileAppHeaders();
+		headers = mHeaders.mobileHeader();
+
+		
+		
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+		Assert.assertEquals(resp.statusCode(), 200);
+		
+		Reporter.log("Guided content Api is working");
+	}
+}

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Platform_Services_API_Results" allow-return-values="true"
+	parallel="classes" thread-count="2">
+
+	<listeners>
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+
+	</listeners>
+
+
+	<test name="Platform_API_AUTOMATION">
+
+		<classes>
+			<class name="com.cleartrip.platform.sms.PlatformSMSservice" />
+
+			<class name="com.cleartrip.platform.whatsapp.WhatsappCheckContacts" />
+			<class name="com.cleartrip.platform.whatsapp.WhatsappUserMessage" />
+			<class name="com.cleartrip.platform.whatsapp.WhatsappwebhookMessage" />
+			<class name="com.cleartrip.platform.whatsapp.WhatsappOptinFlow" />
+			<class name="com.cleartrip.platform.whatsapp.WhatsappOptinflowStatus" />
+			<class
+				name="com.cleartrip.platform.whatsapp.WhatsappUserMessageWithAttachments" />
+
+
+			<class name="com.cleartrip.platform.tripservice.GetCallforTripservice" />
+			<class name="com.cleartrip.platform.tripservice.TripserviceTripsPostcall" />
+			<class name="com.cleartrip.platform.tripservice.TripserviceTripsPutcall" />
+
+
+			<class
+				name="com.cleartrip.platform.emailservice.EmailserviceEmailPostcall" />
+			<class
+				name="com.cleartrip.platform.emailservice.EmailserviceforAttachments" />
+			<class name="com.cleartrip.platform.emailservice.EmailserviceSpamscore" />
+
+
+
+
+
+		</classes>
+	</test>
+
+
+
+</suite> 
+	

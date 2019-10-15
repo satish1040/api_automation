@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Air_Search_Results" parallel="classes" thread-count="2" >
+
+	<listeners>
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+		<listener class-name="com.cleartrip.common.RemoveDuplicateResults"/>
+		<listener class-name="com.cleartrip.common.RetryListener"/>
+	</listeners>
+
+	
+	<!-- <suite-files>
+			<suite-file path="b2cair.xml"></suite-file>
+	</suite-files>
+	
+	<suite-files>
+			<suite-file path="agencyair.xml"></suite-file>
+	</suite-files>
+	
+	<suite-files>
+			<suite-file path="corpair.xml"></suite-file>
+	</suite-files>
+	
+	<suite-files>
+			<suite-file path="corpAEair.xml"></suite-file>
+	</suite-files>
+	
+	<suite-files>
+			<suite-file path="corpSAair.xml"></suite-file>
+	</suite-files>
+	 -->
+	 
+	 
+	 <test name="CorpSA_search">
+
+		<classes>
+			<class
+				name="com.cleartrip.air.corporate.sa.search.CorpSA_DomRoundTripSearchTest" />
+				     
+			<class name="com.cleartrip.air.corporate.sa.search.CorpSA_DomOneWaySearchTest" />
+			<class
+				name="com.cleartrip.air.corporate.sa.search.CorpSA_DomMultiCitySearchTest" />
+
+			<class name="com.cleartrip.air.corporate.sa.search.CorpSA_IntlRoundTripSearch" />
+			<class name="com.cleartrip.air.corporate.sa.search.CorpSA_IntlOneWaySearchTest" />
+			<class
+				name="com.cleartrip.air.corporate.sa.search.CorpSA_IntlMultiCitySearchTest" />
+
+		</classes>
+	</test>
+	
+	
+	<test name="CorpDOM_search">
+
+		<classes>
+			<class
+				name="com.cleartrip.corporate.air.search.CorpDomRoundTripSearchTest" />
+			<class name="com.cleartrip.corporate.air.search.CorpDomOneWaySearchTest" />
+			<class
+				name="com.cleartrip.corporate.air.search.CorpDomMultiCitySearchTest" />
+
+			<class name="com.cleartrip.corporate.air.search.CorpIntlRoundTripSearch" />
+			<class name="com.cleartrip.corporate.air.search.CorpIntlOneWaySearchTest" />
+			<class
+				name="com.cleartrip.corporate.air.search.CorpIntlMultiCitySearchTest" />
+
+		</classes>
+	</test>
+	
+	
+	<test name="B2C_search">
+
+	<classes>
+		<class name="com.cleartrip.air.in.search.DomOneWayBusinessClassSearchTest" />
+		<class name="com.cleartrip.air.in.search.DomOneWaySameDaySearchTest" />
+		<class name="com.cleartrip.air.in.search.DomRoundTripSameDaySearchTest" />
+
+		<class name="com.cleartrip.air.in.search.DomOneWaySearchTest" />
+		<class name="com.cleartrip.air.in.search.DomRoundTripSearchTest" />
+		<class name="com.cleartrip.air.in.search.DomMultiCitySearchTest" />
+
+		<class name="com.cleartrip.air.in.search.IntlOneWaySearchTest" />
+		<class name="com.cleartrip.air.in.search.InltRoundTripSearchTest" />
+		<class name="com.cleartrip.air.in.search.IntlMultiCitySearchTest" />
+
+	</classes>
+</test>
+	
+	
+	<test name="Agency_search">
+
+		<classes>
+			<class name="com.cleartrip.agency.air.search.AgencyDomOneWaySearchTest" />
+			<class name="com.cleartrip.agency.air.search.AgencyDomRoundTripSearchTest" />
+			<class name="com.cleartrip.agency.air.search.AgencyDomMultiCitySearchTest" />
+
+			<class name="com.cleartrip.agency.air.search.AgencyIntlOneWaySearchTest" />
+			<class
+				name="com.cleartrip.agency.air.search.AgencyIntlRoundTripSearchTest" />
+			<class
+				name="com.cleartrip.agency.air.search.AgencyIntlMultiCitySearchTest" />
+		</classes>
+	</test>
+	
+	<test name="CorpAE_Search">
+
+		<classes>
+			<class
+				name="com.cleartrip.corporate.ae.air.search.CorpAE_DomRoundTripSearchTest" />
+			<class name="com.cleartrip.corporate.ae.air.search.CorpAE_DomOneWaySearchTest" />
+			<class
+				name="com.cleartrip.corporate.ae.air.search.CorpAE_DomMultiCitySearchTest" />
+
+			<class name="com.cleartrip.corporate.ae.air.search.CorpAE_IntlRoundTripSearch" />
+			<class name="com.cleartrip.corporate.ae.air.search.CorpAE_IntlOneWaySearchTest" />
+			<class
+				name="com.cleartrip.corporate.ae.air.search.CorpAE_IntlMultiCitySearchTest" />
+
+		</classes>
+	</test>
+	
+	
+</suite> 
+	

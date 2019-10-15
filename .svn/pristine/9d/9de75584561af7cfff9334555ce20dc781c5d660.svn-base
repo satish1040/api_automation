@@ -1,0 +1,71 @@
+package com.cleartrip.platform.whatsapp;
+
+import static com.jayway.restassured.RestAssured.given;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.Main;
+import com.cleartrip.common.RestUtil;
+import com.codepine.api.testrail.model.Status;
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.databind.jsonschema.JsonSchema;
+import com.github.fge.jsonschema.cfg.ValidationConfiguration;
+import com.github.fge.jsonschema.main.JsonSchemaFactory;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+public class WhatsappCheckContacts extends WhatsappCommon {
+
+	@Test(groups={"Regression"})
+	public void checkContacts() {
+		Response resp;
+		String url = "http://172.17.12.164:9080/whatsapp/checkContacts";
+
+		HashMap<String, Object> headers = new HashMap<>();
+		headers = headersForWhatsAppCheckContacts();
+
+		ArrayList params = new ArrayList<>();
+		params = paramsAsArray();
+
+		RestUtil util = new RestUtil();
+
+		resp = util.whatsAppRestApi(params, headers, url);
+
+		if (resp.statusCode() == 200) {
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+			ResponseBody body= resp.getBody();
+			String bodyAsString = body.asString();
+			Assert.assertEquals(bodyAsString.contains("contacts"), true ,"Response boday contains contacts");
+		
+			System.out.println("Status code == " + url + "is :: " + resp.statusCode());
+			
+		} else {
+			assertTrue(false);
+		}
+
+		// Assert.assertEquals(hitStatus,200,"Response code is="+hitStatus);
+	}
+
+	/*
+	 * public HashMap<String, Object> headersForWhatsAppCheckContacts(){
+	 * HashMap<String, Object> headers = new HashMap<>();
+	 * headers.put("Content-Type", "application/json"); return headers;
+	 * 
+	 * }
+	 * 
+	 * public ArrayList paramsAsArray(){ ArrayList params = new ArrayList<>();
+	 * params.add("0123456789"); params.add("9874563210");
+	 * params.add("1234567890"); return params; }
+	 */
+}

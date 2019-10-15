@@ -1,0 +1,56 @@
+package com.cleartrip.local.mobileapp.misc;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.common.headers.MobileAppHeaders;
+import com.cleartrip.local.common.LocalCommonUtil;
+import com.jayway.restassured.response.Response;
+
+public class Offer extends LocalCommonUtil {
+
+	@Test(groups = { "Regression" })
+	public void offer() throws IOException {
+
+		Response resp;
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties = commonLocal("offers", "get", false);
+
+		HashMap<String, Object> headers = new HashMap<String, Object>();
+		MobileAppHeaders mHeaders = new MobileAppHeaders();
+		headers = mHeaders.mobileHeader();
+
+		HashMap<String, Object> params = new HashMap<>();
+		
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+		Assert.assertEquals(resp.statusCode(), 200);
+		
+		Reporter.log("Offer is working");
+	}
+	
+	@Test(groups = { "Regression" })
+	public void particularOffer() throws IOException {
+
+		Response resp;
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties = commonLocal("particularoffer", "get", false);
+
+		HashMap<String, Object> headers = new HashMap<String, Object>();
+		MobileAppHeaders mHeaders = new MobileAppHeaders();
+		headers = mHeaders.mobileHeader();
+
+		HashMap<String, Object> params = new HashMap<>();
+		
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+		Assert.assertEquals(resp.statusCode(), 200);
+		
+		Reporter.log("particular Offer is working");
+	}
+}

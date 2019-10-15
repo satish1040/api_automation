@@ -1,0 +1,5 @@
+package com.cleartrip.local.localextapi.viewbookingdetails;
+
+public class EventsBookDetails {
+
+}

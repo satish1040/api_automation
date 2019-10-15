@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="AllTesting" allow-return-values="true" parallel="classes" thread-count = "2">
+
+	<listeners>
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+	</listeners>
+
+	<test name="Search">
+		<classes>
+			<class name="com.cleartrip.local.localextapi.search.Activity" />
+			<class name="com.cleartrip.local.localextapi.search.EatOut" />
+			<class name="com.cleartrip.local.mobileapp.search.Activity" /> 
+			<class name="com.cleartrip.local.mobileapp.misc.Offer" /> 
+			<class name="com.cleartrip.local.mobileapp.misc.GuidedNavigation" />  
+		</classes>
+	</test>
+
+	<test name="Getavailability">
+		<classes>
+			<class name="com.cleartrip.local.localextapi.availabilitycheck.GetAvailabilityActivity" /> 
+			<class name="com.cleartrip.local.localextapi.availabilitycheck.GetAvailabilityEatOut" />
+	    </classes>
+	</test> 
+	
+	<test name="Booking">
+		<classes>
+			<class name="com.cleartrip.local.localextapi.booking.BookActivity" />
+			<class name="com.cleartrip.local.localextapi.booking.BookEatOut" />
+			
+		</classes>
+	</test>
+	
+	<test name="ViewTripDetails">
+		<classes>
+			<class name="com.cleartrip.local.localextapi.viewbookingdetails.ActivityBookDetails" />
+			<class name="com.cleartrip.local.localextapi.viewbookingdetails.EatOutBookDetails" />
+		</classes>
+	</test> 
+	
+	<test name="CancelTripDetails">
+		<classes>
+			 <class name="com.cleartrip.local.localextapi.cancelbooking.CancelActivityBooking" /> 
+			<class name="com.cleartrip.local.localextapi.cancelbooking.CancelEatOutBooking" />
+		</classes>
+	</test>
+	
+	
+</suite> 
+	

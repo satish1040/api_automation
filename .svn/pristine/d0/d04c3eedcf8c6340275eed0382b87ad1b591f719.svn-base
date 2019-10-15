@@ -1,0 +1,68 @@
+package com.cleartrip.platform.whatsapp;
+
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.platform.common.PlatformCommonUtil;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+public class WhatsappOptinFlow  extends WhatsappCommon
+{
+
+	@Test(groups={"Regression"})
+	public void message() throws IOException
+	{
+		Response resp;
+		//String url = "http://whatsappapi.cltp.com:9001/r3/whatsapp/optin";
+		String url = Service_Url("WHATSAPP_OPTIN");
+		HashMap<String, Object> headers =new HashMap<>();
+		headers = headersForWhatsappUserMessage();
+
+		HashMap<String, Object> params= new HashMap<>();
+		params= paramsForOptinflow();
+
+
+		PlatformCommonUtil util = new PlatformCommonUtil();
+		resp = util.whatsAppRestApiMessage(params, headers, url);
+
+		if(resp.statusCode()==200){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+			System.out.println("Status code == "+ url + "is :: " + resp.statusCode());
+			
+			ResponseBody body= resp.getBody();
+			String bodyAsString = body.asString();
+			Assert.assertEquals(bodyAsString.contains("requestId"), true ,"Response boday contains requestId");
+
+		}else{
+			assertTrue(false);
+			System.err.println("Script failed");
+		}
+	}
+		public HashMap< String, Object> paramsForOptinflow(){
+			HashMap<String,Object> params= new HashMap<>();
+			params.put("ctUserId", "string");
+			params.put("mobileNumber", "7799964888");
+			params.put("whatsappUsername","917799964888");
+			params.put("isValidWhatsappNumber", true);
+			params.put("requestType","optin");
+			params.put("sourcePage", "bookingpage");
+			params.put("sourceType", "bookflow");			
+			params.put("Domain", "cleartrip.com");
+			params.put("countryCode","91");
+			return params;
+
+
+
+		}
+
+	}
+

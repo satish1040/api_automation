@@ -1,0 +1,42 @@
+package com.cleartrip.local.localapi.search;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.testng.annotations.Test;
+
+import com.cleartrip.local.common.LocalCommonUtil;
+
+public class Activity extends LocalCommonUtil {
+
+	ArrayList<String> list = new ArrayList<>();
+	String baseUrl, local, ttdSearch;
+
+	@Test
+	public void vTtdActivity() throws IOException {
+
+		baseUrl = getLocalDataProperties().getProperty("protocol") + "www"
+				+ getLocalDataProperties().getProperty("baseurl") + getLocalDataProperties().getProperty("domain");
+		local = baseUrl + "/local/" + getLocalDataProperties().getProperty("city");
+		ttdSearch = local + getLocalUrlProperties().getProperty("ttdSearch");
+
+		list = LocalCommonUtil.FetchHtmlUrl(ttdSearch, "local", getLocalDataProperties().getProperty("city"));
+		localApiGetCall(ttdSearch);
+
+	}
+//listing page url check
+	@Test
+	public void vTtdActivity1st() throws IOException {
+
+		localApiGetCall(local + list.get(5));
+
+	}
+
+	//detail page url check
+	@Test
+	public void vTtdActivity2nd() throws IOException {
+		list = LocalCommonUtil.FetchHtmlUrl(local+list.get(5), "local", getLocalDataProperties().getProperty("city"));
+		localApiGetCall(local + list.get(6));
+
+	}
+}

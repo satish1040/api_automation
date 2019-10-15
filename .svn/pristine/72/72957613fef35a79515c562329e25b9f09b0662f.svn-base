@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Air_Search_Results" parallel="classes" thread-count="2" >
+
+	<listeners>
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+		<!-- <listener class-name="com.cleartrip.common.RemoveDuplicateResults"/>
+		<listener class-name="com.cleartrip.common.RetryListener"/> -->
+	</listeners>
+
+	
+	<suite-files>
+			<suite-file path="b2cair.xml"></suite-file>
+	</suite-files>
+	
+	<suite-files>
+			<suite-file path="agencyair.xml"></suite-file>
+	</suite-files>
+	
+	<suite-files>
+			<suite-file path="corpair.xml"></suite-file>
+	</suite-files>
+	
+	<suite-files>
+			<suite-file path="corpAEair.xml"></suite-file>
+	</suite-files>
+	
+	<suite-files>
+			<suite-file path="corpSAair.xml"></suite-file>
+	</suite-files>
+	
+	
+</suite> 
+	

@@ -1,0 +1,51 @@
+package com.cleartrip.common;
+
+import java.util.HashMap;
+
+import org.testng.Assert;
+
+import static com.jayway.restassured.RestAssured.given;
+import com.jayway.restassured.response.Response;
+
+public class RestUtil {
+	// TODO Add headers afterwards
+	public static Response httpMethod(HashMap<String, Object> params, HashMap<String, Object> urlAttributes,
+			HashMap<String, Object> headers/* , HashMap<String, Object> postBody */) {
+		Response resp = null;
+		String env;
+
+		boolean isApiCall = urlAttributes.get("api").equals(true);
+		env = Main.getEnv("env", isApiCall);
+		if (urlAttributes.get("httpMethod").equals("get")) {
+			resp = given().log().path().request().params(params).headers(headers).get(urlAttributes.get("protocol") + env
+					+ urlAttributes.get("baseUrl") + urlAttributes.get("domain") + urlAttributes.get("url"));
+
+		} else if (urlAttributes.get("httpMethod").equals("post")) {
+			resp = given().queryParams(params).headers(headers).body(params).post(urlAttributes.get("protocol") + env
+					+ urlAttributes.get("baseUrl") + urlAttributes.get("domain") + urlAttributes.get("url"));
+
+		} else if (urlAttributes.get("httpMethod").equals("put")) {
+			resp = given().headers(headers).body(params).put(urlAttributes.get("protocol") + env
+					+ urlAttributes.get("baseUrl") + urlAttributes.get("domain") + urlAttributes.get("url"));
+
+			Assert.assertEquals(resp.statusCode(), 200);
+
+		} else if (urlAttributes.get("httpMethod").equals("delete")) {
+			resp = given().params(params).headers(headers).delete(urlAttributes.get("protocol") + env
+					+ urlAttributes.get("baseUrl") + urlAttributes.get("domain") + urlAttributes.get("url"));
+
+			Assert.assertEquals(resp.statusCode(), 200);
+		}
+
+		return resp;
+
+	}
+
+	public static Response httpMethodExternal(HashMap<String, Object> params, HashMap<String, Object> headers,
+			String url) {
+		Response resp;
+		return resp = given().params(params).headers(headers).get(url);
+
+	}
+
+}

@@ -1,0 +1,5 @@
+package com.cleartrip.local.localapi.cancelbooking;
+
+public class CancelActivityBooking {
+
+}

@@ -1,0 +1,5 @@
+package com.cleartrip.local.localapi.availabilitycheck;
+
+public class GetAvailability {
+
+}

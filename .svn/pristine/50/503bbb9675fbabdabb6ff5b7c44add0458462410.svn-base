@@ -1,0 +1,51 @@
+###Common
+autocomplete=/local/api/v1/ctLocalAutoComp
+homepage=/activities/api/v2/homePage
+offers=/offers/india/activities
+particularoffer=/offers/india/dubai-delight
+walletbalance=/book/fetchWalletBalance
+getavailability=/camp_rates/jsonservice/availability/v2
+featured=/featured-activities-in-bangalore
+
+###TTD
+ttdsearchcollections=/local/api/v2/ttd/search
+ttdlisting=/local/api/v1/ttd/city/
+ttddetails=/local/api/v1/ttd/city/
+ttditinerarycreate=/ttd/itinerary/mobile/create
+ttdpayment=/ttd/itinerary/
+###Put URl with couple of activites like "33719/activities/788566,788640"
+editorialswithtwoactivities=/local/api/v1/ttd/city/
+ttdSearch=/things-to-do-in-bangalore
+
+
+
+###FNB
+fnbsearchcollections=/local/api/v2/fnb/search
+fnblisting=/local/api/v2/fnb/city/
+# we need to put activity id and variant id for details call
+fnbdetails=/local/api/v2/fnb/city/
+fnbitinerarycreate=/fnb/itinerary/mobile/create
+#add itinerary id and mobile-payment in URL
+fnbpayment=/fnb/itinerary/
+fnbSearch=/food-and-drinks-in-bangalore
+
+###Guided
+gettags=/local/api/v1/getTags
+guidedcontent=/local/api/v1/getGuidedContent
+
+###Events
+eventssearch=/local/api/v2/events/search
+eventsdetails=/local/api/v1/events/details
+eventsitinerarycreate=/events/itinerary/mobile/create
+#add itinerary id and mobile-payment in URL
+eventspayment=/events/itinerary/
+#add itinerary id and release-cart in URL
+eventsreleasecart=/events/itinerary/
+eventSearch=/events-in-bangalore
+
+###google latlong api
+googlelatlong=http://maps.googleapis.com/maps/api/geocode/json
+
+
+#Features
+features=/featured-activities-in-bangalore

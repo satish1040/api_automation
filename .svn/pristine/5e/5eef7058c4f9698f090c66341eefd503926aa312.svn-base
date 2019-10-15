@@ -1,0 +1,32 @@
+package com.cleartrip.local.mobileweb.search;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.testng.annotations.Test;
+
+import com.cleartrip.local.common.LocalCommonUtil;
+
+public class Events extends LocalCommonUtil {
+
+	ArrayList<String> list = new ArrayList<>();
+	String baseUrl, local, eventSearch;
+
+	@Test
+	public void vEvents() throws IOException {
+
+		baseUrl = getLocalDataProperties().getProperty("protocol") + "www"
+				+ getLocalDataProperties().getProperty("baseurl") + getLocalDataProperties().getProperty("domain");
+		local = baseUrl + "/local/" + getLocalDataProperties().getProperty("city");
+		eventSearch = local + getLocalUrlProperties().getProperty("eventSearch");
+		localApiGetCall(eventSearch);
+
+	}
+
+	@Test(dependsOnMethods = { "vEvents" })
+	public void vEventsDetails() throws IOException {
+		list = LocalCommonUtil.FetchHtmlUrl(eventSearch, "local", getLocalDataProperties().getProperty("city"));
+		localApiGetCall(local + list.get(4));
+
+	}
+}

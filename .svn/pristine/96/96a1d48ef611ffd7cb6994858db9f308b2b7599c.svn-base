@@ -1,0 +1,99 @@
+package com.cleartrip.hotels.hotelsapi;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.jayway.restassured.response.Response;
+import static com.jayway.restassured.RestAssured.given;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.HashMap;
+
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.common.dataproviders.HotelDataProvider;
+import com.cleartrip.hotels.common.HotelsCommonUtil;
+import com.jayway.restassured.http.ContentType;
+
+public class HotelBooking extends HotelSearch {
+
+	@Test
+	public void initiateBooking() throws IOException, ParseException {
+
+		Response resp;
+		Response respItinerary;
+
+		HotelsCommonUtil hCommonUtil = new HotelsCommonUtil();
+		
+		HashMap<String, Object> params = new HashMap<>();
+
+		params.put("chk_in",hCommonUtil.testDate(50, "dd/mm/yyyy") );
+		params.put("chk_out", hCommonUtil.testDate(51, "dd/mm/yyyy"));
+		
+		HotelDataProvider hdp = new HotelDataProvider();
+		HashMap<String, Object> paxRoom = new HashMap<>();
+		paxRoom = hdp.roomPaxCombination("SingleRoomMultiPax");
+		
+		params.putAll(paxRoom);
+		params.put("city", getCity());
+		params.put("state", getState());
+		params.put("country", getCountry());
+		params.put("cnm", getCity());
+		params.put("sid", getSid());
+		
+		
+		params.put("rateChannelType", "B2C");
+		params.put("isCheapestRate", "true");
+		params.put("fc", 1);
+		params.put("featuredRank", 5);
+		params.put("num_children", 0);
+		params.put("subRoomInfo", "City View");
+		params.put("sid", "v2-e21ca85f-c3e5-48e1-a417-fc20be3fd08a");
+		params.put("num_adults", 2);
+		params.put("star_rating", 4);
+		params.put("hotelid", "725958");
+		params.put("bookingCode",
+				"7:32550:8268689#209401099#200755882#470467#AC110002-42F9-2691-6392-616964594CFB|si-");
+		params.put("roomtypecode", "200755882:209401099");
+		params.put("sct", "IN");
+		params.put("scr", "INR");
+		// params.put("pahCCRequired", "true");
+		params.put("roomRateBlockVersion", "v1");
+		params.put("uiRank", 4);
+		params.put("fr", 5);
+		params.put("uiRankType", "featured");
+		params.put("stp", "none");
+
+		HashMap<String, Object> headers = new HashMap<>();
+		headers.put("content-type", "application/x-www-form-urlencoded");
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties = hCommonUtil.commonHotels("hotelitinerary", "post", false);
+
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+
+		if (resp.statusCode() == 302) {
+			Assert.assertTrue(true);
+			Reporter.log("Hotels initiate booking is redirecting to 302 : Now we will call get info call");
+
+			String locationHeader = resp.getHeader("Location");
+			String[] findItineraryId = locationHeader.split("/");
+			String itineraryId = findItineraryId[5];
+			System.out.println(locationHeader);
+
+			respItinerary = given().get(locationHeader + "info");
+			if (respItinerary.statusCode() == 200) {
+				Assert.assertTrue(true);
+				Reporter.log("Hotels create itinerary call is successfull ");
+			} else {
+				Assert.assertTrue(false);
+				Reporter.log("Hotels create itinerary call failed  ");
+			}
+		} else {
+			Assert.assertTrue(false);
+			Reporter.log("Hotels initiate booking is not redirecting to 302");
+		}
+
+	}
+}

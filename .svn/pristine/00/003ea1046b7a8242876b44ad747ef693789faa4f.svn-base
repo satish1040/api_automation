@@ -1,0 +1,103 @@
+package com.cleartrip.air.Webcheckin_API;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import javax.annotation.meta.When;
+
+import org.codehaus.groovy.transform.EqualsAndHashCodeASTTransformation;
+import org.json.JSONObject;
+import org.json.XML;
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.air.common.AirCommonUtil;
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.common.dataproviders.AgencyAirDataProvider;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.parsing.Parser;
+import com.jayway.restassured.path.json.JsonPath;
+import com.jayway.restassured.path.xml.XmlPath;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.specification.RequestSpecification;
+import static com.jayway.restassured.RestAssured.given;
+import static org.testng.Assert.assertEquals;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.air.common.AirCommonUtil;
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.common.dataproviders.AirInDataProvider;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.parsing.Parser;
+import com.jayway.restassured.response.Response;
+
+public class Webcheckin_API_Details extends AirCommonUtil{ 
+	
+	Response resp;
+	Response subscribe; 
+	String TripID = "Q1812051064";
+	RequestSpecification request = RestAssured.given(); 
+	RequestSpecification request1 = RestAssured.given();
+	
+	@Test
+	public void GetTripDetails() { //throws IOException{
+		
+		
+	try {
+		
+		
+		//request.header("Content-Type", "application/json");
+		resp = request.log().path().get("http://172.17.13.35:9080/trips/".concat(TripID));
+						
+		//System.out.println("response :" + resp.getBody().asString());
+		
+	
+		
+		String webcheckineligible = resp.then().extract().path("trip.webcheckin-eligible");
+		Reporter.log("webcheckineligible: "+" - " +webcheckineligible,true);
+		
+		String itineraryid = resp.then().extract().path("trip.itinerary-id");
+		Reporter.log("webcheckineligible: "+" - " +itineraryid,true);
+		
+		
+		
+		RequestSpecification request1 = RestAssured.given();
+		request1.body(resp);
+		request1.header("Content-Type", "application/xml");
+		subscribe = request1.log().path().post("http://airwebcheckin.cltp.com:9001/webcheckin/subscribe?tripId=".concat(TripID)+"&isMail=true");
+  
+		System.out.println("subscribe :" + subscribe.getBody().asString());
+	
+		
+    }catch (Exception e)
+	
+	
+	{
+    	Reporter.log(e.getMessage() + Thread.currentThread().getStackTrace()[1].getMethodName() + " is FAILED",true);
+        Assert.fail("*****  REPONSE RETURNED HAVE NO RESULTS *****");
+    }
+}
+	
+	
+	
+//	@Test(dependsOnMethods ="GetTripDetails")
+//	public void Subscribe() {
+//		
+//		
+//		
+//		subscribe = request.accept(ContentType.XML).post("http://airwebcheckin.cltp.com:9001/webcheckin/subscribe?tripId=".concat(TripID)+"&isMail=true");
+//		System.out.println("subscribe :" + subscribe.getBody().asString());		
+//		
+//	}
+//	
+
+}

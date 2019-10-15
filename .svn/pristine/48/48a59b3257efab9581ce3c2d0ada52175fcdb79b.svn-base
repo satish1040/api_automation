@@ -1,0 +1,61 @@
+package com.cleartrip.local.localextapi.booking;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.common.headers.LocalExtApiHeaders;
+import com.jayway.restassured.response.Response;
+
+public class BookEatOut extends CreateItineraryEatOut{
+	    
+	    
+	    private String tripId;
+	    
+	    
+	    @Test(dependsOnMethods={"eatOutItineraryRequest"}, groups = {"Regression","Smoke"})
+	    public void eatOutBookRequest() throws IOException{
+		
+		Response resp;
+		String bookUrl;
+		
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties= commonLocalExtApi("extApiFnbBook", "post", true);
+		
+		bookUrl = commonUrlProperties.get("url")+"itinerary/book/"+getItineraryId();
+		commonUrlProperties.put("url", bookUrl);
+		
+	        HashMap<String, Object> headers = new HashMap<String,Object>();
+		LocalExtApiHeaders lh = new LocalExtApiHeaders();
+		headers = lh.localExtApiHeaders();
+		
+		HashMap<String, Object> bookParams = new HashMap<String,Object>();
+		bookParams = travellerDetails();
+		bookParams.put("ItineraryId", getItineraryId());
+		
+		resp = RestUtil.httpMethod(bookParams,commonUrlProperties,headers);
+	        Assert.assertEquals(resp.statusCode(),200);
+	        
+	        Reporter.log("Book request for itineraryId : "+getItineraryId()+" "+"passed");
+	        Reporter.log("Book request for eat out is passed");
+	        setTripId(resp.then().extract().path("success.trip_id"));
+		
+	    }
+	    
+	    
+
+	    public String getTripId() {
+	        return tripId;
+	    }
+
+	    public void setTripId(String tripId) {
+	        this.tripId = tripId;
+	    }
+
+	}
+
+

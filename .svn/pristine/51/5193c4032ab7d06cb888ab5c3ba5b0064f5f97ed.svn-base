@@ -1,0 +1,8 @@
+baseurl=.cleartrip
+domain=.com
+protocol=https://
+env=www
+onwardsearch_date=3
+returnsearch_date=21
+username = automation@cleartrip.com
+password = dontask

@@ -1,0 +1,53 @@
+package com.cleartrip.local.mobileweb.booking;
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+//import com.cleartrip.common.headers.LocalExtApiHeaders;
+import com.cleartrip.common.headers.MobileWebHeaders;
+import com.cleartrip.local.mobileweb.availabilitycheck.GetAvailabilityActivity;
+//import com.cleartrip.local.localextapi.availabilitycheck.GetAvailabilityActivity;
+import com.jayway.restassured.response.Response;
+
+
+public class CreateItineraryActivity extends GetAvailabilityActivity {
+
+ 
+        private String itineraryId;
+        
+        @Test(groups = { "Regression","Smoke"},dependsOnMethods ={ "com.cleartrip.local.mobileweb.availabilitycheck.GetAvailabilityActivity.getAvailability"})
+        public void itineraryRequest() throws IOException{
+    	
+    	Response resp;
+    	HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+    	commonUrlProperties= commonLocal("ttditinerarycreate", "post", true);
+    	
+    	HashMap<String, Object> headers = new HashMap<String,Object>();
+    	
+    	MobileWebHeaders lh = new MobileWebHeaders();
+    	headers = lh.localHeaders("mobileWeb");
+    	
+    	HashMap<String, Object> params = new HashMap<String,Object>();
+    	params = getItiParams();
+    	
+    	resp = RestUtil.httpMethod(params,commonUrlProperties,headers);
+            Assert.assertEquals(resp.statusCode(),200);
+            setItineraryId(resp.then().extract().path("ItineraryId"));
+            
+            Reporter.log("Local TTD Itinerary request passed");
+            Reporter.log("ItineraryId : "+getItineraryId());
+    	
+        }
+        
+        public String getItineraryId() {
+            return itineraryId;
+        }
+
+        public void setItineraryId(String itineraryId) {
+            this.itineraryId = itineraryId;
+        }
+}

@@ -1,0 +1,455 @@
+package com.cleartrip.hotels.hotelsapi;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.common.dataproviders.HotelDataProvider;
+import com.cleartrip.hotels.common.HotelsCommonUtil;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.parsing.Parser;
+import com.jayway.restassured.response.Response;
+import static com.jayway.restassured.RestAssured.given;
+
+public class HotelSearch {
+
+	private String sid;
+	private String hotelId;
+	private String state;
+	private String country;
+	private String dest_code;
+	private String city;
+	private String bookingCode;
+	private String roomTypeCode;
+	
+	
+	@Test
+	public void hotelHomePage() throws IOException, ParseException {
+
+		Response resp;
+
+		HashMap<String, Object> params = new HashMap<>();
+
+		HashMap<String, Object> headers = new HashMap<>();
+
+		HotelsCommonUtil hCommonUtil = new HotelsCommonUtil();
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties = hCommonUtil.commonHotels("hotelshome", "get", false);
+
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+
+		if (resp.statusCode() == 200) {
+			Assert.assertTrue(true);
+			Reporter.log("Hotels home page is loaded");
+		} else {
+			Assert.assertTrue(false);
+			Reporter.log("Hotels home page is not loading...");
+		}
+
+	}
+
+	@Test(dataProvider = "autocomplete", dataProviderClass = com.cleartrip.common.dataproviders.HotelDataProvider.class)
+	public void autoComplete(HashMap<String, Object> params) throws IOException {
+		Response resp;
+		RestAssured.defaultParser = Parser.JSON;
+		System.out.println("In autocomplete method");
+		HashMap<String, Object> headers = new HashMap<>();
+
+		HotelsCommonUtil hCommonUtil = new HotelsCommonUtil();
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties = hCommonUtil.commonHotels("hotelautocomplete", "get", false);
+
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+		System.out.println(resp.asString());
+		if (resp.statusCode() == 200) {
+			Assert.assertTrue(true);
+			Reporter.log("Hotels autocomplete is working");
+			setState(resp.then().extract().path("r[0].s"));
+			setCountry(resp.then().extract().path("r[0].c"));
+			setDest_code(resp.then().extract().path("r[0].k"));
+			setCity(resp.then().extract().path("r[0].cy"));
+		} else {
+			Assert.assertTrue(false);
+			Reporter.log("Hotels autocomplete is not working...");
+		}
+	}
+
+	@Test(dependsOnMethods = "autoComplete", dataProvider = "hotelcontent", dataProviderClass = com.cleartrip.common.dataproviders.HotelDataProvider.class)
+	public void hotelContent(HashMap<String, Object> params) throws IOException {
+		Response resp;
+
+		System.out.println("In hotelcontent method");
+		params.put("country", getCountry());
+		params.put("city", getCity());
+		params.put("state", getState());
+
+		HashMap<String, Object> headers = new HashMap<>();
+
+		HotelsCommonUtil hCommonUtil = new HotelsCommonUtil();
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties = hCommonUtil.commonHotels("hotelcontent", "get", false);
+
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+		System.out.println(resp.asString());
+		if (resp.statusCode() == 200) {
+			Assert.assertTrue(true);
+			Reporter.log("Hotels content is working");
+		} else {
+			Assert.assertTrue(false);
+			Reporter.log("Hotels content is not working...");
+		}
+
+	}
+
+	@Test(dependsOnMethods = "hotelContent", dataProvider = "scdata", dataProviderClass = com.cleartrip.common.dataproviders.HotelDataProvider.class)
+	public void scData(HashMap<String, Object> params) throws IOException, ParseException {
+		Response resp;
+		
+		System.out.println("In scdata method");
+		RestAssured.defaultParser = Parser.JSON;
+		HotelsCommonUtil hCommonUtil = new HotelsCommonUtil();
+		HotelDataProvider hdp = new HotelDataProvider();
+
+		HashMap<String, Object> paxRoom = new HashMap<>();
+		paxRoom = hdp.roomPaxCombination("SingleRoomMultiPax");
+
+		params.put("state", getState());
+		params.put("city", getCity());
+		params.put("country", getCountry());
+		params.put("chk_in", hCommonUtil.testDate(7, "dd/MM/yyyy"));
+		params.put("chk_out", hCommonUtil.testDate(8, "dd/MM/yyyy"));
+		params.putAll(paxRoom);
+
+		HashMap<String, Object> headers = new HashMap<>();
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties = hCommonUtil.commonHotels("hotelscdata", "get", false);
+
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+		System.out.println(resp.asString());
+		
+		HashMap<String, Integer> map = new HashMap<>();
+		map = resp.then().extract().path("rn");
+		for(Map.Entry<String, Integer> entry : map.entrySet()){
+			if(entry.getValue()==2){
+				setHotelId(entry.getKey());
+				break;
+			}
+		}
+		
+		System.out.println(getHotelId());
+		if (resp.statusCode() == 200) {
+			Assert.assertTrue(true);
+			Reporter.log("Hotels SC data is working");
+		} else {
+			Assert.assertTrue(false);
+			Reporter.log("Hotels SC data is not working...");
+		}
+
+		setSid(resp.then().extract().path("sid").toString());
+		
+
+	}
+
+	@Test(dependsOnMethods = "scData")
+	public void sidResults() throws IOException {
+		Response resp = null;
+		int index = 1;
+		int count = 1;
+		boolean needToCallOneMoreTime = true;
+
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("sid", getSid());
+		params.put("index", index);
+		params.put("count", count);
+
+		HashMap<String, Object> headers = new HashMap<>();
+
+		HotelsCommonUtil hCommonUtil = new HotelsCommonUtil();
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties = hCommonUtil.commonHotels("hotelsidresults", "get", false);
+
+		while (needToCallOneMoreTime) {
+			resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+			if (resp.then().extract().path("progress").equals(true)) {
+				index = index + 1;
+				params.put("index", index);
+				if (resp.then().extract().path("retry").equals(true)) {
+					count = count + 1;
+					params.put("count", count);
+				} else {
+					count = count;
+				}
+			} else {
+				if (resp.then().extract().path("retry").equals(true)) {
+					count = count + 1;
+					params.put("count", count);
+				} else {
+					needToCallOneMoreTime = false;
+				}
+			}
+		}
+		System.out.println(resp.asString());
+		if (resp.statusCode() == 200) {
+			Assert.assertTrue(true);
+			Reporter.log("sid results passed");
+		} else {
+			Assert.assertTrue(false);
+			Reporter.log("sid results failed");
+		}
+
+	}
+
+	@Test(dependsOnMethods = "sidResults")
+	public void hotelInfo() throws IOException, ParseException {
+		Response resp;
+		String hotelInfoUrl;
+
+		HotelsCommonUtil hCommonUtil = new HotelsCommonUtil();
+
+		HashMap<String, Object> params = new HashMap<>();
+
+		HashMap<String, Object> headers = new HashMap<>();
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties = hCommonUtil.commonHotels("hotelinfo", "get", false);
+		hotelInfoUrl = commonUrlProperties.get("url") + getHotelId();
+		commonUrlProperties.put("url", hotelInfoUrl);
+
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+
+		if (resp.statusCode() == 200) {
+			Assert.assertTrue(true);
+			Reporter.log("Hotels details api is working");
+		} else {
+			Assert.assertTrue(false);
+			Reporter.log("Hotels details api is not working...");
+		}
+
+	}
+
+	@Test(dependsOnMethods = "hotelInfo", dataProvider = "scdata", dataProviderClass = com.cleartrip.common.dataproviders.HotelDataProvider.class)
+	public void rateCalendar(HashMap<String, Object> params) throws IOException, ParseException {
+		Response resp;
+		String checkInDate;
+		String checkOutDate;
+		RestAssured.defaultParser = Parser.JSON;
+		
+		HotelsCommonUtil hCommonUtil = new HotelsCommonUtil();
+		checkInDate = hCommonUtil.testDate(7, "dd/MM/yyyy");
+		checkOutDate = hCommonUtil.testDate(8, "dd/MM/yyyy");
+
+		HotelDataProvider hdp = new HotelDataProvider();
+		HashMap<String, Object> paxRoom = new HashMap<>();
+		paxRoom = hdp.roomPaxCombination("SingleRoomMultiPax");
+
+		params.put("state", getState());
+		params.put("city", getCity());
+		params.put("country", getCountry());
+		params.putAll(paxRoom);
+
+		params.put("ct_hotelid", getHotelId());
+		params.put("chk_in", checkInDate);
+		params.put("chk_out", checkOutDate);
+
+		HashMap<String, Object> headers = new HashMap<>();
+		headers.put("Accept", "application/json");
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties = hCommonUtil.commonHotels("hotelratecalendar", "get", false);
+
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+		
+		
+		System.out.println(resp.asString());
+
+		if (resp.statusCode() == 200) {
+			Assert.assertTrue(true);
+			Reporter.log("Hotel rate calendar is working");
+			System.out.println(resp.asString());
+			setBookingCode(resp.then().extract().path("rc.d0.rms[0].rtc")+"|"+"si-");
+			setRoomTypeCode(resp.then().extract().path("rc.d0.rms[0].rmtc"));
+		} else {
+			Assert.assertTrue(false);
+			Reporter.log("Hotel rate calendar is not working...");
+		}
+		
+	}
+	
+	@Test(dependsOnMethods={"rateCalendar"})
+	public void initiateBooking() throws IOException, ParseException {
+
+		Response resp;
+		Response respItinerary;
+
+		HotelsCommonUtil hCommonUtil = new HotelsCommonUtil();
+		
+		HashMap<String, Object> params = new HashMap<>();
+
+		/*params.put("chk_in",hCommonUtil.testDate(7, "dd/MM/yyyy") );
+		params.put("chk_out", hCommonUtil.testDate(8, "dd/MM/yyyy"));
+		
+		HotelDataProvider hdp = new HotelDataProvider();
+		HashMap<String, Object> paxRoom = new HashMap<>();
+		paxRoom = hdp.roomPaxCombination("SingleRoomMultiPax");
+		
+		params.putAll(paxRoom);
+		params.put("city", getCity());
+		params.put("state", getState());
+		params.put("country", getCountry());
+		params.put("cnm", getCity());
+		params.put("sid", getSid());
+		params.put("bookingCode",getBookingCode().trim());
+		params.put("roomtypecode", getRoomTypeCode().trim());
+		params.put("hotelid", getHotelId());
+		params.put("sct", "IN");
+		params.put("scr", "INR");
+		params.put("num_children", params.get("childs"));
+		params.put("num_adults", params.get("adults"));
+		params.put("rateChannelType", "B2C");
+		params.put("pahCCRequired", "true");
+		params.put("roomRateBlockVersion", "v1");
+		params.put("subRoomInfo", "City View");
+		params.put("isCheapestRate", "true");
+		params.put("star_rating", 5);
+		params.put("stp", "N/A");*/
+
+		
+		
+		HotelDataProvider hdp = new HotelDataProvider();
+		HashMap<String, Object> paxRoom = new HashMap<>();
+		paxRoom = hdp.roomPaxCombination("SingleRoomMultiPax");
+		
+		params.put("chk_in","11/06/2018" );
+		params.put("chk_out", "12/06/2018");
+		params.putAll(paxRoom);
+		params.put("city", getCity());
+		params.put("state", getState());
+		params.put("country", getCountry());
+		params.put("cnm", getCity());
+		params.put("sid", getSid());
+		params.put("bookingCode","5:32550:208972|si-");
+		params.put("roomtypecode","208972:2727833");
+		params.put("hotelid", getHotelId());
+		params.put("sct", "IN");
+		params.put("scr", "INR");
+		params.put("num_children", params.get("childs"));
+		params.put("num_adults", params.get("adults"));
+		params.put("rateChannelType", "B2C");
+		params.put("pahCCRequired", "true");
+		params.put("roomRateBlockVersion", "v1");
+		params.put("subRoomInfo", "690 sq.ft,City View");
+		params.put("isCheapestRate", "true");
+		params.put("star_rating", 5);
+		params.put("stp", "N/A");
+		
+		HashMap<String, Object> headers = new HashMap<>();
+		headers.put("content-type", "application/x-www-form-urlencoded");
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties = hCommonUtil.commonHotels("hotelitinerary", "post", false);
+
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+
+		if (resp.statusCode() == 302) {
+			Assert.assertTrue(true);
+			Reporter.log("Hotels initiate booking is redirecting to 302 : Now we will call get info call");
+
+			String locationHeader = resp.getHeader("Location");
+			String[] findItineraryId = locationHeader.split("/");
+			String itineraryId = findItineraryId[5];
+			System.out.println(locationHeader);
+
+			respItinerary = given().get(locationHeader + "info");
+			if (respItinerary.statusCode() == 200) {
+				Assert.assertTrue(true);
+				Reporter.log("Hotels create itinerary call is successfull ");
+			} else {
+				Assert.assertTrue(false);
+				Reporter.log("Hotels create itinerary call failed  ");
+			}
+		} else {
+			Assert.assertTrue(false);
+			Reporter.log("Hotels initiate booking is not redirecting to 302");
+		}
+
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getDest_code() {
+		return dest_code;
+	}
+
+	public void setDest_code(String dest_code) {
+		this.dest_code = dest_code;
+	}
+
+	public String getSid() {
+		return sid;
+	}
+
+	public void setSid(String sid) {
+		this.sid = sid;
+	}
+
+	public String getHotelId() {
+		return hotelId;
+	}
+
+	public void setHotelId(String hotelId) {
+		this.hotelId = hotelId;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getBookingCode() {
+		return bookingCode;
+	}
+
+	public void setBookingCode(String bookingCode) {
+		this.bookingCode = bookingCode;
+	}
+
+	public String getRoomTypeCode() {
+		return roomTypeCode;
+	}
+
+	public void setRoomTypeCode(String roomTypeCode) {
+		this.roomTypeCode = roomTypeCode;
+	}
+}

@@ -1,0 +1,12 @@
+baseurl=.cleartrip
+domain=.com
+city=bangalore
+statecode=KA
+currency=
+protocol=https://
+
+#Api keys
+prodkey=b56151ea36bc0e75d010c245014155c5
+#d9c3e7336309dc9db02debe182731662
+qakey=g9s45bsammqggtczpz3kj3qk
+stagingkey=c2d7ee2dc1d5f9641714dabb27e3e779

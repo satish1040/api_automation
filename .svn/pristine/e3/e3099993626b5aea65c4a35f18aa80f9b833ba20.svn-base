@@ -1,0 +1,19 @@
+baseurl=.cleartrip.com
+autocomplete=/local/1.0/cities
+
+#TTD search
+extApiTtdSearch=/extapi/local/1.0/ttd/search
+extApiTtdListing=/extapi/local/1.0/ttd/listing
+extApiTtdDetails=/extapi/local/1.0/ttd/details
+extApiGetAvailability=/extapi/local/1.0/availability
+extApiTtdItinerary=/extapi/local/v1/ttd/itinerary/create
+extApiTtdBook=/extapi/local/v1/ttd/
+tripDetail=/extapi/local/trips/view/
+tripCancel=/extapi/local/trips/cancel/
+
+#FNB search
+extApiFnbSearch=/extapi/local/1.0/fnb/search
+extApiFnbListing=/extapi/local/1.0/fnb/listing
+extApiFnbDetails=/extapi/local/1.0/fnb/details
+extApiFnbItinerary=/extapi/local/v1/fnb/itinerary/create
+extApiFnbBook=/extapi/local/v1/fnb/

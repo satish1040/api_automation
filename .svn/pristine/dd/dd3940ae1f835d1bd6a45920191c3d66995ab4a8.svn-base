@@ -1,0 +1,326 @@
+package com.cleartrip.local.camp.userAccess;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.annotations.Test;
+
+import com.cleartrip.local.common.CampActivity;
+
+public class SAUser extends CampActivity{
+
+	public HashMap<String, String> values = new HashMap<>();
+	
+
+	@Test
+	public void vFinance() {
+		try {
+			values.put("Username", getCampUrl("UserNameSA"));
+			values.put("Password", getCampUrl("PasswordClear"));
+			values.put("url", getCampUrl("accfinanceounts"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	@Test
+	public void vAllActivity() {
+		try {
+			values.put("url", getCampUrl("allActivity"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void vTtd() {
+		try {
+			values.put("url", getCampUrl("ttd"));
+			vCampUserAcess(values,200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vFnb() {
+		try {
+			values.put("url", getCampUrl("fnb"));
+			vCampUserAcess(values,200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vInventory() {
+		try {
+			values.put("url", getCampUrl("inventory"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vActivityAudit() {
+		try {
+			values.put("url", getCampUrl("activityAudit"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vRating() {
+		try {
+			values.put("url", getCampUrl("rating"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vImportExport() {
+		try {
+			values.put("url", getCampUrl("importExport"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+
+	@Test
+	public void vBooking() {
+		try {
+			values.put("url", getCampUrl("booking"));
+			vCampUserAcess(values,200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vRemittance() {
+		try {
+			values.put("url", getCampUrl("remittance"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vGstReport() {
+		try {
+			values.put("url", getCampUrl("gstReport"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vReportNew() {
+		try {
+			values.put("url", getCampUrl("report"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vReportOld() {
+		try {
+			values.put("url", getCampUrl("reportOld"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vMasterList() {
+		try {
+			values.put("url", getCampUrl("masterList"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vReorder() {
+		try {
+			values.put("url", getCampUrl("reorder"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vSortListing() {
+		try {
+			values.put("url", getCampUrl("sorting"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vManageCategory() {
+		try {
+			values.put("url", getCampUrl("categories"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vAccessContorl() {
+		try {
+			values.put("url", getCampUrl("accessControl"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vCustomMapping() {
+		try {
+			values.put("url", getCampUrl("customMapping"));
+			vCampUserAcess(values,200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	
+	
+	@Test
+	public void vNearByCities() {
+		try {
+			values.put("url", getCampUrl("nearByCity"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vMerchandising() {
+		try {
+			values.put("url", getCampUrl("merchandising"));
+			vCampUserAcess(values,200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	
+	
+	@Test
+	public void vEditorial() {
+		try {
+			values.put("url", getCampUrl("editorial"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vRecommendations() {
+		try {
+			values.put("url", getCampUrl("recommendations"));
+			vCampUserAcess(values,200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	
+	
+	@Test
+	public void vManageChain() {
+		try {
+			values.put("url", getCampUrl("manageChain"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vWlAccounts() {
+		try {
+			values.put("url", getCampUrl("wlAccounts"));
+			vCampUserAcess(values,404);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+}

@@ -1,0 +1,34 @@
+package com.cleartrip.air.in.booking;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.annotations.Test;
+
+import com.cleartrip.air.common.AirCommonUtil;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.parsing.Parser;
+import com.jayway.restassured.response.Response;
+
+public class CreateItinerary extends AirCommonUtil{
+	
+	private String itineraryId;
+	
+	 @Test
+	 //(groups = { "Regression","Smoke"},dependsOnMethods = {"com.cleartrip.air.in.search.DomOneWaySearchTest.Domestic_OneWay_Search"})
+     public void itineraryRequest() throws IOException{{
+		 
+		 Response resp;
+			RestAssured.defaultParser = Parser.JSON;
+			
+			HashMap<String, Object> commonUrlProperties = new HashMap<String,Object>();
+			commonUrlProperties = commonAir("createitinerary", "post", false);
+			
+			
+			
+			//params.put("farekey",onwarddate);
+			
+	 }
+ 	
+
+}}

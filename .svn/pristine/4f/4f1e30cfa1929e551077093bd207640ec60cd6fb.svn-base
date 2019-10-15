@@ -1,0 +1,33 @@
+package com.cleartrip.local.common;
+
+import static com.jayway.restassured.RestAssured.given;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+
+public class CampActivity extends LocalCommonUtil {
+
+	public void vCampUserAcess(HashMap<String, String> values, int statusCode) throws IOException {
+
+		values.put("Username", getCampUrl("UserNameCM"));
+		values.put("Password", getCampUrl("PasswordDemo"));
+		values.put("domain", getCampUrl("domain"));
+		values.put("protocol", getCampUrl("protocol"));
+		values.put("env", getCampUrl("env"));
+		values.put("baseurl", getCampUrl("baseurl"));
+
+		int code = given()
+				.auth().basic(values.get("Username"), values.get("Password")).get(values.get("protocol")
+						+ values.get("env") + values.get("baseurl") + values.get("domain") + values.get("url"))
+				.getStatusCode();
+
+		Assert.assertTrue(code == statusCode,
+				values.get("url") + "is unable to access from this user" + values.get("Username"));
+		Reporter.log(values.get("url") + "is able to access from this user" + values.get("Username"), true);
+
+	}
+
+}

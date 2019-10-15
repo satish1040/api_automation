@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="B2C_Air_Search_Results" allow-return-values="true" parallel="classes" thread-count = "2">
+
+	<listeners>
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+	</listeners>
+
+	
+	<test name="search">
+
+	<classes>
+		<class name="com.cleartrip.air.in.search.DomOneWayBusinessClassSearchTest" />
+		<class name="com.cleartrip.air.in.search.DomOneWaySameDaySearchTest" />
+		<class name="com.cleartrip.air.in.search.DomRoundTripSameDaySearchTest" />
+
+		<class name="com.cleartrip.air.in.search.DomOneWaySearchTest" />
+		<class name="com.cleartrip.air.in.search.DomRoundTripSearchTest" />
+		<class name="com.cleartrip.air.in.search.DomMultiCitySearchTest" />
+
+		<class name="com.cleartrip.air.in.search.IntlOneWaySearchTest" />
+		<class name="com.cleartrip.air.in.search.InltRoundTripSearchTest" />
+		<class name="com.cleartrip.air.in.search.IntlMultiCitySearchTest" />
+
+	</classes>
+</test>
+
+
+		
+	
+</suite> 
+	

@@ -1,0 +1,188 @@
+package com.cleartrip.common.dataproviders;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.annotations.DataProvider;
+
+import com.cleartrip.common.PropertyUtil;
+
+public class CorporateAirDataProvider extends PropertyUtil {
+	
+	@DataProvider(name="domowsearch")
+	public Object[][] owsearch() throws IOException{
+		HashMap<String, Object> params = new HashMap<String,Object>();
+		params.put("from", getAirData("fromcity"));
+		params.put("to", getAirData("tocity"));
+		params.put("carrier", getAirData("carrier"));
+		params.put("adults", getAirData("adultpax"));
+		params.put("childs", getAirData("childpax"));
+		params.put("infants", getAirData("infantpax"));
+		params.put("class", getAirData("defaultclass"));
+		params.put("type", getAirData("type"));
+		params.put("ver", getAirData("ver"));
+		params.put("airline", getAirData("airline"));
+		
+		params.put("source", getAirData("corpsource"));
+		params.put("search_ver", getAirData("corpsearch_ver"));
+		params.put("companyid", getAirData("corpcompanyid"));
+		params.put("enableCorpFare", getAirData("enableCorpFare"));
+		params.put("type", getAirData("corptype"));
+		
+		params.put("trip_type", getAirData("corpOWtrip_type"));
+		
+		
+		return new Object[][]{{params}};
+	}
+	
+	@DataProvider(name="domrtsssearch")
+	public Object[][] rtsearch() throws IOException{
+		HashMap<String, Object> params = new HashMap<String,Object>();
+		params.put("from", getAirData("fromcity"));
+		params.put("to", getAirData("tocity"));
+		params.put("carrier", getAirData("carrier"));
+		params.put("adults", getAirData("adultpax"));
+		params.put("childs", getAirData("childpax"));
+		params.put("infants", getAirData("infantpax"));
+		params.put("class", getAirData("defaultclass"));
+		params.put("type", getAirData("type"));
+		params.put("ver", getAirData("ver"));
+		params.put("airline", getAirData("airline"));
+		
+		params.put("source", getAirData("corpsource"));
+		params.put("search_ver", getAirData("corpsearch_ver"));
+		params.put("companyid", getAirData("corpcompanyid"));
+		params.put("enableCorpFare", getAirData("enableCorpFare"));
+		params.put("type", getAirData("corptype"));
+		
+		params.put("trip_type", getAirData("corpRTtrip_type"));
+		
+		
+		
+		return new Object[][]{{params}};
+	}
+	
+	
+	@DataProvider(name="dommcsssearch")
+	public Object[][] mcsearch() throws IOException{
+		HashMap<String, Object> params = new HashMap<String,Object>();
+		params.put("from1", getAirData("fromcity1"));
+		params.put("to1", getAirData("tocity1"));
+		params.put("from2", getAirData("fromcity2"));
+		params.put("to2", getAirData("tocity2"));
+		params.put("carrier", getAirData("carrier"));
+		params.put("adults", getAirData("adultpax"));
+		params.put("childs", getAirData("childpax"));
+		params.put("infants", getAirData("infantpax"));
+		params.put("class", getAirData("defaultclass"));
+		params.put("type", getAirData("type"));
+		params.put("multicity", getAirData("multicity"));
+		params.put("ver", getAirData("ver"));
+		params.put("airline", getAirData("airline"));
+		
+		params.put("source", getAirData("corpsource"));
+		//params.put("search_ver", getAirData("corpsearch_ver"));
+		params.put("companyid", getAirData("corpcompanyid"));
+		params.put("enableCorpFare", getAirData("enableCorpFare"));
+		params.put("type", getAirData("corptype"));
+		
+		params.put("trip_type", getAirData("corpMCtrip_type"));
+		params.put("multicity", getAirData("corpmulticity"));
+		params.put("num_legs", getAirData("corpnum_legs"));
+		
+		
+		
+		
+		return new Object[][]{{params}};
+	}
+	
+	
+	@DataProvider(name="intlowsearch")
+	public Object[][] intlsearch() throws IOException{
+		HashMap<String, Object> params = new HashMap<String,Object>();
+		params.put("from", getAirData("intlfromcity"));
+		params.put("to", getAirData("intltocity"));
+		params.put("carrier", getAirData("carrier"));
+		params.put("adults", getAirData("adultpax"));
+		params.put("childs", getAirData("childpax"));
+		params.put("infants", getAirData("infantpax"));
+		params.put("class", getAirData("defaultclass"));
+		params.put("type", getAirData("type"));
+		params.put("ver", getAirData("ver"));
+		params.put("intl", getAirData("intl"));
+		params.put("airline", getAirData("airline"));
+		
+		params.put("source", getAirData("corpsource"));
+		params.put("search_ver", getAirData("corpsearch_ver"));
+		params.put("companyid", getAirData("corpcompanyid"));
+		params.put("enableCorpFare", getAirData("enableCorpFare"));
+		params.put("type", getAirData("corptype"));
+		params.put("page", getAirData("page"));
+		params.put("rhc", getAirData("rhc"));
+		params.put("cc", getAirData("cc"));
+		
+		
+		params.put("trip_type", getAirData("corpOWtrip_type"));
+		
+		
+		
+		return new Object[][]{{params}};
+	}
+	
+	@DataProvider(name="intlrtsssearch")
+	public Object[][] intlrtsearch() throws IOException{
+		HashMap<String, Object> params = new HashMap<String,Object>();
+		params.put("from", getAirData("intlfromcity"));
+		params.put("to", getAirData("intltocity"));
+		params.put("carrier", getAirData("carrier"));
+		params.put("adults", getAirData("adultpax"));
+		params.put("childs", getAirData("childpax"));
+		params.put("infants", getAirData("infantpax"));
+		params.put("class", getAirData("defaultclass"));
+		params.put("type", getAirData("type"));
+		params.put("ver", getAirData("ver"));
+		params.put("intl", getAirData("intl"));
+		params.put("airline", getAirData("airline"));
+		
+		params.put("source", getAirData("corpsource"));
+		params.put("search_ver", getAirData("corpsearch_ver"));
+		params.put("companyid", getAirData("corpcompanyid"));
+		params.put("enableCorpFare", getAirData("enableCorpFare"));
+		params.put("type", getAirData("corptype"));
+		params.put("page", getAirData("page"));
+		params.put("rhc", getAirData("rhc"));
+		params.put("cc", getAirData("cc"));
+		
+		
+		params.put("trip_type", getAirData("corpRTtrip_type"));
+		
+		return new Object[][]{{params}};
+	}
+	
+	@DataProvider(name="intlmcsssearch")
+	public Object[][] mcintlsearch() throws IOException{
+		HashMap<String, Object> params = new HashMap<String,Object>();
+		params.put("from1", getAirData("intlfromcity1"));
+		params.put("to1", getAirData("intltocity1"));
+		params.put("from2", getAirData("intlfromcity2"));
+		params.put("to2", getAirData("intltocity2"));
+		params.put("carrier", getAirData("carrier"));
+		params.put("adults", getAirData("adultpax"));
+		params.put("childs", getAirData("childpax"));
+		params.put("infants", getAirData("infantpax"));
+		params.put("class", getAirData("defaultclass"));
+		params.put("type", getAirData("type"));
+		params.put("multicity", getAirData("multicity"));
+		params.put("ver", getAirData("ver"));
+		params.put("intl", getAirData("intl"));
+		
+		params.put("source", getAirData("agencysource"));
+		params.put("search_ver", getAirData("agencysearch_ver"));
+		params.put("companyid", getAirData("agencycompanyid"));
+		
+		
+		return new Object[][]{{params}};
+	}
+
+
+}

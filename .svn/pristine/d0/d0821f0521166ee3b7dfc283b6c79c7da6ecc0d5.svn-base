@@ -1,0 +1,61 @@
+package main.java.com.cleartrip.platform.tripservice;
+
+import static com.jayway.restassured.RestAssured.given;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.jayway.restassured.response.Response;
+
+public class TripserviceCommon 
+{
+	
+	public HashMap<String, Object> headersForTripservicepostcall(){
+		HashMap<String, Object> headers = new HashMap<>();
+		headers.put("Content-Type", "application/json");
+		return headers;
+
+	}
+	
+	public HashMap<String, Object> headersForTripserviceGetcall(){
+		HashMap<String, Object> headers = new HashMap<>();
+		headers.put("Accept", "application/json");
+		return headers;
+
+	}
+	
+	public HashMap<String, Object> headersForTripserviceputcall(){
+		HashMap<String, Object>headers = new HashMap<>();
+				headers.put("Content-Type", "application/json");
+				headers.put("X-CT-CLOSE-TRANSACTION","true");
+				return headers;
+		
+	}
+	
+	
+	
+	public Response TripservicePostcall(String params, HashMap<String, Object> headers, String url){
+		Response resp;
+		resp = given().
+				when().
+				log().all().
+				body(params).
+				headers(headers).
+				post(url);
+		return resp;
+	}
+
+	public Response TripservicePutcall(String params, HashMap<String, Object> headers, String url){
+		Response resp;
+		resp = given().
+				when().
+				log().all().
+				body(params).
+				headers(headers).
+				put(url);
+		return resp;
+	}
+
+
+
+}

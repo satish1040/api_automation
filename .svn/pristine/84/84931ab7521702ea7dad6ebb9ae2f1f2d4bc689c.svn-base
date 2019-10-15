@@ -1,0 +1,7 @@
+flightsearch=/flights/results/airjson
+mcflightsearch=/flights/results/mcairjson
+flightcalandersearch=/flights/calendar/calendarstub.json
+intlflightsearch=/flights/results/intlairjson
+createitinerary=/flights/initiate-booking
+
+

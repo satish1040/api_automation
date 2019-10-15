@@ -1,0 +1,52 @@
+package com.cleartrip.corporate.ae.air.search;
+
+//import static org.testng.Assert.assertEquals;
+import java.io.IOException;
+import java.util.HashMap;
+//import java.util.concurrent.TimeUnit;
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+import com.cleartrip.air.common.AirCommonUtil;
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.common.dataproviders.AgencyAirDataProvider;
+import com.cleartrip.common.dataproviders.CorporateAirDataProvider;
+//import com.cleartrip.common.dataproviders.AirInDataProvider;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.parsing.Parser;
+import com.jayway.restassured.response.Response;
+
+
+public class CorpAE_DomOneWaySearchTest extends AirCommonUtil {
+	
+	@Test(groups = {"Regression","Smoke"},dataProviderClass=CorporateAirDataProvider.class, dataProvider="domowsearch")
+	public void Corp_AE_Dom_OneWay_Search(HashMap<String, Object> params) throws IOException {{
+		
+		Response resp;
+		RestAssured.defaultParser = Parser.JSON;
+		String onwarddate=putDate(getAirData("onwardsearch_date"));
+
+		try {
+
+			HashMap<String, Object> commonUrlProperties = new HashMap<String,Object>();
+			commonUrlProperties = corpAEair("flightsearch", "get", false);
+
+			HashMap<String, Object> headers = new HashMap<String,Object>();
+
+			params.put("depart_date",onwarddate);
+
+			resp = RestUtil.corp_AE_httpMethod(params,commonUrlProperties,headers);
+			Assert.assertEquals(resp.statusCode(),200, Thread.currentThread().getStackTrace()[1].getMethodName() + " is FAILED");
+
+			farekeypricecheck(resp);
+
+			Reporter.log(Thread.currentThread().getStackTrace()[1].getMethodName() + " is completed",true);
+
+		}catch (Exception e)
+
+		{
+			Reporter.log(e + Thread.currentThread().getStackTrace()[1].getMethodName() + " is FAILED",true);
+			 Assert.fail("*****  REPONSE RETURNED HAVE NO RESULTS *****");
+
+		}
+	}}}

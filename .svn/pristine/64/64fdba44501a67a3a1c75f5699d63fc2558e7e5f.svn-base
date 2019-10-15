@@ -1,0 +1,119 @@
+package com.cleartrip.local.localapi.search;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.*;
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.common.headers.LocalExtApiHeaders;
+import com.cleartrip.common.Main;
+import com.cleartrip.local.common.LocalCommonUtil;
+import com.jayway.restassured.response.Response;
+
+public class ThingsToDoTest extends LocalCommonUtil {
+
+	
+	@Test(groups = {"Regression"}, dataProvider = "autocomplete",dataProviderClass = com.cleartrip.common.dataproviders.LocalDataProvider.class)
+	public void autoComplete(HashMap<String, Object> params) throws IOException{
+		
+		Response resp;
+						
+		HashMap<String, Object> commonUrlProperties = new HashMap<String,Object>();
+		commonUrlProperties = commonLocalExtApi("autocomplete", "get", true);
+		
+		HashMap<String, Object> headers = new HashMap<String,Object>();
+		
+		LocalExtApiHeaders lh = new LocalExtApiHeaders();
+		headers = lh.localExtApiHeaders();
+		
+		resp = RestUtil.httpMethod(params,commonUrlProperties,headers);
+		
+		System.out.println(resp.asString());
+		Assert.assertEquals(resp.statusCode(),200);
+			
+	}
+	
+	 //Data provider returns a map and its part of method 
+	@Test( /*dependsOnMethods="autoComplete",*/groups = {"Regression"}, dataProvider = "searchCollections", dataProviderClass = com.cleartrip.common.dataproviders.LocalDataProvider.class)
+    public HashMap<String, Object> thingsToDoSearchCollections(HashMap<String, Object> params) throws IOException {
+
+		Response resp;
+
+		// Get, post, put or delete parameters 
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+		commonUrlProperties= commonLocalExtApi("extApiTtdSearch", "get", true);
+		
+        HashMap<String, Object> headers = new HashMap<String,Object>();
+		
+		LocalExtApiHeaders lh = new LocalExtApiHeaders();
+		headers = lh.localExtApiHeaders();
+		
+		resp = RestUtil.httpMethod(params, commonUrlProperties,headers);
+		
+		HashMap<String, Object> cityIdCollectionId = new HashMap<String,Object>();
+       
+		cityIdCollectionId.put("city-id", resp.then().extract().path("city.id"));
+		cityIdCollectionId.put("collection-id", resp.then().extract().path("collections[0].id"));
+		
+		Assert.assertEquals(resp.statusCode(),200);
+		
+		return cityIdCollectionId;
+	}
+	
+
+	@Test(dependsOnMethods="thingsToDoSearchCollections",groups = {"Regression", "Smoke"}, dataProvider = "searchListing", dataProviderClass = com.cleartrip.common.dataproviders.LocalDataProvider.class )
+	public HashMap<String, Object> thingsToDoActivityListing(HashMap<String, Object> params) throws IOException {
+
+		Response resp;
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String,Object>();
+		commonUrlProperties = commonLocalExtApi("extApiTtdListing", "get", true);
+		
+		LocalExtApiHeaders lh = new LocalExtApiHeaders();
+		
+		HashMap<String, Object> headers = new HashMap<String, Object>();
+		headers = lh.localExtApiHeaders();
+
+		resp = RestUtil.httpMethod(params,commonUrlProperties,headers);
+		
+		HashMap<String, Object> cityIdVariantId = new HashMap<String,Object>();
+		cityIdVariantId.put("city-id",resp.then().extract().path("result[0].address.city_id"));
+		cityIdVariantId.put("id",resp.then().extract().path("result[0].id"));
+		
+		Assert.assertEquals(resp.getStatusCode(), 200);
+		
+		return cityIdVariantId;
+				
+	}
+
+	@Test(dependsOnMethods="thingsToDoActivityListing",groups={"Regression", "Smoke"}, dataProvider="searchDetails",dataProviderClass = com.cleartrip.common.dataproviders.LocalDataProvider.class)
+	public int thingsToDoVariantDetails(HashMap<String, Object> params) throws IOException{
+		
+		Response resp;
+
+		HashMap<String, Object> commonUrlProperties = new HashMap<String,Object>();
+		commonUrlProperties = commonLocalExtApi("extApiTtdDetails", "get", true);
+		
+                LocalExtApiHeaders lh = new LocalExtApiHeaders();
+		
+		HashMap<String, Object> headers = new HashMap<String, Object>();
+		headers = lh.localExtApiHeaders();
+		
+		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+                int rateId= resp.then().extract().path("details.rates[0].rate_id");
+       		
+                Assert.assertEquals(resp.statusCode(), 200);
+                
+		return rateId;
+		
+	}
+	
+	
+	
+	
+}

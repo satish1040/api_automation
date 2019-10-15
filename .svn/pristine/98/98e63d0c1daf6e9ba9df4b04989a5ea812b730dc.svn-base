@@ -1,0 +1,18 @@
+baseurl=.cleartrip
+domain=.com
+city=gadag
+statecode=KA
+currency=INR
+countrycode=IN
+protocol=https://
+
+###Guided Navigation
+tags=Music,Theme Parks,Spa
+type=ttd,events
+
+###Card Information###
+cardexpiryyear=2021
+cardexpirymonth=05
+cvv=123
+cardnumber=5123456789012346
+

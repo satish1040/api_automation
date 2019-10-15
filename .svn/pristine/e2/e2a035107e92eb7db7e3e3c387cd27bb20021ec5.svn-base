@@ -1,0 +1,39 @@
+package com.cleartrip.common.headers;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import com.cleartrip.common.PropertyUtil;
+import com.cleartrip.common.Main;
+
+public class LocalExtApiHeaders extends PropertyUtil {
+
+	public HashMap<String, Object> localExtApiHeaders() throws IOException {
+
+		HashMap<String, Object> headers = new HashMap<String, Object>();
+		headers.put("X-CT-SOURCETYPE", "API");
+
+		if (Main.getEnv("env").equalsIgnoreCase("qa2")) {
+			headers.put("X-CT-API-KEY", getLocalExtapiData("qakey"));
+
+		} else if (Main.getEnv("env").equalsIgnoreCase("staging")) {
+			headers.put("X-CT-API-KEY", getLocalExtapiData("stagingkey"));
+
+		} else if (Main.getEnv("env").equalsIgnoreCase("www")) {
+			headers.put("X-CT-API-KEY", getLocalExtapiData("prodkey"));
+
+		} else if (Main.getEnv("env").equalsIgnoreCase("dev")) {
+			headers.put("X-CT-API-KEY", getLocalExtapiData("devkey"));
+
+		} else if (Main.getEnv("env").equalsIgnoreCase("hf")) {
+			headers.put("X-CT-API-KEY", getLocalExtapiData("hfkey"));
+
+		} else if (Main.getEnv("env").equalsIgnoreCase("beta")) {
+			headers.put("X-CT-API-KEY", getLocalExtapiData("prodkey"));
+
+		}
+		return headers;
+
+	}
+
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="2" guice-stage="DEVELOPMENT" name="Failed suite [Platform_Services_API_Results]" parallel="classes" allow-return-values="true">
+  <listeners>
+    <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+  </listeners>
+  <test name="Platform_API_search(failed)" parallel="classes">
+    <classes>
+      <class name="com.cleartrip.platform.whatsapp.WhatsappOptinFlow">
+        <methods>
+          <include name="message"/>
+        </methods>
+      </class> <!-- com.cleartrip.platform.whatsapp.WhatsappOptinFlow -->
+      <class name="com.cleartrip.platform.whatsapp.WhatsappCheckContacts">
+        <methods>
+          <include name="checkContacts"/>
+        </methods>
+      </class> <!-- com.cleartrip.platform.whatsapp.WhatsappCheckContacts -->
+    </classes>
+  </test> <!-- Platform_API_search(failed) -->
+</suite> <!-- Failed suite [Platform_Services_API_Results] -->

@@ -1,0 +1,84 @@
+package com.cleartrip.common.dataproviders;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.HashMap;
+
+import org.mozilla.javascript.ObjArray;
+import org.testng.annotations.DataProvider;
+
+import com.cleartrip.common.PropertyUtil;
+import com.cleartrip.hotels.common.HotelsCommonUtil;
+
+public class HotelDataProvider extends PropertyUtil {
+
+	@DataProvider(name = "autocomplete")
+	public Object[][] autocomplete() throws IOException {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("s", getHotelData("city"));
+		params.put("v", 2);
+
+		return new Object[][] { { params } };
+	}
+
+	@DataProvider(name = "hotelcontent")
+	public Object[][] hotelContent() throws IOException {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("op", getHotelData("op"));
+		params.put("pahCCRequired", getHotelData("pahccrequired"));
+
+		return new Object[][] { { params } };
+
+	}
+
+	@DataProvider(name = "scdata")
+	public Object[][] scData() throws IOException, ParseException {
+
+		HashMap<String, Object> params = new HashMap<>();
+
+		params.put("pahCCRequired", getHotelData("pahccrequired"));
+		params.put("lowRate", true);
+        return new Object[][] { { params } };
+	}
+
+	public HashMap<String, Object> roomPaxCombination(String roomPaxType) {
+		HashMap<String, Object> paxRoom = new HashMap<>();
+		if (roomPaxType.equalsIgnoreCase("SingleRoomSinglePax")) {
+			paxRoom.put("adults1", 1);
+			paxRoom.put("children1", 0);
+			paxRoom.put("num_rooms", 1);
+			paxRoom.put("adults", 1);
+			paxRoom.put("childs", 0);
+		} else if (roomPaxType.equalsIgnoreCase("SingleRoomMultiPax")) {
+			paxRoom.put("adults1", 2);
+			paxRoom.put("children1", 0);
+			paxRoom.put("num_rooms", 1);
+			paxRoom.put("adults", 2);
+			paxRoom.put("childs", 0);
+		} else if (roomPaxType.equalsIgnoreCase("SingleRoomMultiPaxWithChild")) {
+			paxRoom.put("adults1", 2);
+			paxRoom.put("children1", 1);
+			paxRoom.put("num_rooms", 1);
+			paxRoom.put("adults", 2);
+			paxRoom.put("childs", 1);
+		} else if (roomPaxType.equalsIgnoreCase("MultiRoomMultiPax")) {
+			paxRoom.put("adults1", 2);
+			paxRoom.put("children1", 0);
+			paxRoom.put("adults2", 2);
+			paxRoom.put("children2", 0);
+			paxRoom.put("num_rooms", 2);
+			paxRoom.put("adults", 4);
+			paxRoom.put("childs", 0);
+		} else if (roomPaxType.equalsIgnoreCase("MultiRoomMultiPaxWithChild")) {
+			paxRoom.put("adults1", 2);
+			paxRoom.put("children1", 1);
+			paxRoom.put("adults2", 2);
+			paxRoom.put("children2", 1);
+			paxRoom.put("num_rooms", 2);
+			paxRoom.put("adults", 4);
+			paxRoom.put("childs", 2);
+
+		}
+		return paxRoom;
+	}
+}

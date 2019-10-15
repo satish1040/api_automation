@@ -1,0 +1,81 @@
+
+package com.cleartrip.local.common;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+    "0",
+    "1",
+    "2"
+})
+public class Ts {
+
+    @JsonProperty("0")
+    private List<String> _0 = null;
+    @JsonProperty("1")
+    private List<String> _1 = null;
+    @JsonProperty("2")
+    private List<String> _2 = null;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    @JsonProperty("0")
+    public List<String> get0() {
+        return _0;
+    }
+
+    @JsonProperty("0")
+    public void set0(List<String> _0) {
+        this._0 = _0;
+    }
+
+    @JsonProperty("1")
+    public List<String> get1() {
+        return _1;
+    }
+
+    @JsonProperty("1")
+    public void set1(List<String> _1) {
+        this._1 = _1;
+    }
+
+    @JsonProperty("2")
+    public List<String> get2() {
+        return _2;
+    }
+
+    @JsonProperty("2")
+    public void set2(List<String> _2) {
+        this._2 = _2;
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
+    }
+
+    public List<String> tsNumber(String tsNumber){
+	
+	if(tsNumber.equalsIgnoreCase("0")){
+	    return get0();
+	}else if(tsNumber.equalsIgnoreCase("1")){
+	    return get1();
+	}else{
+	    return get2();
+	}
+   }
+}

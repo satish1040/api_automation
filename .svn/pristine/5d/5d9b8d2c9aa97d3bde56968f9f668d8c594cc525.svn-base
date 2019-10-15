@@ -1,0 +1,5 @@
+package com.cleartrip.local.localextapi.search;
+
+public class Events {
+
+}

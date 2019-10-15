@@ -1,0 +1,11 @@
+baseurl=.cleartrip
+domain=.com
+city=bangalore
+statecode=KA
+currency=INR
+countrycode=IN
+protocol=https://
+
+###Guided Navigation
+tags=Music,Theme Parks,Spa
+type=ttd,events

@@ -1,0 +1,71 @@
+package main.java.com.cleartrip.platform.tripservice;
+
+import static org.testng.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import main.java.com.cleartrip.platform.whatsapp.WhatsappCommon;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+
+
+public class TripserviceTripsPostcall extends TripserviceCommon
+{
+
+	
+	
+	@Test
+	public void Tripservicepostcall(){
+	Response resp;
+	 String url = "http://172.17.12.214:9080/trips";
+	 
+	 
+		HashMap<String, Object> headers =new HashMap<>();
+		headers = headersForTripservicepostcall();
+		
+		/*HashMap<String, Object> params= new HashMap<>();
+		params= TripservicePostcall();*/
+		
+		TripserviceCommon common  = new TripserviceCommon();
+		resp = common.TripservicePostcall(params, headers, url);
+		
+		
+		if(resp.statusCode()==200){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+		
+			System.out.println("Status code == "+ url+  "is :: " + resp.statusCode());
+			
+			
+			ResponseBody body= resp.getBody();
+			String bodyAsString = body.asString();
+			Assert.assertEquals(bodyAsString.contains("tripRef"), true ,"Response boday contains  tripRef");
+		}else{
+			assertTrue(false);
+		}
+			
+	}
+		/*public HashMap< String, Object> TripservicePostcall(){
+			HashMap<String,Object> params= new HashMap<>();
+			params.put("mobileNumber", "7799964888");
+			params.put("message","HI");
+			params.put("ctUserId","1234");
+			params.put("ccid", "Q1234567890");
+			return params;
+		}
+		*/
+		
+		
+		String params =  "{"+ "  \"train_bookings\": " + "["+"{" + 	" \"seq_no\": 1," + "\"train_routes\":" +"["+"{" + " \"seq_no\": 1," + "\"trains\": "+"[" +	"{" + " \"departure_date_time\": \"2018-05-18T10:30:00\"," +"\"arrival_station\": \"MYS\"," +"\"departure_station\": \"SBC\"," +"\"train_name\": \"RAJYARANI EXP\"," + 	"\"train_type\": null," +"\"duration\": 10800," +"\"arrival_date_time\": \"2018-05-18T13:30:00\"," +"\"booking_quota\": \"GN\"," +"\"train_number\": \"16558\"," +"\"distance\": 139," +"\"boarding_station\": \"SBC\"," +"\"boarding_date_time\": \"2018-05-18T10:30:00\"," +"\"seq_no\": 1" +	"}" +"]," +"\"departure_station\": \"SBC\"," +"\"departure_date_time\": \"2018-05-18T10:30:00\"," +"\"arrival_station\": \"MYS\"," +"\"arrival_date_time\": \"2018-05-18T13:30:00\"" +	"}" +"]," +"\"train_fares\": [" +"{" +"\"seq_no\": 1," +"\"pricing_elements\": "+"[" +"{" + " \"amount\": 60.0," + " \"code\": \"IRCTC-BF\"," + " \"category\": \"BF\"" + "}," + " {" + " \"amount\": 15.0," + " \"code\": \"IRCTC-RF\"," + "\"category\": \"FEE\"" + " }," + " {" + " \"amount\": 0.0," + "\"code\": \"CASH-BACK\"," + " \"category\": \"CB\"" + "}," + " {" + " \"amount\": 16.95," +" \"code\": \"CT-SVF\"," + " \"category\": \"FEE\"" + " }," + " {" + " \"amount\": 1.53," + "\"code\": \"CT-CGST\"," + " \"category\": \"TAX\"" + "  }," + " {" + " \"amount\": 1.53," + "  \"code\": \"CT-SGST\"," + " \"category\": \"TAX\"" + " }," + " {" + "\"amount\": 0.0," + "\"code\": \"CT-IGST\"," + " \"category\": \"TAX\"" + "}," +" {" + " \"amount\": 1.14," + " \"code\": \"GW\"," + " \"category\": \"FEE\"" + "}," + " {" + "\"amount\": 0.11," + " \"code\": \"GW-CGST\"," + " \"category\": \"TAX\"" + "}," + " {" + " \"amount\": 0.11," + "\"code\": \"GW-SGST\"," + "\"category\": \"TAX\"" + " }," + " {" + " \"amount\": 0.0," + "\"code\": \"GW-IGST\"," + " \"category\": \"TAX\"" + " }" + " ]," + " \"total_fare\": 96.37," + " \"total_base_fare\": 60.0," + " \"total_tax\": 3.28," + " \"total_tax_ct_st\": 0.0," + " \"total_tax_ct_cgst\": 1.53," + " \"total_tax_ct_sgst\": 1.53," + " \"total_tax_ct_igst\": 0.0," + "\"total_tax_gw_st\": 0.0," + "\"total_tax_gw_cgst\": 0.11," + " \"total_tax_gw_sgst\": 0.11," + " \"total_tax_gw_igst\": 0.0," + " \"total_tax_irctc_st\": 0.0," + " \"total_tax_unknown\": 0.0," + "\"total_discount\": 0.0," + " \"total_fee_irctc_conc\": 0.0," + " \"total_dis_unknown\": 0.0," +" \"total_markup\": 0.0," + "\"total_cashback\": 0.0," + "\"total_fee\": 33.089999999999996," + " \"total_fee_irctc_tc\": 0.0," + " \"total_fee_irctc_svf\": 0.0," + "  \"total_fee_irctc_sf\": 0.0," + " \"total_fee_irctc_rf\": 15.0," + " \"total_fee_irctc_oc\": 0.0," +" \"total_fee_irctc_cc\": 0.0," +"\"total_fee_ct_svf\": 16.95," +" \"total_fee_gw\": 1.14," + " \"total_fee_unknown\": 0.0," + "\"total_nc\": 0.0," + " \"total_nc_fee\": 0.0" +"}" + "]," + "\"external_references\": [" + "{" + "\"name\": \"ITINERARY-ID\"," +" \"value\": \"4d3774d0278001361c237a163e62ce63\"" +"}," + " {" + " \"name\": \"NGET\"," + "\"value\": \"true\"" +"}," + " {" +"\"name\": \"irctc_user_name\"," + " \"value\": \"test\"" + "}" + "]," + " \"pax_list\": [" +"{" + " \"pax_type_code\": \"ADT\"," + "\"meal_request_code\": null," +"\"age\": \"27\"," + "\"last_name\": \"test\"," + "\"first_name\": \"test\"," + "\"title\": \"Mr\"," + "\"seq_no\": 1," + "\"gender\": \"M\"," + " \"person_id\": \"13943410\"" + " }" + "]," + " \"booking_info_list\": [" + "{" + "\"train_fare_seq_no\": 1," + "\"train_seq_no\": 1," +"  \"pax_info_seq_no\": 1," + " \"seq_no\": 1," + "\"booking_class\": \"2S\"," + " \"booking_status\": \"Z\"" + "}" +" ]" + " }" + " ]," + "  \"amount\": 96," +"  \"external_references\": [" + " {" + " \"name\": \"contact-user-id\"," + "\"value\": \"13941099\"" + "  }," + " {" + "  \"name\": \"Apache\"," + " \"value\": \"8134a8.5413c2f9c044a\"" + " }" + "  ]," + "  \"itinerary_id\": \"4d3774d0278001361c237a163e62ce63\"," + "  \"domain\": \"cleartrip.com\"," + "  \"company_id\": \"110340\"," + "  \"currency\": \"INR\"," + "  \"trip_name\": \" -  one-way\"," + "  \"notes\": null," + "  \"user_id\": \"13941099\"," + "  \"gst_detail\": {" + "    \"gst_holder_statename\": \"Maharashtra\"," + "    \"gst_holder_statecode\": 27," + " \"gst_number\": \"\"," + "    \"gst_holder_address\": \"\"," +"    \"gst_holder_name\": \"\"" + "  }," + "  \"contact_detail\": {" + " \"city_name\": null," + "\"country_id\": null," +" \"state_id\": null," + "    \"city_id\": null," + "    \"landline\": null," + "    \"mobile\": \"9743049515\"," + " \"address\": null," +"\"email\": \"vinay.raj@cleartrip.com\"," + " \"state_name\": null," + " \"country_name\": null," + "\"pin_code\": null," +"    \"title\": \"Mr\"," + "\"first_name\": \"vinay\"," + "\"last_name\": \"raj\"" + "  }," + "  \"txns\": [" + " {" + " \"source_type\": \"ACCOUNT\"," + " \"source_id\": \"192.168.42.64\"," + "  \"user_id\": \"13941099\"," + "\"txn_type\": 1," + "\"misc\": \"{\\\"log_booking_service\\\":\\\"tripService\\\"}\"" + "}" + " ]," +" \"trip_type\": 4," + "  \"start_date_time\": \"2018-05-18T10:30:00\"," +"  \"end_date_time\": \"2018-05-18T13:30:00\"," +	"  \"travellers\": \"---\\nADT: 1\\n\"" + "}";
+		
+		
+				
+		
+		
+}

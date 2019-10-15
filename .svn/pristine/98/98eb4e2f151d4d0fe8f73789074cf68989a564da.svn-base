@@ -1,0 +1,64 @@
+package com.cleartrip.local.common;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class AvailabilityParser {
+	
+	 private ObjectMapper mapper = new ObjectMapper();
+	
+	 public HashMap<String, Object> availabilityJsonParser(String json) throws JsonParseException, JsonMappingException, IOException {
+
+			MyPojo myPojo = mapper.readValue(json, MyPojo.class);
+			HashMap<String, Object> getAvailabilityParams = new HashMap<String,Object>();
+			String timeSlot;
+			String timeSlotArrayNumber;
+			boolean isAvailable=false;
+			
+			for (Inv inventory: myPojo.getInv()) {
+				inventory.getDate();
+				for (TimeSlotInventory timeSlotInventory : inventory.getTimeSlotInventory()) {
+				     if(timeSlotInventory.getStatus().equalsIgnoreCase("A")){
+					 isAvailable =true;
+					 getAvailabilityParams.put("date",inventory.getDate());
+					 getAvailabilityParams.put("min", 1);
+					      if(timeSlotInventory.getTsKey()!=null){
+						timeSlotArrayNumber = timeSlotInventory.getTsKey();  
+					        timeSlot = myPojo.getTs().tsNumber(timeSlotArrayNumber).get(0);
+					        getAvailabilityParams.put("time-slot", timeSlot);
+					        
+					      }else{
+						  if(timeSlotInventory.getTime()!=null){
+						     getAvailabilityParams.put("time-slot", timeSlotInventory.getTime());
+					         }else{
+						     System.out.println("This is open activity without time slot. Hence continuing with no time slot");
+						  }
+					      }if(timeSlotInventory.getUnitPrice()==null){
+						  getAvailabilityParams.put("pricing", "INDIVIDUAL");
+						  if(timeSlotInventory.getAdultPrice()!=null){
+						      getAvailabilityParams.put("adults", 1);
+						    }else {
+						      getAvailabilityParams.put("child", 1);
+						  }
+					      }else{
+						 getAvailabilityParams.put("pricing", "UNIT");
+						 getAvailabilityParams.put("units", 1);
+						 getAvailabilityParams.put("adults", 1);
+					      }
+				              break;
+				        }
+				  }
+				if(isAvailable){
+				    break;
+				}
+			  }
+			
+			return getAvailabilityParams;
+		 }
+	 
+	 
+}

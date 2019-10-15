@@ -1,0 +1,41 @@
+package com.cleartrip.local.localextapi.cancelbooking;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.common.headers.LocalExtApiHeaders;
+import com.cleartrip.local.localextapi.viewbookingdetails.EatOutBookDetails;
+import com.jayway.restassured.response.Response;
+
+public class CancelEatOutBooking extends EatOutBookDetails {
+
+    @Test(groups = {"Regression","Smoke"}, dependsOnMethods={"com.cleartrip.local.localextapi.viewbookingdetails.EatOutBookDetails.viewEatOutTripDetails"})
+    public void cancelEatOutTrip() throws IOException{
+	Response resp;
+	String tripCancel;
+	
+	HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+	commonUrlProperties= commonLocalExtApi("tripCancel", "delete", true);
+	
+	tripCancel = commonUrlProperties.get("url")+getTripId();
+	commonUrlProperties.put("url", tripCancel);
+	
+	HashMap<String, Object> headers = new HashMap<String,Object>();
+	LocalExtApiHeaders lh = new LocalExtApiHeaders();
+	headers = lh.localExtApiHeaders();
+	
+	HashMap<String, Object> params = new HashMap<>();
+	
+	resp = RestUtil.httpMethod(params,commonUrlProperties,headers);
+	System.out.println(resp.asString());
+	Assert.assertEquals(resp.statusCode(), 200);
+	
+	Reporter.log("Ext API FNB trip cancel passed");
+    }
+    
+}

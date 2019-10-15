@@ -1,0 +1,13 @@
+<h2>Reporter output</h2><table><tr><td>Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/checkContacts</td></tr>
+<tr><td>Service URL : http://smsapi.cltp.com:9001/r3/sms</td></tr>
+<tr><td>Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/message</td></tr>
+<tr><td>Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/message</td></tr>
+<tr><td>Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/optin</td></tr>
+<tr><td>Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/optinStatus</td></tr>
+<tr><td>Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/message</td></tr>
+<tr><td>Service URL : http://trip-service.cltp.com:9001/r3/trips</td></tr>
+<tr><td>Service URL : http://trip-service.cltp.com:9001/r3/trips/Q1805170048/%7Bbooking-type%7D/%7Bseq%7D/booking-info-list</td></tr>
+<tr><td>Service URL : http://emailapi.cltp.com:9001/r3/email</td></tr>
+<tr><td>Service URL : http://emailapi.cltp.com:9001/r3/email</td></tr>
+<tr><td>Service URL : http://emailapi.cltp.com:9001/r3/check-spam-score</td></tr>
+</table>

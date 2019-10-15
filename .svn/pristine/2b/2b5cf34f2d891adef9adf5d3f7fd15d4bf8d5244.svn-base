@@ -1,0 +1,65 @@
+package com.cleartrip.platform.whatsapp;
+
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.mail.BodyPart;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.platform.common.PlatformCommonUtil;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+public class WhatsappUserMessage extends WhatsappCommon
+{
+
+	
+	@Test(groups={"Regression"})
+	public void message() throws IOException {
+		Response resp;
+		String url = Service_Url("WHATSAPP_MESSAGE");
+		
+		HashMap<String, Object> headers =new HashMap<>();
+		headers = headersForWhatsappUserMessage();
+			
+		/*HashMap<String, Object> params= new HashMap<>();
+		params= paramsForMessages();*/
+		
+	
+		PlatformCommonUtil util = new PlatformCommonUtil();
+		resp = util.paramsForMesagesWithAttachments(params, headers, url);
+		
+		if(resp.statusCode()==202){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+			System.out.println("Status code == "+ url + "is :: " + resp.statusCode());
+			
+			ResponseBody body= resp.getBody();
+			String bodyAsString = body.asString();
+			Assert.assertEquals(bodyAsString.contains("messageId"), true ,"Response boday contains messageId");
+			
+		}else{
+			assertTrue(false);
+			System.err.println("Script failed");
+		}
+			   
+			   					
+}
+	/*public HashMap< String, Object> paramsForMessages(){
+		HashMap<String,Object> params= new HashMap<>();
+		params.put("mobileNumber", "7799964888");
+		params.put("message","HI from cleartrip automation");
+		params.put("ctUserId","1234");
+		params.put("ccid", "Q1234567890");
+		return params;
+	}*/
+	
+	String params="{\"ccid\":\"Q1807300315\",\"ctUserId\":41644626,\"messageType\":\"hsm\",\"mobileNumber\":\"7799964888\",\"hsmRequestPayload\":{\"firstName\":\"Likhitha\",\"hsmType\":\"flight\",\"hsmSubType\":\"onward\",\"tripId\":\"Q1807300315\",\"flightDetails\":[{\"fromCity\":\"BBI\",\"toCity\":\"BBI\",\"pnrNum\":\"TDT8GX\",\"dateOfJourney\":\"Thu, 09 Aug 2018\",\"departureTime\":\"10:40\",\"arrivalTime\":\"13:00\",\"flightName\":\"SG\"}],\"tripStart\":\"BBI\",\"tripEnd\":\"BBI\"}}";
+ }

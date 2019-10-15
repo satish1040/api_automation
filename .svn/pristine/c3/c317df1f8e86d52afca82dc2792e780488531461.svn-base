@@ -1,0 +1,8 @@
+hotelshome=/hotels
+hotelautocomplete=/places/hac
+hotelcontent=/hotels/jsonservice/hotel-content
+hotelscdata=/hotels/service/scData
+hotelsidresults=/hotels/service/sid-results
+hotelinfo=/hotels/details/
+hotelratecalendar=/hotels/service/rate-calendar
+hotelitinerary=/hotels/initiate-booking

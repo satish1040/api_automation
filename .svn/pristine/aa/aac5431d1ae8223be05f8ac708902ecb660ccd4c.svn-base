@@ -1,0 +1,3 @@
+flightsearch=/flights/results/airjson?
+flightcalandersearch=/flights/calendar/calendarstub.json?
+intlflightsearch=/flights/results/intlairjson?

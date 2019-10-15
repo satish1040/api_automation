@@ -1,0 +1,73 @@
+package com.cleartrip.air.in.search;
+
+import static com.jayway.restassured.RestAssured.given;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.air.common.AirCommonUtil;
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.common.dataproviders.AirInDataProvider;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.parsing.Parser;
+import com.jayway.restassured.response.Response;
+
+public class DomOneWayCalendarSearchTest extends AirCommonUtil{
+	
+	//https://www.cleartrip.com/flights/calendar/calendarstub.json?from=DEL&to=BOM&start_date=20171201&end_date=20171231&t=1513197084673
+	
+	@Test(groups = {"Regression","Search"},dataProviderClass=AirInDataProvider.class, dataProvider="domowsearch")
+	public void domOneWaySearch(HashMap<String, Object> params) throws IOException{{
+		
+		RestAssured.defaultParser = Parser.JSON;
+		Response resp;
+		
+	  /*  resp = given().log().path().request().
+	    		get(getAirData("protocol")+getAirData("env")+getAirData("baseurl")+getAirData("domain")+
+	    		getAirUrl("flightcalandersearch")+"from="+from+"&to="+to+"&depart_date=22/01/2018&adults="
+	    		+ ""+aCount+"&childs="+cCount+"&infants="+iCount+"&class="+flightclass+"&airline=&carrier="
+	    		+ ""+carrier+"&intl=n&type=json&ver=V2");
+		
+		assertEquals(resp.getStatusCode(), 200);
+		
+		Reporter.log("ReponseTime in MilliSecs : "+resp.getTimeIn(TimeUnit.MILLISECONDS));
+		
+		String responseBody = resp.getBody().asString();
+		Reporter.log("responseBody :"+ responseBody);
+		System.out.println("responseBody :"+ responseBody);
+		
+		//Rest assured parser needs to be added here
+		Response resp;
+		RestAssured.defaultParser = Parser.JSON;
+		*/String onwarddate=putDate(getAirData("onwardsearch_date"));
+				
+			
+		HashMap<String, Object> commonUrlProperties = new HashMap<String,Object>();
+		commonUrlProperties = commonAir("flightcalandersearch", "get", false);
+		
+		HashMap<String, Object> headers = new HashMap<String,Object>();
+		
+		params.put("depart_date",onwarddate);
+		
+		resp = RestUtil.httpMethod(params,commonUrlProperties,headers);
+		//Assert.assertEquals(resp.statusCode(),200);
+		//String TC = Thread.currentThread().getStackTrace()[1].getMethodName();
+		Assert.assertEquals(resp.statusCode(),200, Thread.currentThread().getStackTrace()[1].getMethodName() + " is FAILED");
+		//System.out.println(resp.asString());
+		
+		String fareKey = resp.then().extract().path("fare.1.R.fk");
+		System.out.println("fareKey: " +Thread.currentThread().getStackTrace()[1].getMethodName()+" - " +fareKey);
+		
+		
+		Reporter.log(Thread.currentThread().getStackTrace()[1].getMethodName() + " is completed");
+		
+		
+	}
+}}

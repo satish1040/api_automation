@@ -1,0 +1,55 @@
+package com.cleartrip.platform.whatsapp;
+import static org.testng.Assert.assertTrue;
+
+import java.util.HashMap;
+
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+import com.jayway.restassured.response.Response;
+
+public class WhatsappOptinStatus extends WhatsappCommon
+{
+
+	@Test
+	public void message()
+	{
+		Response resp;		
+		String url = "172.17.12.164:9080/whatsapp/optinStatus";
+		
+		
+		HashMap<String, Object> headers = new   HashMap<>();
+		headers = headersForWhatsappUserMessage();
+		
+		HashMap<String , Object> params = new HashMap<>();
+		params = paramsForOptinStatus();
+		
+		
+		RestUtil util = new RestUtil();
+		resp = util.WhatsappOptinStatus(params, headers, url);
+		
+		if(resp.statusCode()==200){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+			System.out.println("Status code == "+ url + "is :: " + resp.statusCode());
+			
+		}else{
+			assertTrue(false);
+			System.err.println("Script failed");
+		}
+			   
+			   					
+}
+		
+		
+	public HashMap< String, Object> paramsForOptinStatus(){
+		HashMap<String,Object> params= new HashMap<>();
+		params.put("mobileNumber", "7799964888");
+		params.put("domain","cleartrip.com");
+		
+		return params;
+	}
+		
+	}
+	

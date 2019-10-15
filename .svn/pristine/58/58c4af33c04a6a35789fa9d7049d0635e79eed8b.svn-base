@@ -1,0 +1,30 @@
+<h2>Methods run, sorted chronologically</h2><h3>&gt;&gt; means before, &lt;&lt; means after</h3><p/><br/><em>Platform_Services_API_Results</em><p/><small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table border="1">
+<tr><th>Time</th><th>Delta (ms)</th><th>Suite<br>configuration</th><th>Test<br>configuration</th><th>Class<br>configuration</th><th>Groups<br>configuration</th><th>Method<br>configuration</th><th>Test<br>method</th><th>Thread</th><th>Instances</th></tr>
+<tr bgcolor="bca1e0">  <td>18/08/01 11:34:29</td>   <td>0</td> <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td title="WhatsappCheckContacts.checkContacts()[pri:0, instance:com.cleartrip.platform.whatsapp.WhatsappCheckContacts@56aac163]">checkContacts</td> 
+  <td>pool-1-thread-2@1926237351</td>   <td></td> </tr>
+<tr bgcolor="92be91">  <td>18/08/01 11:34:29</td>   <td>108</td> <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td title="PlatformSMSservice.smsservice()[pri:0, instance:com.cleartrip.platform.sms.PlatformSMSservice@48503868]">smsservice</td> 
+  <td>pool-1-thread-1@65006128</td>   <td></td> </tr>
+<tr bgcolor="886778">  <td>18/08/01 11:34:31</td>   <td>1995</td> <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td title="WhatsappUserMessage.message()[pri:0, instance:com.cleartrip.platform.whatsapp.WhatsappUserMessage@1f7030a6]">message</td> 
+  <td>pool-1-thread-1@65006128</td>   <td></td> </tr>
+<tr bgcolor="9ba398">  <td>18/08/01 11:34:31</td>   <td>2144</td> <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td title="WhatsappwebhookMessage.message()[pri:0, instance:com.cleartrip.platform.whatsapp.WhatsappwebhookMessage@5a1c0542]">message</td> 
+  <td>pool-1-thread-1@65006128</td>   <td></td> </tr>
+<tr bgcolor="7bafac">  <td>18/08/01 11:34:31</td>   <td>2194</td> <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td title="WhatsappOptinFlow.message()[pri:0, instance:com.cleartrip.platform.whatsapp.WhatsappOptinFlow@396f6598]">message</td> 
+  <td>pool-1-thread-2@1926237351</td>   <td></td> </tr>
+<tr bgcolor="77a0a2">  <td>18/08/01 11:34:31</td>   <td>2211</td> <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td title="WhatsappOptinflowStatus.message()[pri:0, instance:com.cleartrip.platform.whatsapp.WhatsappOptinflowStatus@394e1a0f]">message</td> 
+  <td>pool-1-thread-1@65006128</td>   <td></td> </tr>
+<tr bgcolor="a5fe93">  <td>18/08/01 11:34:31</td>   <td>2283</td> <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td title="WhatsappUserMessageWithAttachments.message()[pri:0, instance:com.cleartrip.platform.whatsapp.WhatsappUserMessageWithAttachments@27a5f880]">message</td> 
+  <td>pool-1-thread-2@1926237351</td>   <td></td> </tr>
+<tr bgcolor="9168bc">  <td>18/08/01 11:34:31</td>   <td>2291</td> <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td title="GetCallforTripservice.Getcallfortripservice()[pri:0, instance:com.cleartrip.platform.tripservice.GetCallforTripservice@1d29cf23]">Getcallfortripservice</td> 
+  <td>pool-1-thread-1@65006128</td>   <td></td> </tr>
+<tr bgcolor="6796d9">  <td>18/08/01 11:34:31</td>   <td>2472</td> <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td title="TripserviceTripsPostcall.Tripservicepostcall()[pri:0, instance:com.cleartrip.platform.tripservice.TripserviceTripsPostcall@5f282abb]">Tripservicepostcall</td> 
+  <td>pool-1-thread-1@65006128</td>   <td></td> </tr>
+<tr bgcolor="9d62cb">  <td>18/08/01 11:34:31</td>   <td>2602</td> <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td title="TripserviceTripsPutcall.Tripserviceputcall()[pri:0, instance:com.cleartrip.platform.tripservice.TripserviceTripsPutcall@167fdd33]">Tripserviceputcall</td> 
+  <td>pool-1-thread-1@65006128</td>   <td></td> </tr>
+<tr bgcolor="759b6d">  <td>18/08/01 11:34:32</td>   <td>2688</td> <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td title="EmailserviceEmailPostcall.message()[pri:0, instance:com.cleartrip.platform.emailservice.EmailserviceEmailPostcall@1e965684]">message</td> 
+  <td>pool-1-thread-1@65006128</td>   <td></td> </tr>
+<tr bgcolor="69bbb7">  <td>18/08/01 11:34:32</td>   <td>2860</td> <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td title="EmailserviceforAttachments.message()[pri:0, instance:com.cleartrip.platform.emailservice.EmailserviceforAttachments@4d95d2a2]">message</td> 
+  <td>pool-1-thread-1@65006128</td>   <td></td> </tr>
+<tr bgcolor="96e971">  <td>18/08/01 11:34:32</td>   <td>2946</td> <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td title="EmailserviceSpamscore.message()[pri:0, instance:com.cleartrip.platform.emailservice.EmailserviceSpamscore@53f65459]">message</td> 
+  <td>pool-1-thread-1@65006128</td>   <td></td> </tr>
+</table>

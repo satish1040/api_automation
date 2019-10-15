@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Air_Search_Results" allow-return-values="true" parallel="classes" thread-count = "2">
+
+	<listeners>
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+	</listeners>
+
+	
+	<suite-files>
+			<suite-file path="b2cair.xml"></suite-file>
+	</suite-files>
+	
+	<suite-files>
+			<suite-file path="agencyair.xml"></suite-file>
+	</suite-files>
+	
+	<suite-files>
+			<suite-file path="corpair.xml"></suite-file>
+	</suite-files>
+	
+	
+	
+	
+</suite> 
+	

@@ -1,0 +1,48 @@
+package main.java.com.cleartrip.platform.emailservice;
+
+import static org.testng.Assert.assertTrue;
+
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import main.java.com.cleartrip.platform.whatsapp.WhatsappCommon;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+public class EmailserviceEmailPostcall extends EmailserviceCommon
+{
+
+	@Test
+	public void message(){
+		Response resp;
+		String url = "http://172.17.26.11:8001/email";
+		
+	
+		HashMap<String, Object> headers =new HashMap<>();
+		headers = headersForEmailpostcall();
+
+		
+		EmailserviceCommon common  = new EmailserviceCommon();
+		resp = common.EmailPostAPI(params, headers, url);
+		
+	if(resp.statusCode()==202){
+		assertTrue(true);
+		System.out.println("Test case passed");
+		System.out.println(resp.asString());
+		System.out.println("Status code == "+ url + "is :: " + resp.statusCode());
+		ResponseBody body= resp.getBody();
+		String bodyAsString = body.asString();
+		Assert.assertEquals(bodyAsString.contains("status"), true ,"Response boday contains  status");
+		
+	}else{
+		assertTrue(false);
+		System.err.println("Script failed");
+	}
+	
+}
+	
+	
+	String params  = "{" + "\"from\": \"ns.likhitha@cleartrip.com\"," + "\"to\": [\"ns.likhitha@cleartrip.com\"]," + "\"cc\": [\"ns.likhitha@cleartrip.com\"]," +"\"bcc\": [\"ns.likhitha@cleartrip.com\"]," +"\"subject\":\"Test Subject\"," +	"\"mailContent\": \"Test automation message from script\"," +"\"useTemplate\" : \"false\"," + "\"category\" : \"test 2\"," +"\"userName\" : \"lik\"" +"}";
+}

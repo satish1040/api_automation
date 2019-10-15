@@ -1,0 +1,171 @@
+
+package com.cleartrip.local.common;
+
+import java.util.HashMap;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+    "min",
+    "unit_price",
+    "unit_mrp",
+    "unit_max_pax",
+    "ts_key",
+    "max",
+    "status",
+    "time",
+    "adult_price"
+})
+public class TimeSlotInventory {
+
+    @JsonProperty("min")
+    private Integer min;
+    
+    @JsonProperty("unit_price")
+    private String unitPrice;
+    
+    @JsonProperty("unit_mrp")
+    private String unitMrp;
+    
+    @JsonProperty("unit_max_pax")
+    private String unitMaxPax;
+    
+    @JsonProperty("ts_key")
+    private String tsKey;
+    
+    @JsonProperty("max")
+    private Integer max;
+    
+    @JsonProperty("status")
+    private String status;
+    
+    @JsonProperty("time")
+    private String time;
+    
+    @JsonProperty("adult_price")
+    private String adultPrice;
+    
+    @JsonProperty("child_price")
+    private String childPrice;
+    
+    @JsonProperty("child_mrp")
+    private String childMrp;
+    
+    @JsonProperty("adult_mrp")
+    private String adultMrp;
+    
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    @JsonProperty("time")
+    public String getTime(){
+	return time;
+    }
+    
+    @JsonProperty("adult_price")
+    public String getAdultPrice(){
+	return adultPrice;
+    }
+    
+    @JsonProperty("child_price")
+    public String getChildPrice(){
+	return childPrice;
+    }
+    
+    @JsonProperty("adult_mrp")
+    public String getAdultMrp(){
+	return adultMrp;
+    }
+    
+    @JsonProperty("child_mrp")
+    public String getChildMrp(){
+	return childMrp;
+    }
+    
+    @JsonProperty("min")
+    public Integer getMin() {
+        return min;
+    }
+
+    @JsonProperty("min")
+    public void setMin(Integer min) {
+        this.min = min;
+    }
+
+    @JsonProperty("unit_price")
+    public String getUnitPrice() {
+        return unitPrice;
+    }
+
+    @JsonProperty("unit_price")
+    public void setUnitPrice(String unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    @JsonProperty("unit_mrp")
+    public String getUnitMrp() {
+        return unitMrp;
+    }
+
+    @JsonProperty("unit_mrp")
+    public void setUnitMrp(String unitMrp) {
+        this.unitMrp = unitMrp;
+    }
+
+    @JsonProperty("unit_max_pax")
+    public String getUnitMaxPax() {
+        return unitMaxPax;
+    }
+
+    @JsonProperty("unit_max_pax")
+    public void setUnitMaxPax(String unitMaxPax) {
+        this.unitMaxPax = unitMaxPax;
+    }
+
+    @JsonProperty("ts_key")
+    public String getTsKey() {
+        return tsKey;
+    }
+
+    @JsonProperty("ts_key")
+    public void setTsKey(String tsKey) {
+        this.tsKey = tsKey;
+    }
+
+    @JsonProperty("max")
+    public Integer getMax() {
+        return max;
+    }
+
+    @JsonProperty("max")
+    public void setMax(Integer max) {
+        this.max = max;
+    }
+
+    @JsonProperty("status")
+    public String getStatus() {
+        return status;
+    }
+
+    @JsonProperty("status")
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
+    }
+
+}

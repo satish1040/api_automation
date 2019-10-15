@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+  <reporter-output>
+    <line>
+      <![CDATA[Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/message]]>
+    </line>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="1783" started-at="2018-08-07T07:02:06Z" finished-at="2018-08-07T07:02:08Z">
+    <groups>
+      <group name="Regression">
+        <method signature="WhatsappUserMessage.message()[pri:0, instance:com.cleartrip.platform.whatsapp.WhatsappUserMessage@68c4039c]" name="message" class="com.cleartrip.platform.whatsapp.WhatsappUserMessage"/>
+      </group> <!-- Regression -->
+    </groups>
+    <test name="Default test" duration-ms="1783" started-at="2018-08-07T07:02:06Z" finished-at="2018-08-07T07:02:08Z">
+      <class name="com.cleartrip.platform.whatsapp.WhatsappUserMessage">
+        <test-method status="PASS" signature="message()[pri:0, instance:com.cleartrip.platform.whatsapp.WhatsappUserMessage@68c4039c]" name="message" duration-ms="1759" started-at="2018-08-07T12:32:06Z" finished-at="2018-08-07T12:32:08Z">
+          <reporter-output>
+            <line>
+              <![CDATA[Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/message]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- message -->
+      </class> <!-- com.cleartrip.platform.whatsapp.WhatsappUserMessage -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

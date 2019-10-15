@@ -1,0 +1,56 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+mainClassName = 'com.cleartrip.common.Main'
+
+
+repositories {
+       mavenCentral()
+}
+
+dependencies {
+	
+	// RestAssured
+	compile 'com.jayway.restassured:rest-assured:2.9.0'
+	compile 'com.jayway.jsonpath:json-path:2.2.0'
+	
+	// Schema Validator
+	compile 'com.github.fge:json-schema-validator:2.2.6'
+	compile 'com.github.fge:json-schema-core:1.2.5'
+	compile 'com.github.fge:jackson-coreutils:1.8'
+	
+	// TestNG & ReportNG 
+	compile 'org.testng:testng:6.10'
+	compile("org.uncommons:reportng:1.1.2") {
+        exclude group: "org.testng", module: "testng"
+    }
+    compile "com.google.inject:guice:3.0"
+    
+    // TestRail
+    compile 'com.codepine.api:testrail-api-java-client:2.0.0'
+    
+    //compile 'org.json:json:20160212'
+    //compile 'com.fasterxml.jackson.core:jackson-databind:2.0.1'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.9.1'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.1'
+	
+	// The below statement is needed when the test files are present in src/test/java folder.
+	//compile files('build/classes/test')
+	
+	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.4'
+}
+    
+run {
+	if (project.hasProperty("runArgs") ) {
+    	args findProperty('runArgs').split(' ')
+    }
+}
+
+test {
+	useTestNG()
+}
+
+
+    
+

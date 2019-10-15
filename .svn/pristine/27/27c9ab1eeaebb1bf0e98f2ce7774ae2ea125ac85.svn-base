@@ -1,0 +1,43 @@
+package main.java.com.cleartrip.platform.tripservice;
+
+import static org.testng.Assert.assertTrue;
+
+import java.util.HashMap;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+import static com.jayway.restassured.RestAssured.get;
+
+public class GetCallforTripservice extends TripserviceCommon
+{
+	
+	
+	@Test
+	public void Getcallfortripservice() throws JSONException{
+	Response resp = get ("http://172.17.12.214:9080/trips/?tripID=Q1805170048");
+	
+		
+		if(resp.statusCode()==200){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+		
+			System.out.println("Status code == "+  "is :: " + resp.statusCode());
+			
+			ResponseBody body= resp.getBody();
+			String bodyAsString = body.asString();
+			Assert.assertEquals(bodyAsString.contains("id"), true ,"Response boday contains Id");
+		}else{
+			assertTrue(false);
+		}
+			
+	}
+	
+
+}

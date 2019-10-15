@@ -1,0 +1,55 @@
+package com.cleartrip.air.corporate.sa.search;
+
+	import java.io.IOException;
+	import java.util.HashMap;
+
+	import org.testng.Assert;
+	import org.testng.Reporter;
+	import org.testng.annotations.Test;
+
+	import com.cleartrip.air.common.AirCommonUtil;
+	import com.cleartrip.common.RestUtil;
+	import com.cleartrip.common.dataproviders.CorporateAirDataProvider;
+	import com.jayway.restassured.RestAssured;
+	import com.jayway.restassured.parsing.Parser;
+	import com.jayway.restassured.response.Response;
+
+	public class CorpSA_IntlRoundTripSearch  extends AirCommonUtil{
+
+		@Test(groups = {"Regression","Smoke"},dataProviderClass=CorporateAirDataProvider.class, dataProvider="intlrtsssearch")
+		public void Corp_SA_IntlRoundTripSearch(HashMap<String, Object> params) throws IOException{{
+			
+				Response resp;
+				RestAssured.defaultParser = Parser.JSON;
+				String departdate=putDate(getAirData("onwardsearch_date"));
+				String returndate=putDate(getAirData("returnsearch_date"));
+
+				try {
+					
+					HashMap<String, Object> commonUrlProperties = new HashMap<String,Object>();
+					commonUrlProperties = corpSAair("intlflightsearch", "get", false);
+
+					HashMap<String, Object> headers = new HashMap<String,Object>();
+
+					params.put("depart_date",departdate);
+					params.put("return_date",returndate);
+					headers.put("Referer", "https://");
+					headers.put("Accept","application/json");
+
+					resp = RestUtil.corp_SA_httpMethod(params,commonUrlProperties,headers);
+					Assert.assertEquals(resp.statusCode(),200, Thread.currentThread().getStackTrace()[1].getMethodName() + " is FAILED");
+
+					farekeypricecheck(resp);
+
+					Reporter.log(Thread.currentThread().getStackTrace()[1].getMethodName() + " is completed",true);
+
+				}catch (Exception e)
+
+				{
+					Reporter.log(e + Thread.currentThread().getStackTrace()[1].getMethodName() + " is FAILED",true);
+					Assert.fail("*****  REPONSE RETURNED HAVE NO RESULTS *****");
+
+				}
+		}}}
+
+

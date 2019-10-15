@@ -1,0 +1,212 @@
+package com.cleartrip.platform.common;
+
+import static com.jayway.restassured.RestAssured.given;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.testng.Reporter;
+
+import com.cleartrip.common.Main;
+import com.cleartrip.common.PropertyUtil;
+import com.jayway.restassured.response.Response;
+
+public class PlatformCommonUtil extends PropertyUtil {
+
+	public String Service_Url (String Service) throws IOException {
+		String url = "";
+		String environment = Main.getEnv("env");
+
+		if(Service.equals("SMS")) {
+			if(environment.equals("www")) {
+				url = getPlatformData("sms_prod");
+			}else if (environment.equals("qa2")) {
+				url = getPlatformData("sms_qa2");
+			}
+		}
+		if(Service.equals("WHATSAPP_CC")) {
+			if(environment.equals("www")) {
+				url = getPlatformData("whatsapp_checkcontacts_prod");
+			}else if (environment.equals("qa2")) {
+				url = getPlatformData("whatsapp_checkcontacts_qa2");
+			}
+		}
+
+		if(Service.equals("WHATSAPP_OPTIN")) {
+			if(environment.equals("www")) {
+				url = getPlatformData("whatsapp_optin_prod");
+			}else if (environment.equals("qa2")) {
+				url = getPlatformData("whatsapp_optin_qa2");
+			}
+		}
+
+		if(Service.equals("WHATSAPP_OPTIN_STATUS")) {
+			if(environment.equals("www")) {
+				url = getPlatformData("whatsapp_optinstatus_prod");
+			}else if (environment.equals("qa2")) {
+				url = getPlatformData("whatsapp_optinstatus_qa2");
+			}
+		}
+
+		if(Service.equals("WHATSAPP_MESSAGE")) {
+			if(environment.equals("www")) {
+				url = getPlatformData("whatsapp_message_prod");
+			}else if (environment.equals("qa2")) {
+				url = getPlatformData("whatsapp_message_qa2");
+			}
+
+		}
+
+		if(Service.equals("WHATSAPP_ATTACHMENTS_MESSAGE")) {
+			if(environment.equals("www")) {
+				url = getPlatformData("whatsapp_attachments_prod");
+			}else if (environment.equals("qa2")) {
+				url = getPlatformData("whatsapp_attachments_qa2");
+
+			}
+		}
+		
+		if(Service.equals("WHATSAPP_WEBHOOK_MESSAGE")) {
+			if(environment.equals("www")) {
+				url = getPlatformData("whatsapp_attachments_prod");
+			}else if (environment.equals("qa2")) {
+				url = getPlatformData("whatsapp_attachments_qa2");
+
+			}
+		}
+		
+		if(Service.equals("WHATSAPP_DELIVERY_FEEDBACK")) {
+			if(environment.equals("www")) {
+				url = getPlatformData("whatsapp_deliveryfeedback_prod");
+			}else if (environment.equals("qa2")) {
+				url = getPlatformData("whatsapp_deliveryfeedback_qa2");
+
+			}
+		}
+		
+		
+		if(Service.equals("EMAILS_POST_CALL")) {
+			if(environment.equals("www")) {
+				url = getPlatformData("emailservice_post_prod");
+			}else if (environment.equals("qa2")) {
+				url = getPlatformData("emailservice_post_qa2");
+
+			}
+		}
+		
+		if(Service.equals("EMAIL_ATTACHMENTS")) {
+			if(environment.equals("www")) {
+				url = getPlatformData("emailservice_attachemnts_prod");
+			}else if (environment.equals("qa2")) {
+				url = getPlatformData("emailservice_attachemnts_qa2");
+
+			}
+		}
+		
+		if(Service.equals("EMAIL_SPAMSCORE")) {
+			if(environment.equals("www")) {
+				url = getPlatformData("emailservice_spamscore_prod");
+			}else if (environment.equals("qa2")) {
+				url = getPlatformData("emailservice_spamscore_qa2");
+
+			}
+		}
+		
+		if(Service.equals("TRIPSERVICE_PUT_CALL")) {
+			if(environment.equals("www")) {
+				url = getPlatformData("tripservice_putcall_prod");
+			}else if (environment.equals("qa2")) {
+				url = getPlatformData("tripservice_putcall_qa2");
+
+			}
+		}
+		
+		if(Service.equals("TRIPSERVICE_POST_CALL")) {
+			if(environment.equals("www")) {
+				url = getPlatformData("tripservice_postcall_prod");
+			}else if (environment.equals("qa2")) {
+				url = getPlatformData("tripservice_postcall_qa2");
+
+			}
+		}
+		
+		
+		
+
+		Reporter.log("Service URL : "+url);
+		return url;
+	}
+	
+	
+	public Response whatsAppRestApi(Map<String,List<String>> params, HashMap<String, Object> headers, String url){
+		Response resp;
+		resp = given().
+				when().
+				log().all().
+				body(params).
+				headers(headers).
+				post(url);
+		return resp;
+	}
+	
+	
+	public Response WhatsappOptinStatus(HashMap<String, Object> params,HashMap<String, Object> headers, String url )
+	{
+		Response resp;
+		resp=given().
+				when().
+				log().all().
+				body(params).
+				headers(headers).
+				post(url);
+		return resp;
+	}
+	
+
+	public Response whatsAppRestApiMessage(HashMap<String, Object> params, HashMap<String, Object> headers, String url){
+		Response resp;
+		resp = given().
+				when().
+				log().all().
+				body(params).
+				headers(headers).
+				post(url);
+		return resp;
+	}
+	public Response paramsForwebHookMesages(String params, HashMap<String, Object> headers, String url){
+		Response resp;
+		resp = given().
+				when().
+				log().all().
+				body(params).
+				headers(headers).
+				post(url);
+		return resp;
+	}
+	
+	public Response paramsForMesagesWithAttachments(String params, HashMap<String, Object> headers, String url){
+		Response resp;
+		resp = given().
+				when().
+				log().all().
+				body(params).
+				headers(headers).
+				post(url);
+		return resp;
+	}
+	
+	public Response paramsForwhatsappfeliveryfeedback(HashMap<String, Object> headers, String url){
+		Response resp;
+		resp = given().
+				when().
+				log().all().
+				headers(headers).
+				get(url);
+		return resp;
+	}
+	
+
+}

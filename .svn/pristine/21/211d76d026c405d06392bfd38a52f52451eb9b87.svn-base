@@ -1,0 +1,102 @@
+package com.cleartrip.platform.tripservice;
+
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.jayway.restassured.path.json.JsonPath;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+public class TripservicePutcall_Hotel extends TripserviceCommon
+{
+
+	String tripref;
+
+
+	@Test(groups={"Regression"})
+	public void Tripservicehotelpostcall() throws IOException
+	{
+		Response resp;
+		String url =  Service_Url("TRIPSERVICE_POST_CALL");
+
+
+		HashMap<String, Object> headers =new HashMap<>();
+		headers = headersForTripservicepostcall();
+
+		/*HashMap<String, Object> params= new HashMap<>();
+		params= TripservicePostcall();*/
+
+		TripserviceCommon common  = new TripserviceCommon();
+		resp = common.TripservicePostcall(params1, headers, url);
+
+
+		if(resp.statusCode()==200){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+
+			System.out.println("Status code == "+ url+  "is :: " + resp.statusCode());
+
+
+			ResponseBody body= resp.getBody();
+			String bodyAsString = body.asString();
+			System.out.println("-------------------"+bodyAsString+"-----------------");
+			Assert.assertEquals(bodyAsString.contains("trip_ref"), true ,"Response boday contains  tripRef");
+
+			JsonPath jsonPath = new JsonPath(bodyAsString);
+			tripref = jsonPath.getJsonObject("trip_ref");
+
+
+			System.out.println("------------"+tripref+"------------------");
+		}else{
+			assertTrue(false);
+		}
+
+	}
+
+
+	String params1 =  "{\"amount\":209.01,\"company_id\":110340,\"contact_detail\":{\"address\":\"Unit No 001, Ground Floor, DTC Bldg, Sitaram Mills Compound, N.M. Joshi Marg, Delisle Road, Lower Parel (E)\",\"city_name\":\"Mumbai\",\"country_name\":\"India\",\"email\":\"shivam.khare@cleartrip.com\",\"first_name\":\"test\",\"last_name\":\"test\",\"mobile\":\"1234567890\",\"pin_code\":\"400011\",\"state_name\":\"Maharashtra\",\"title\":\"Mr\",\"user_type\":\"NONE\"},\"currency\":\"INR\",\"domain\":\"cleartrip.com\",\"end_date_time\":\"2018-09-06T00:00:00.000+0530\",\"external_references\":[],\"gst_detail\":{\"gst_holder_statecode\":\"27\",\"gst_holder_statename\":\"Maharashtra\"},\"has_wallet_promotion\":\"false\",\"hotel\":1,\"hotel_bookings\":[{\"total_fare\":209.01,\"hotel_id\":48425,\"total_guests\":2,\"guests\":\"--- \\nADT: 2\\n\",\"check_in_date\":\"2018-09-05T00:00:00.000+0530\",\"check_out_date\":\"2018-09-06T00:00:00.000+0530\",\"seq_no\":1,\"room_count\":1,\"voucher_number\":\"null\",\"total_base_fare\":150.0,\"total_tax\":0.0,\"total_markup\":50.0,\"total_discount\":0.0,\"total_cashback\":0.0,\"total_fee\":9.01,\"total_tax_sup\":0.0,\"total_tax_svc\":0.0,\"total_tax_unknown\":0.0,\"total_fee_gw\":7.63,\"total_fee_unknown\":1.38,\"pay_at_hotel\":\"N\",\"all_day_check_in\":\"false\",\"part_pay\":\"N\",\"sup_currency\":\"INR\",\"sup_total_currency_rate\":1.0,\"ct_promos\":\"5775116\",\"lth_booking\":0,\"multitax_extra_commission\":0.0,\"st_on_extra_commission\":0.0,\"b2b_rate_for_b2c_count_cookie\":0.0,\"rate_channels\":\"AGENCY,API,B2C,CORP,MOBILE,WL\",\"trip_villa_rate\":0.0,\"express_checkout\":\"N\",\"absorbed_svc_fee\":0.0,\"sup_currency_markup\":0.0,\"referrer_domain\":\"qa2.cleartrip.com\",\"quickeys\":0,\"is_agency_model\":\"Y\",\"total_st_on_commission\":0.0,\"is_gst_model\":\"Y\",\"total_sup_gst\":0.0,\"total_gw_gst\":1.38,\"total_comm_gst\":-9.0,\"total_comm_tds\":0.0,\"rate_type\":\"SELL\",\"gstin_available\":\"Y\",\"is_reseller_model\":\"N\",\"hotel_detail\":{\"name\":\"Hotel Celebrations Inn\",\"address\":\"Maldhakka Road,\\nOld Pune Mumbai Highway,\\nChinchwad Station,\\n Chinchwad\\n, Pune, 411 005\",\"city_id\":35943,\"full_city_name\":\"Pune, Maharashtra, India\"},\"room_rates\":[{\"start_date_time\":\"2018-09-05T00:00:00.000+0530\",\"end_date_time\":\"2018-09-05T00:00:00.000+0530\",\"seq_no\":1,\"total_fare\":209.01,\"total_base_fare\":150.0,\"total_tax\":0.0,\"total_discount\":0.0,\"total_markup\":50.0,\"total_cashback\":0.0,\"total_fee\":9.01,\"total_tax_svc\":0.0,\"total_tax_unknown\":0.0,\"total_tax_sup\":0.0,\"total_fee_gw\":7.63,\"total_fee_unknown\":1.38,\"total_nc\":0.0,\"total_nc_fee\":0.0,\"total_dis_bf\":0.0,\"total_dis_suptax\":0.0,\"total_dis_supmkp\":0.0,\"total_cb_bf\":0.0,\"total_cb_suptax\":0.0,\"total_cb_supmkp\":0.0,\"total_dis_agency_commission\":0.0,\"total_tax_agency_comm_tax\":0.0,\"total_fee_pgc\":0.0,\"total_fee_amd\":0.0,\"total_tax_ecess\":0.0,\"total_tax_shecess\":0.0,\"total_tax_st\":0.0,\"total_dis_supd\":0.0,\"total_tax_dis_st\":0.0,\"total_tax_dis_ecess\":0.0,\"total_tax_dis_shecess\":0.0,\"total_mkp_sup\":50.0,\"total_fee_agency_markup\":0.0,\"total_dis_agency_discount\":0.0,\"total_wallet_cashback\":0.0,\"total_tax_sbc\":0.0,\"total_tax_dis_sbc\":0.0,\"total_tax_kkc\":0.0,\"total_tax_dis_kkc\":0.0,\"total_tax_sup_gst\":0.0,\"total_fee_gw_gst\":1.38,\"cost_room_rate\":{\"total_fare\":141.0,\"total_tax\":0.0,\"total_tax_sup\":0.0,\"total_dis_bf\":0.0,\"total_dis_suptax\":0.0,\"seq_no\":1,\"total_tax_unknown\":0.0,\"total_bf\":150.0,\"total_cb_suptax\":0.0,\"total_cb_bf\":0.0,\"total_dis_plb\":0,\"total_tax_sbc\":0.0,\"total_tax_dis_sbc\":0.0,\"total_tax_kkc\":0.0,\"total_tax_dis_kkc\":0.0,\"total_ct_claim_st_mkp\":0,\"total_ct_claim\":-9.0,\"total_ct_claim_st_plb\":0,\"total_ct_claim_comm_gst\":-9.0,\"total_ct_claim_plb_gst\":0,\"total_tax_sup_gst\":0.0,\"total_tax_comm_tds\":0,\"total_tax_plb_tds\":0,\"pricing_elements\":[{\"amount\":150.0,\"category\":\"BF\"},{\"amount\":-4.5,\"category\":\"CT_CLAIM\",\"code\":\"COMM_CGST\"},{\"amount\":-4.5,\"category\":\"CT_CLAIM\",\"code\":\"COMM_SGST\"}]},\"pricing_elements\":[{\"amount\":150.0,\"category\":\"BF\"},{\"amount\":50.0,\"category\":\"MKP\",\"code\":\"SUP\"},{\"amount\":7.63,\"category\":\"FEE\",\"code\":\"GW\"},{\"amount\":0.69,\"category\":\"FEE\",\"code\":\"GW_CGST\"},{\"amount\":0.69,\"category\":\"FEE\",\"code\":\"GW_SGST\"}]}],\"room_types\":[{\"name\":\"Deluxe AC Room Only\",\"supplier_id\":5,\"inclusions\":\"--- \\ninclusion: \\n- Free Wi-Fi\\n- All Applicable Taxes\\n\",\"cancellation_policy\":\"If you cancel within 24 hours before checkin,  you will be charged 1 room night charges per room.\",\"seq_no\":1,\"policy_start_date\":\"2018-09-04T00:00:00.000+0530\",\"rate_id\":5419720,\"room_type_name\":\"Deluxe Room\",\"room_type_id\":346972}],\"rooms\":[{\"guests\":\"--- \\nguest: \\n- category: ADT\\n- category: ADT\\n\",\"seq_no\":1,\"room_type_seq_no\":1}],\"external_references\":[{\"name\":\"FREE_CANCEL_POLICY\",\"value\":\"1\"},{\"name\":\"PAYMENT_ACCEPTED_AT_HOTEL\",\"value\":\"1000\"}],\"hotel_booking_infos\":[{\"stay_date\":\"2018-09-05T00:00:00.000+0530\",\"booking_status\":\"Z\",\"seq_no\":1,\"room_seq_no\":1,\"room_rate_seq_no\":1,\"status_history\":0,\"room_type\":\"Deluxe AC Room Only\",\"orig_cost_rate\":0.0}]}],\"itinerary_id\":\"75715c6dd9-0758-4332-9d11-1e2b173bcdde\",\"notes\":[],\"start_date_time\":\"2018-09-05T00:00:00.000+0530\",\"tag_links\":[],\"travellers\":\"--- \\nADT: 2\\n\",\"trip_name\":\"Hotel Celebrations Inn, Pune, Maharashtra, India\",\"trip_type\":2,\"txns\":[{\"source_id\":\"192.168.45.231\",\"source_type\":\"ACCOUNT\",\"txn_type\":1,\"user_id\":13945416}],\"user_id\":13945416}";
+
+	@Test(groups={"Regression"})
+	public void Tripservicehotelputcall() throws IOException
+
+	{		
+		Response resp1;
+		String url1 = ("http://trip-service.cltp.com:9001/r3/trips/"+tripref+"/hotel-bookings/1/booking-info-list");
+		//http://trip-service.cltp.com:9001/r3/trips/Q1805170048/%7Bbooking-type%7D/%7Bseq%7D/booking-info-list
+		//String url1 = Service_Url("TRIPSERVICE_PUT_CALL");
+
+		HashMap<String, Object> headers =new HashMap<>();
+		headers = headersForTripserviceputcall();
+
+		TripserviceCommon common  = new TripserviceCommon();
+		String params="{\"hotel_booking_infos\":[{\"stay_date\":\"2018-09-05T00:00:00.000+0530\",\"booking_status\":\"P\",\"seq_no\":1,\"room_seq_no\":1,\"room_rate_seq_no\":1,\"voucher_number\":\"CHMM-8528832\",\"status_history\":0,\"nri\":\"false\",\"inventory_remaining\":94,\"auto_refill_inventory_count\":0,\"base_rate_id\":5419720,\"external_references\":[{\"name\":\"PAYMENT_ACCEPTED_AT_HOTEL\",\"value\":\"1000\"},{\"name\":\"DESIGN_VERSION\",\"value\":\"v2\"},{\"name\":\"room-type\",\"value\":\"Deluxe Room\"},{\"name\":\"upd-res-url\",\"value\":\"/chmm/updatebooking?id=oawETvnuw2Mr4SLyIVbUUw%3D%3D\"},{\"name\":\"dp-coupon-booking-enabled\",\"value\":\"false\"}]}]}";
+
+
+		resp1 = common.TripserviceHotelsPutcall(params, headers, url1);
+
+
+		if(resp1.statusCode()==200){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp1.asString());
+
+			System.out.println("Status code == "+ url1+  "is :: " + resp1.statusCode());
+
+			ResponseBody body1= resp1.getBody();
+			String bodyAsString1 = body1.asString();
+			Assert.assertEquals(bodyAsString1.contains("trip_ref"), true ,"Response boday contains  tripRef");
+		}else{
+			assertTrue(false);
+		}
+
+	}
+	
+}
+
+

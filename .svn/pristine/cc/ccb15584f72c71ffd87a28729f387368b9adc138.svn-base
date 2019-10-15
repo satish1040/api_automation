@@ -1,0 +1,57 @@
+package com.cleartrip.platform.whatsapp;
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.platform.common.PlatformCommonUtil;
+import com.jayway.restassured.response.Response;
+
+public class WhatsappOptinStatus extends WhatsappCommon
+{
+
+	@Test(groups={"Regression"})
+	public void message() throws IOException {
+		Response resp;
+		String url = Service_Url("WHATSAPP_OPTIN_STATUS");
+		
+		
+		
+		HashMap<String, Object> headers = new   HashMap<>();
+		headers = headersForWhatsappUserMessage();
+		
+		HashMap<String , Object> params = new HashMap<>();
+		params = paramsForOptinStatus();
+		
+		
+		PlatformCommonUtil util = new PlatformCommonUtil();
+		resp = util.WhatsappOptinStatus(params, headers, url);
+		
+		if(resp.statusCode()==200){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+			System.out.println("Status code == "+ url + "is :: " + resp.statusCode());
+			
+		}else{
+			assertTrue(false);
+			System.err.println("Script failed");
+		}
+			   
+			   					
+}
+		
+		
+	public HashMap< String, Object> paramsForOptinStatus(){
+		HashMap<String,Object> params= new HashMap<>();
+		params.put("mobileNumber", "7799964888");
+		params.put("domain","cleartrip.com");
+		
+		return params;
+	}
+		
+	}
+	

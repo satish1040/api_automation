@@ -1,0 +1,4 @@
+baseurl=.cleartrip
+domain=.com
+protocol=https://
+env=qa2

@@ -1,0 +1,50 @@
+package com.cleartrip.platform.emailservice;
+
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+public class Emailservice_Template_true extends EmailserviceCommon
+{
+
+	
+	@Test(groups={"Regression"})		
+	public void message() throws IOException {
+		Response resp;
+		String url = Service_Url("EMAILS_POST_CALL");
+
+	HashMap<String, Object> headers =new HashMap<>();
+	headers = headersForEmailpostcall();
+
+
+	EmailserviceCommon common  = new EmailserviceCommon();
+	resp = common.EmailPostAPI(params, headers, url);
+
+	if(resp.statusCode()==202){
+		assertTrue(true);
+		System.out.println("Test case passed");
+		System.out.println(resp.asString());
+		System.out.println("Status code == "+ url + "is :: " + resp.statusCode());
+		ResponseBody body= resp.getBody();
+		String bodyAsString = body.asString();
+		Assert.assertEquals(bodyAsString.contains("status"), true ,"Response boday contains  status");
+
+	}
+	else
+	{
+		
+		assertTrue(false);
+		System.err.println("Script failed");
+	}
+
+}
+
+String params  = "{" + "\"from\": \"ns.likhitha@cleartrip.com\"," + "\"to\": [\"ns.likhitha@cleartrip.com\"]," + "\"cc\": [\"ns.likhitha@cleartrip.com\"]," +"\"bcc\": [\"ns.likhitha@cleartrip.com\"]," +"\"subject\":\"new testing\"," +	"\"mailContent\": \"Test automation message from script\"," +"\"useTemplate\" : \"true\"," + "\"category\" : \"new testing\"," +"\"userName\" : \"lik\"" +"}";
+}

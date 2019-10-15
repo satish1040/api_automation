@@ -1,0 +1,173 @@
+package com.cleartrip.local.localextapi.search;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.common.headers.LocalExtApiHeaders;
+import com.cleartrip.local.common.LocalCommonUtil;
+import com.jayway.restassured.response.Response;
+
+
+public class Activity extends LocalCommonUtil{
+   private String cityId;
+   private String collectionId;
+   private String variantId;
+   private String rateId;
+   private Response respDetails;
+    	
+    	
+
+	@Test(groups = {"Regression"}, dataProvider = "autocomplete",dataProviderClass = com.cleartrip.common.dataproviders.LocalDataProvider.class)
+    	public void autoComplete(HashMap<String, Object> params) throws IOException{
+    		
+    		Response resp;
+    						
+    		HashMap<String, Object> commonUrlProperties = new HashMap<String,Object>();
+    		commonUrlProperties = commonLocalExtApi("autocomplete", "get", true);
+    		
+    		HashMap<String, Object> headers = new HashMap<String,Object>();
+    		
+    		LocalExtApiHeaders lh = new LocalExtApiHeaders();
+    		headers = lh.localExtApiHeaders();
+    		
+    		resp = RestUtil.httpMethod(params,commonUrlProperties,headers);
+    		Assert.assertEquals(resp.statusCode(),200);
+    		
+    		Reporter.log("Ext API TTD Autocomplete API is passed");
+    	}
+    	
+    	 
+
+	//Data provider returns a map and its part of method 
+    	@Test(dependsOnMethods = "autoComplete",groups = {"Regression"}, dataProvider = "searchCollections", dataProviderClass = com.cleartrip.common.dataproviders.LocalDataProvider.class)
+        public void thingsToDoSearchCollections(HashMap<String, Object> params) throws IOException {
+
+    		Response resp;
+
+    		// Get, post, put or delete parameters 
+
+    		HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+    		commonUrlProperties= commonLocalExtApi("extApiTtdSearch", "get", true);
+    		
+                HashMap<String, Object> headers = new HashMap<String,Object>();
+    		
+    		LocalExtApiHeaders lh = new LocalExtApiHeaders();
+    		headers = lh.localExtApiHeaders();
+    		
+    		resp = RestUtil.httpMethod(params, commonUrlProperties,headers);
+    		Assert.assertEquals(resp.statusCode(),200);
+    		
+    		setCityId(resp.then().extract().path("city.id").toString());
+    		setCollectionId(resp.then().extract().path("collections[0].id").toString());
+    		
+    		Reporter.log("Ext API TTD Search collections API is passed");
+    		
+    		
+    		
+    	}
+    	
+
+    	@Test(dependsOnMethods="thingsToDoSearchCollections",groups = {"Regression", "Smoke"}/*, dataProvider = "searchListing", dataProviderClass = com.cleartrip.common.dataproviders.LocalDataProvider.class */)
+    	public void thingsToDoActivityListing() throws IOException {
+
+    		Response resp;
+
+    		HashMap<String, Object> commonUrlProperties = new HashMap<String,Object>();
+    		commonUrlProperties = commonLocalExtApi("extApiTtdListing", "get", true);
+    		
+    		LocalExtApiHeaders lh = new LocalExtApiHeaders();
+    		
+    		HashMap<String, Object> headers = new HashMap<String, Object>();
+    		headers = lh.localExtApiHeaders();
+    		
+    		HashMap<String, Object> params = new HashMap<String,Object>();
+    		params.put("city-id", getCityId());
+    		params.put("collection-id", getCollectionId());    		
+
+    		resp = RestUtil.httpMethod(params,commonUrlProperties,headers);
+    		Assert.assertEquals(resp.getStatusCode(), 200);
+    		
+    		setVariantId(resp.then().extract().path("result[0].id").toString());
+    		
+    		Reporter.log("Ext API TTD Listing  API is passed");
+    		
+    	}
+
+    	@Test(dependsOnMethods="thingsToDoActivityListing",groups={"Regression", "Smoke"}/*, dataProvider="searchDetails",dataProviderClass = com.cleartrip.common.dataproviders.LocalDataProvider.class*/)
+    	public void thingsToDoVariantDetails() throws IOException{
+    		
+    		Response resp;
+
+    		HashMap<String, Object> commonUrlProperties = new HashMap<String,Object>();
+    		commonUrlProperties = commonLocalExtApi("extApiTtdDetails", "get", true);
+    		
+                LocalExtApiHeaders lh = new LocalExtApiHeaders();
+    		
+    		HashMap<String, Object> headers = new HashMap<String, Object>();
+    		headers = lh.localExtApiHeaders();
+    		
+    		HashMap<String, Object> params = new HashMap<String,Object>();
+    		params.put("id", getVariantId());
+    		params.put("city-id", getCityId());
+    		
+    		resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+    		Assert.assertEquals(resp.statusCode(), 200);
+    		
+    		setRespDetails(resp);
+    		
+    		setRateId(resp.then().extract().path("details.rates[0].rate_id").toString());
+    		Reporter.log("Rate id is : "+getRateId());
+    		System.out.println(getRateId());
+    		
+    		Reporter.log("Ext API TTD variant details  API is passed");
+    		                
+    		    		
+    	}
+    	
+    	public String getCityId() {
+	    return cityId;
+	}
+
+	public void setCityId(String cityId) {
+	    this.cityId = cityId;
+	}
+
+	public String getCollectionId() {
+	    return collectionId;
+	}
+
+	public void setCollectionId(String collectionId) {
+	    this.collectionId = collectionId;
+	}
+
+	public String getVariantId() {
+	    return variantId;
+	}
+
+	public void setVariantId(String variantId) {
+	    this.variantId = variantId;
+	}
+
+	public String getRateId() {
+	    return rateId;
+	}
+
+	public void setRateId(String rateId) {
+	    this.rateId = rateId;
+	}
+	public Response getRespDetails() {
+	    return respDetails;
+	}
+
+	public void setRespDetails(Response respDetails) {
+	    this.respDetails = respDetails;
+	}
+  	
+   }
+
+

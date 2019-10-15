@@ -1,0 +1,51 @@
+package com.cleartrip.platform.emailservice;
+
+import static org.testng.Assert.assertTrue;
+
+import java.util.HashMap;
+
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+import org.apache.log4j.net.SyslogAppender;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class EmailserviceforAttachments extends EmailserviceCommon 
+{
+	
+	@Test(groups={"Regression"})
+	public void message()
+	{
+		Response resp;
+		String url = "http://172.17.26.11:8001/email";
+		
+		
+		HashMap<String, Object> headers = new HashMap<>();
+		headers = headersForEmailpostcall();
+		
+		EmailserviceCommon common = new EmailserviceCommon();
+		resp = common.EmailPostAPI(params, headers, url);
+		
+		
+		if(resp.statusCode()==202)
+		{
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+			System.out.println("Status code =" + url + "is :: " + resp.statusCode());
+			ResponseBody body= resp.getBody();
+			String bodyAsString = body.asString();
+			Assert.assertEquals(bodyAsString.contains("status"), true ,"Response boday contains  status");
+			//System.out.println(resp.getBody());
+		}
+		else {
+			assertTrue(false);
+			System.out.println("Test script got failed!!");
+		}
+	}
+		
+	String params = "{" +"\"from\": \"ns.likhitha@cleartrip.com\"," + "\"to\": [\"ns.likhitha@cleartrip.com\"]," +	"\"cc\": [\"ns.likhitha@cleartrip.com\"]," +"\"bcc\": [\"ns.likhitha@cleartrip.com\"]," + "\"subject\":\"Test Subject\"," + "\"mailContent\": \"Test message\"," + "\"useTemplate\" : \"true\"," + "\"userName\" : \"lik test\"," + "\"category\" : \"test 2\"," + "\"attachment\" : [\"CleartripHotelBookingPolicy.pdf\",\"flight_failed_payments_reports_1511346209.csv\"]" + "}" +"";
+
+
+}

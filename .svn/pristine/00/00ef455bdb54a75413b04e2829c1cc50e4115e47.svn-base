@@ -1,0 +1,39 @@
+package com.cleartrip.local.mobileapp.misc;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+
+public class Test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		 LocalDate currentDate = LocalDate.now();
+		 int day;
+		 int year;
+		 int month = currentDate.getMonthValue();
+			if(month == 12){
+			  year = currentDate.getYear()+1;
+			  day = 1;
+			  month = 1;
+			}else{
+				day = currentDate.getDayOfMonth();
+				month = currentDate.getMonthValue();
+				year = currentDate.getYear();
+		    }
+			String date = day+"-"+month+"-"+year;  
+		
+		
+	 
+	 
+ }
+			 
+			 
+			 
+		 }
+
+
+

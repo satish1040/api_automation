@@ -1,0 +1,44 @@
+package com.cleartrip.platform.tripservice;
+
+import static org.testng.Assert.assertTrue;
+
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+public class TripserviceTripsPutcall extends TripserviceCommon
+{
+
+	@Test(groups={"Regression"})
+	public void Tripserviceputcall(){
+	Response resp;
+	 String url = "http://172.17.12.214:9080/trips/Q1805170048/%7Bbooking-type%7D/%7Bseq%7D/booking-info-list";
+	 
+	 HashMap<String, Object> headers =new HashMap<>();
+	 headers = headersForTripserviceputcall();
+	 
+		TripserviceCommon common  = new TripserviceCommon();
+		resp = common.TripservicePutcall(params, headers, url);
+		
+		
+		if(resp.statusCode()==200){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+		
+			System.out.println("Status code == "+ url+  "is :: " + resp.statusCode());
+			
+			ResponseBody body= resp.getBody();
+			String bodyAsString = body.asString();
+			Assert.assertEquals(bodyAsString.contains("tripRef"), true ,"Response boday contains  tripRef");
+		}else{
+			assertTrue(false);
+		}
+	}
+		
+		String params= "{" + " \"seq_no\": 1," + " \"booking_info_list\": [" + " {" +"\"train_fare_seq_no\": 1," +"\"train_seq_no\":1," +"\"pax_info_seq_no\": 1," +"\"seq_no\": 1," +" \"booking_class\": \"2S\"," +	"\"booking_status\": \"P\"" + "}" + "]" +"}	"; 
+}

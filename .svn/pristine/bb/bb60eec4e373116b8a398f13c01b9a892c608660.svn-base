@@ -1,0 +1,75 @@
+package com.cleartrip.common.dataproviders;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.mozilla.javascript.ObjArray;
+import org.testng.annotations.DataProvider;
+
+import com.cleartrip.common.PropertyUtil;
+import com.cleartrip.local.common.LocalCommonUtil;
+import com.cleartrip.local.localextapi.search.Activity;
+
+
+public class LocalDataProvider extends PropertyUtil {
+	
+	
+	@DataProvider(name="autocomplete")
+	public Object[][]autocomplete() throws IOException{
+		HashMap<String, Object> params = new HashMap<String,Object>();
+		params.put("city", getLocalExtapiData("city"));
+      
+	   return new Object[][]{{params}};
+	}
+
+	@DataProvider(name="searchCollections")
+	public Object[][] searchCollections() throws IOException{
+		
+		HashMap<String, Object> params = new HashMap<String,Object>();
+		params.put("city", getLocalExtapiData("city"));
+				
+	  return new Object[][]{{params}};
+	}
+	
+	
+	// Mobile data providers
+	@DataProvider(name="citystate")
+	public Object[][] mobileAutocomplete() throws IOException{
+		
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("address", getLocalData("city")+"+"+getLocalData("statecode"));
+		return new Object[][]{{params}};
+		
+	}
+	
+	@DataProvider(name="searchCollectionsMobile")
+	public Object[][] searchCollectionsmobile() throws IOException{
+		//editorial=true&scr=INR&sct=IN&city=bangalore
+
+		HashMap<String, Object> params = new HashMap<String,Object>();
+		params.put("city", getLocalData("city"));
+		params.put("editorial", true);
+		params.put("scr", getLocalData("currency"));
+		params.put("sct", getLocalData("countryCode"));
+				
+	  return new Object[][]{{params}};
+	}
+	
+	@DataProvider(name="guidedNavigation")
+	public Object[][] guidedNavigation() throws IOException{
+		HashMap<String, Object> params = new HashMap<String,Object>();
+		
+		LocalCommonUtil common = new LocalCommonUtil();
+		String date = common.dateSelected();
+		
+		params.put("date", date);
+		params.put("tags", getLocalData("tags"));
+		params.put("type", getLocalData("type"));
+		params.put("city", getLocalData("city"));
+		return new Object[][]{{params}};
+		
+	}
+}

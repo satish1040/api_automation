@@ -1,0 +1,58 @@
+package com.cleartrip.air.in.search;
+
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import com.cleartrip.air.common.AirCommonUtil;
+import com.cleartrip.common.Main;
+import com.cleartrip.local.common.LocalCommonUtil;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.parsing.Parser;
+import com.jayway.restassured.response.Response;
+import static com.jayway.restassured.RestAssured.given;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DomOneWaySearchTest extends AirCommonUtil{
+	
+	/*https://qa2.cleartrip.com/flights/results/airjson?from=DEL&to=BOM&trip_type=OneWay&adults=1&childs=0&infants=0&ver=V2&type=json&class=Economy&airline=&carrier=&search_ver=V2&dls=y
+	 *https://qa2.cleartrip.com/flights/results?from=DEL&to=BOM&depart_date=22/01/2018&adults=1&childs=0&infants=0&class=Economy&airline=&carrier=&intl=n&sd=1512729060869&page=loaded
+*/	
+	
+	@DataProvider(name="ows")
+	public static Object[][] oneAdultDp(){
+		return new Object[][]{
+				{"BOM","BLR","6E","1","0"}
+
+
+		};
+	}
+
+	
+	@Test(dataProvider="ows")
+	public void domOneWaySearch(String from,String to,String carrier,String aCount,String cCount) throws Exception{
+		RestAssured.defaultParser = Parser.JSON;
+		Response resp;
+		//resp = given().get(getAirData("protocol")+getAirData("env")+getAirData("baseurl")+getAirData("domain")+"/flights/results/airjson?from="+from+"&to="+to+"&trip_type=OneWay&adults=1&childs=0&infants=0&ver=V2&type=json&class=Economy&airline=&carrier="+carrier+"&search_ver=V2&dls=y");
+		resp = given().get(getAirData("protocol")+getAirData("env")+getAirData("baseurl")+getAirData("domain")+"/flights/results?from="+from+"&to="+to+"&depart_date=22/01/2018&adults=1&childs=0&infants=0&class=Economy&airline=&carrier="+carrier+"&intl=n");
+		 
+		//String cityCode =  resp.then().extract().path("[0].k");
+			//System.out.println(cityCode );
+		String responseBody = resp.getBody().asString();
+		System.out.println("responseBody :"+ responseBody);
+		
+		    String passanger = responseBody.toString().valueOf("passengers");
+		    System.out.println("passanger" + passanger);
+		    
+			System.out.println(resp.getStatusCode());
+			//System.out.println(resp.getHeaders());
+			int response = resp.getStatusCode();
+			Assert.assertEquals(response, 200, "response Received");
+	
+	}
+	
+	
+}

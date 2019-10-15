@@ -1,0 +1,108 @@
+package main.java.com.cleartrip.platform.whatsapp;
+
+import static org.testng.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.codehaus.groovy.util.ListHashMap;
+import org.json.JSONArray;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import main.java.com.cleartrip.common.RestUtil;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+public class WhatsappwebhookMessage extends WhatsappCommon
+
+{
+
+	@Test
+	public void whatsappwebhook(){
+		Response resp ;
+		String url = "http://172.17.12.164:9080/whatsapp/webhook/messages";
+
+
+		HashMap<String, Object> headers =new HashMap<>();
+		headers = headersForWhatsAppCheckContacts();
+		
+		/*Map<String, Object> params= new HashMap<>();
+		params= paramsForwebHookMesages();*/
+		
+		RestUtil util = new RestUtil();
+		resp = util.paramsForwebHookMesages(params, headers, url);
+		
+		
+		if(resp.statusCode()==200){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+		
+			System.out.println("Status code == "+ url+  "is :: " + resp.statusCode());
+			
+			ResponseBody body= resp.getBody();
+			String bodyAsString = body.asString();
+			Assert.assertEquals(bodyAsString.contains("messageId"), true ,"Response boday contains messageId");
+	          
+		}else{
+
+			System.out.println(resp.asString());
+			assertTrue(false);
+		}
+	}
+	
+	/*public HashMap< String, Object> paramsForwebHookMesages(){
+		HashMap<String,Object>params= new HashMap<>();
+		String val ="[";   //	    [	left square bracket
+		String val1="]";   //&#93;	]	right square bracket
+		String val2 = "{" ;  //&#123;	{	left curly brace
+		String val3 = "} " ; //&#125;	}	right curly brace
+		params.put("messages", val );
+		params.put(val2, "");
+		params.put("from","917799964888");
+		params.put("text",val2);
+		params.put("body", "hi cleartrip");
+		params.put(val3,"");
+		params.put(val3,"");
+		params.put(val1,"");
+		return params;
+		
+	}*/
+	
+	
+	
+	
+	
+/*	public Map<String, Object> map = new HashMap<>();
+	{
+		Object jsonArrayList = 	map.put("messages",  
+				new HashMap<String,String>() {{
+		                                                    put("from","7799964888");
+		                                                   map. put("text",new HashMap<String,String>(){{
+		                                                    	put("body","testtest");
+		                                                    }});
+		                                                
+				}});
+	
+	
+ 
+System.out.println(map);
+	}*/
+	//List<Map> messages = new List<Map>;
+	/*ListHashMap<K, V>
+	
+	HashMap<String,Object> msg = new HashMap<String,Object>();
+	HashMap<String,String> textHash = new HashMap<String,String>();
+
+	textHash.put("body","string");
+	msg.put('from',"0987654");
+	msg.put('text',textHash);
+	
+	messages.add(message)*/
+	
+	
+	String params = "{" + " \"messages\": [" +"{"+"  " + " " + "  \"from\": \"7799964888\"," +"" +" " + "\"text\":{" + " \"body\": \"string\" " +	" }" +	" " +"  }" +" ]" +"}";
+}

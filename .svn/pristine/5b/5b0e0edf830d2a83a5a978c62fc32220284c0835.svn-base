@@ -1,0 +1,84 @@
+package com.cleartrip.hotels.common;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
+
+import com.cleartrip.common.Main;
+import com.cleartrip.common.PropertyUtil;
+
+public class HotelsCommonUtil extends PropertyUtil {
+
+	public static HashMap<String, Object> commonHotelExtApi(String url, String httpmethod, boolean isExtApi) throws IOException {
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		map.put("env", Main.getEnv("env"));
+		map.put("baseUrl", getHotelExtapiData("baseurl"));
+		map.put("domain", getHotelExtapiData("domain"));
+		map.put("url", getHotelExtapiData(url));
+		map.put("httpMethod", httpmethod);
+		map.put("protocol", getHotelExtapiData("protocol"));
+		if (isExtApi) {
+			
+			map.put("api", true);
+		} else {
+			
+			map.put("api", false);
+		}
+		return map;
+
+	}
+	
+	public static HashMap<String, Object> commonHotels(String url, String httpmethod, boolean isExtApi) throws IOException {
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		map.put("env", Main.getEnv("env"));
+		map.put("baseUrl", getHotelData("baseurl"));
+		map.put("domain", getHotelData("domain"));
+		map.put("url", getHotelUrl(url));
+		map.put("httpMethod", httpmethod);
+		map.put("protocol", getHotelData("protocol"));
+        if (isExtApi) {
+			
+			map.put("api", true);
+		} else {
+			
+			map.put("api", false);
+		}
+		return map;
+
+	}
+	
+	public long dateInMillis() throws ParseException{
+		Date date = new Date();  
+	    SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss:SSS");  
+	    long millis = date.getTime();
+		return millis;
+	}
+	
+	public String checkInAndCheckOutDate(long dPlusX, String dateFormat) throws ParseException{
+		
+		long todaysDate= dateInMillis();
+		long dPlusXDate = todaysDate+dPlusX;
+		SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+		Date currentDate = new Date(dPlusXDate);
+		String actualDate =   formatter.format(currentDate);
+				
+		return actualDate;
+		
+	}
+	
+	public String testDate( long dPlusX, String dateFormat) throws ParseException{
+		long dPlusXMillis = dPlusX*60*60*24*1000;
+		String cInAndCout = checkInAndCheckOutDate(dPlusXMillis, dateFormat);
+		return cInAndCout;
+		
+	}
+	
+}

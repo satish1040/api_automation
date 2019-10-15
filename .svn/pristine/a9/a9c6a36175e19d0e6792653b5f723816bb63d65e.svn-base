@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
+<head>
+  <title>Test Results Report - Platform_Services_API_Results - Groups</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="description" content="TestNG unit test results." />
+  <link href="reportng.css" rel="stylesheet" type="text/css" />
+  </head>
+<body>
+  <h1>Groups for Platform_Services_API_Results</h1>
+
+  <table class="resultsTable">
+      <tr>
+      <td class="group">Regression</td>
+    </tr>
+        <tr>
+      <td>com.cleartrip.platform.emailservice.EmailserviceEmailPostcall.<b>message</b></td>    
+    </tr>
+        <tr>
+      <td>com.cleartrip.platform.emailservice.EmailserviceSpamscore.<b>message</b></td>    
+    </tr>
+        <tr>
+      <td>com.cleartrip.platform.emailservice.EmailserviceforAttachments.<b>message</b></td>    
+    </tr>
+        <tr>
+      <td>com.cleartrip.platform.sms.PlatformSMSservice.<b>smsservice</b></td>    
+    </tr>
+        <tr>
+      <td>com.cleartrip.platform.tripservice.GetCallforTripservice.<b>Getcallfortripservice</b></td>    
+    </tr>
+        <tr>
+      <td>com.cleartrip.platform.tripservice.TripserviceTripsPostcall.<b>Tripservicepostcall</b></td>    
+    </tr>
+        <tr>
+      <td>com.cleartrip.platform.tripservice.TripserviceTripsPutcall.<b>Tripserviceputcall</b></td>    
+    </tr>
+        <tr>
+      <td>com.cleartrip.platform.whatsapp.WhatsappCheckContacts.<b>checkContacts</b></td>    
+    </tr>
+        <tr>
+      <td>com.cleartrip.platform.whatsapp.WhatsappOptinFlow.<b>message</b></td>    
+    </tr>
+        <tr>
+      <td>com.cleartrip.platform.whatsapp.WhatsappOptinflowStatus.<b>message</b></td>    
+    </tr>
+        <tr>
+      <td>com.cleartrip.platform.whatsapp.WhatsappUserMessage.<b>message</b></td>    
+    </tr>
+        <tr>
+      <td>com.cleartrip.platform.whatsapp.WhatsappUserMessageWithAttachments.<b>message</b></td>    
+    </tr>
+        <tr>
+      <td>com.cleartrip.platform.whatsapp.WhatsappwebhookMessage.<b>message</b></td>    
+    </tr>
+        </table>
+</body>
+</html>

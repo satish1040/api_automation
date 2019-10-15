@@ -1,0 +1,180 @@
+package com.cleartrip.air.common;
+
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
+
+import org.testng.Reporter;
+
+import com.cleartrip.common.Main;
+import com.cleartrip.common.PropertyUtil;
+import com.jayway.restassured.builder.RequestSpecBuilder;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.specification.RequestSpecification;
+
+public class AirCommonUtil extends PropertyUtil {
+	
+	Response resp;
+	RequestSpecification requestspec;
+	RequestSpecBuilder build;
+	
+	
+	public static HashMap<String, Object> commonAir(String url, String httpmethod, boolean isExtApi) throws IOException {
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		map.put("env", Main.getEnv("env"));
+		map.put("baseUrl", getAirData("baseurl"));
+		map.put("domain", getAirData("domain"));
+		map.put("url", getAirUrl(url));
+		map.put("httpMethod", httpmethod);
+		map.put("protocol", getAirData("protocol"));
+		if (isExtApi) {
+
+			map.put("api", true);
+		} else {
+
+			map.put("api", false);
+		}
+		return map;
+
+	}
+	
+
+	public static HashMap<String, Object> agencyAir(String url, String httpmethod, boolean isExtApi) throws IOException {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		
+		map.put("domainname", Main.agencygetDomain("domainname"));
+		map.put("baseUrl", getAirData("agencybaseurl"));
+		map.put("domain", getAirData("domain"));
+		map.put("url", getAirUrl(url));
+		map.put("httpMethod", httpmethod);
+		map.put("protocol", getAirData("protocol"));
+		if (isExtApi) {
+
+			map.put("api", true);
+		} else {
+
+			map.put("api", false);
+		}
+		System.out.println(map);
+		return map;
+
+	}
+	
+
+	public static HashMap<String, Object> corpAir(String url, String httpmethod, boolean isExtApi) throws IOException {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		
+		map.put("domainname", Main.corpgetDomain("domainname"));
+		map.put("baseUrl", getAirData("corpbaseurl"));
+		map.put("domain", getAirData("domain"));
+		map.put("url", getAirUrl(url));
+		map.put("httpMethod", httpmethod);
+		map.put("protocol", getAirData("protocol"));
+		if (isExtApi) {
+
+			map.put("api", true);
+		} else {
+
+			map.put("api", false);
+		}
+		System.out.println(map);
+		return map;
+
+	}
+
+	protected void farekeypricecheck(Response resp) {
+
+		String dfd = resp.then().extract().path("fare.1.dfd");
+		System.out.println(dfd);
+		
+		String fareKey = resp.then().extract().path("fare.1."+dfd+".fk");
+		Reporter.log("fareKey: "+" - " +fareKey,true);
+
+		String price = resp.then().extract().path("fare.1."+dfd+".pr").toString();
+		Reporter.log("price: "+" - " +price,true);
+	}
+
+
+
+	public HashMap<String, Object> travellerDetails(){
+
+		HashMap<String, Object> travellers = new HashMap<String, Object>();
+
+		travellers.put("title", "Mr");
+		travellers.put("firstName", "Test");
+		travellers.put("lastName", "Booking");
+		travellers.put("userName", "automation_cltp@cleartrip.com");
+		travellers.put("mobileNumber", "7259345154");
+		travellers.put("bookingRef", "test123");
+
+		return travellers;
+
+	}	
+
+	public String dateSelected(){
+
+		LocalDate currentDate = LocalDate.now();
+		int day;
+		int year;
+		int month = currentDate.getMonthValue();
+		if(month == 12){
+			year = currentDate.getYear()+1;
+			day = 01;
+			month = 01;
+		}else{
+			day = currentDate.getDayOfMonth();
+			month = currentDate.getMonthValue();
+			year = currentDate.getYear();
+		}
+		String date = day+"-"+month+"-"+year;  
+		return date;
+
+	}
+
+	public String getModifiedDate(String date1){
+		String date="";
+		Calendar c = Calendar.getInstance();
+		//System.out.println("input date="+date1);
+		SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );  
+		c.add(Calendar.DATE,Integer.parseInt(date1));
+
+		String convertedDate=dateFormat.format(c.getTime());    
+		//System.out.println("Date increased="+convertedDate);
+
+
+		return convertedDate;
+	}
+
+	public String putDate(String date1){
+		String date="";
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		cal.add(Calendar.DATE,Integer.parseInt(date1));
+		String convertedDate=format.format(cal.getTime());
+
+
+		return convertedDate;
+	}
+
+
+	public String putSamedayDate(){
+		String date="";
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		String convertedDate=format.format(cal.getTime());
+
+
+		return convertedDate;
+	}
+
+}

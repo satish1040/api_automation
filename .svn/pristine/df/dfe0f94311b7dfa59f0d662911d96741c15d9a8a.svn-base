@@ -1,0 +1,6 @@
+baseurl=.cleartrip
+domain=.com
+protocol=https://
+city=bang
+pahccrequired=true
+op=true

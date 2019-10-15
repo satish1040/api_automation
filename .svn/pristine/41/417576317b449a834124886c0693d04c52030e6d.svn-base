@@ -1,0 +1,74 @@
+package com.cleartrip.platform.whatsapp;
+
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
+import java.sql.Time;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.cleartrip.platform.common.PlatformCommonUtil;
+import com.jayway.restassured.path.json.JsonPath;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+public class Whatsappdeliveryfeedback extends  WhatsappCommon
+{
+
+
+	@Test(groups={"Regression"})
+	public void message() throws IOException, InterruptedException {
+		Response resp;
+		String url = Service_Url("WHATSAPP_MESSAGE");
+
+		HashMap<String, Object> headers =new HashMap<>();
+		headers = headersForWhatsappUserMessage();
+
+		/*HashMap<String, Object> params= new HashMap<>();
+		params= paramsForMessages();*/
+
+
+		PlatformCommonUtil util = new PlatformCommonUtil();
+		resp = util.paramsForMesagesWithAttachments(params, headers, url);		
+		if(resp.statusCode()==202){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+			System.out.println("Status code == "+ url + "is :: " + resp.statusCode());
+			ResponseBody body= resp.getBody();
+			String bodyAsString = body.asString();
+			Assert.assertEquals(bodyAsString.contains("messageId"), true ,"Response boday contains messageId");
+			JsonPath jsonPath = new JsonPath(bodyAsString);
+			String messageId = jsonPath.getJsonObject("messageId");	
+			System.out.println("-----------------------------"+messageId+"---------------------------");
+			Thread.sleep(2000);
+			Response response;	
+			Thread.sleep(4000);
+			String url4feedback =("http://whatsappapi.cltp.com:9001/r3/whatsapp/feedback?id="+messageId);
+					// Service_Url("WHATSAPP_DELIVERY_FEEDBACK"+messageId); ("http://whatsappapi.cltp.com:9001/r3/whatsapp/feedback?id="+messageId);
+			System.out.println(url4feedback);
+			HashMap<String, Object> headers1 =new HashMap<>();
+			headers = headersForWhatsappUserMessage();
+			PlatformCommonUtil util1 = new PlatformCommonUtil();
+			response = util1.paramsForwhatsappfeliveryfeedback(headers1, url4feedback);
+			if(response.statusCode()==200){
+				assertTrue(true);
+				System.out.println("Test case passed");
+				System.out.println(response.asString());
+				System.out.println("Status code == "+ url4feedback + "is :: " + response.statusCode());
+
+				ResponseBody body1= response.getBody();
+				String bodyAsString1 = body1.asString();
+				Assert.assertEquals(bodyAsString1.contains("delivered"), true ,"Response boday contains delivered");
+				System.out.println("delivered time for requested message is :: "  + bodyAsString1);
+			}
+			else{
+				assertTrue(false);
+				System.err.println("Script failed");
+			}
+		}
+	}
+	String params="{\"ccid\":\"Q1807300315\",\"ctUserId\":41644626,\"messageType\":\"hsm\",\"mobileNumber\":\"7799964888\",\"hsmRequestPayload\":{\"firstName\":\"Likhitha\",\"hsmType\":\"flight\",\"hsmSubType\":\"onward\",\"tripId\":\"Q1807300315\",\"flightDetails\":[{\"fromCity\":\"BBI\",\"toCity\":\"BBI\",\"pnrNum\":\"TDT8GX\",\"dateOfJourney\":\"Thu, 09 Aug 2018\",\"departureTime\":\"10:40\",\"arrivalTime\":\"13:00\",\"flightName\":\"SG\"}],\"tripStart\":\"BBI\",\"tripEnd\":\"BBI\"}}";
+}

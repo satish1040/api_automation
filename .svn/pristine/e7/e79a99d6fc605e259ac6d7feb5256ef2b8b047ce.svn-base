@@ -1,0 +1,127 @@
+package com.cleartrip.local.mobileapp.availabilitycheck;
+
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.common.headers.LocalExtApiHeaders;
+import com.cleartrip.common.headers.MobileAppHeaders;
+import com.cleartrip.local.common.AvailabilityParser;
+import com.cleartrip.local.common.LocalCommonUtil;
+import com.cleartrip.local.mobileapp.search.Activity;
+import com.cleartrip.local.mobileapp.search.EatOut;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.jayway.restassured.response.Response;
+
+public class GetAvailabilityEatOut extends EatOut{
+
+		private String activityId;
+		private boolean isOpenActivity;
+		private boolean isUnitType;
+		private HashMap<String, Object> itiParams;
+
+		// T1234 = automation_id custom field in TestRails
+		// @TestRailCase("T1234")
+		@Test(groups = { "Regression", "Smoke" }, dependsOnMethods = {"com.cleartrip.local.mobileapp.search.EatOut.eatOutVariantDetailsMobile" })
+		public void getAvailability() throws IOException {
+
+			Response resp;
+			HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+			commonUrlProperties = commonLocal("getavailability", "get", false);
+
+			HashMap<String, Object> headers = new HashMap<String, Object>();
+			MobileAppHeaders mHeaders = new MobileAppHeaders();
+			headers = mHeaders.mobileHeader();
+
+			HashMap<String, Object> params = new HashMap<>();
+			params.put("rate-id", getRateId());
+
+			resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+			System.out.println(resp.asString());
+			Assert.assertEquals(resp.statusCode(), 200);
+
+
+			activityParams(getRespDetails());
+			itineraryParams(resp);
+			
+		}
+
+		
+
+		public void activityParams(Response resp) {
+			boolean cuisinePresent;
+			// This is to check whether the activity is ttd or fnb
+			cuisinePresent = resp.asString().contains("cuisine");
+
+			if (cuisinePresent) {
+				activityId = resp.then().extract().path("details.locations[0].activity_id").toString();
+				isUnitType = resp.then().extract().path("details.locations[0].rate.is_unit_type");
+				isOpenActivity = resp.then().extract().path("details.open_activity");
+
+			} else {
+
+				isOpenActivity = resp.then().extract().path("details.open_activity");
+				isUnitType = resp.then().extract().path("details.rates[0].is_unit_type");
+				activityId = resp.then().extract().path("details.activity_id").toString();
+
+			}
+
+			setActivityId(activityId);
+			setOpenActivity(isOpenActivity);
+			setUnitType(isUnitType);
+			setVariantId(getVariantId());
+
+		}
+
+		public void itineraryParams(Response resp) throws JsonParseException, JsonMappingException, IOException {
+
+			AvailabilityParser ap = new AvailabilityParser();
+			
+			HashMap<String, Object> params = new HashMap<String, Object>();
+			params = ap.availabilityJsonParser(resp.asString());
+			params.put("activity-id", getActivityId());
+			params.put("rate-id", getRateId());
+			params.put("variant-id", getVariantId());
+			params.remove("min");
+			setItiParams(params);
+		}
+
+		public HashMap<String, Object> getItiParams() {
+			return itiParams;
+		}
+
+		public void setItiParams(HashMap<String, Object> itiParams) {
+			this.itiParams = itiParams;
+		}
+		public String getActivityId() {
+			return activityId;
+		}
+
+		public boolean isOpenActivity() {
+			return isOpenActivity;
+		}
+
+		public boolean isUnitType() {
+			return isUnitType;
+		}
+
+		public void setActivityId(String activityId) {
+			this.activityId = activityId;
+		}
+
+		public void setOpenActivity(boolean isOpenActivity) {
+			this.isOpenActivity = isOpenActivity;
+		}
+
+		public void setUnitType(boolean isUnitType) {
+			this.isUnitType = isUnitType;
+		}
+	}
+
+

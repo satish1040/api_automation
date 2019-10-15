@@ -1,0 +1,134 @@
+package com.cleartrip.local.localextapi.availabilitycheck;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.common.headers.LocalExtApiHeaders;
+import com.cleartrip.local.common.AvailabilityParser;
+import com.cleartrip.local.common.LocalCommonUtil;
+import com.cleartrip.local.localextapi.search.EatOut;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.jayway.restassured.response.Response;
+
+public class GetAvailabilityEatOut extends EatOut {
+
+    private String activityId;
+    private boolean isOpenActivity;
+    private boolean isUnitType;
+    private HashMap<String, Object> itiParams;
+
+    // T1234 = automation_id custom field in TestRails
+    // @TestRailCase("T1234")
+    @Test(groups = { "Regression", "Smoke" }, dependsOnMethods = {"com.cleartrip.local.localextapi.search.EatOut.eatOutVariantDetails"})
+    public void getAvailability() throws IOException {
+
+	Response resp;
+	HashMap<String, Object> commonUrlProperties = new HashMap<String, Object>();
+
+	commonUrlProperties = LocalCommonUtil.commonLocalExtApi("extApiGetAvailability", "get", true);
+
+	LocalExtApiHeaders lh = new LocalExtApiHeaders();
+	HashMap<String, Object> headers = new HashMap<String, Object>();
+	headers = lh.localExtApiHeaders();
+
+	HashMap<String, Object> params = new HashMap<>();
+	params.put("rate-id", getRateId());
+
+	resp = RestUtil.httpMethod(params, commonUrlProperties, headers);
+	Assert.assertEquals(resp.statusCode(), 200);
+
+	Reporter.log("Ext API TTD/FNB GetAvailabilty call is passed ");
+	System.out.println(getRespDetails().asString());
+        try{
+            activityParams(getRespDetails());
+        }catch (Exception e) {
+	    e.printStackTrace();
+	}
+	
+	itineraryParams(resp);
+	Reporter.log("Activity Id : " + getActivityId());
+	Reporter.log("Variant id is : " + getVariantId());
+	Reporter.log("Rate id is : " + getRateId());
+	Reporter.log("Is Open Activity ? : " + isOpenActivity);
+	Reporter.log("Is Unit Type ? : " + isUnitType);
+    }
+
+    public String getActivityId() {
+	return activityId;
+    }
+
+    public boolean isOpenActivity() {
+	return isOpenActivity;
+    }
+
+    public boolean isUnitType() {
+	return isUnitType;
+    }
+
+    public void setActivityId(String activityId) {
+	this.activityId = activityId;
+    }
+
+    public void setOpenActivity(boolean isOpenActivity) {
+	this.isOpenActivity = isOpenActivity;
+    }
+
+    public void setUnitType(boolean isUnitType) {
+	this.isUnitType = isUnitType;
+    }
+
+    public void activityParams(Response resp) {
+	System.out.println(resp.asString());
+	boolean cuisinePresent;
+	// This is to check whether the activity is ttd or fnb
+	cuisinePresent = resp.asString().contains("cuisine");
+
+	if (cuisinePresent) {
+	    activityId = resp.then().extract().path("details.locations[0].activity_id").toString();
+	    isUnitType = resp.then().extract().path("details.locations[0].rate.is_unit_type");
+	    isOpenActivity = resp.then().extract().path("details.open_activity");
+
+	} else {
+
+	    isOpenActivity = resp.then().extract().path("details.open_activity");
+	    isUnitType = resp.then().extract().path("details.rates[0].is_unit_type");
+	    activityId = resp.then().extract().path("details.activity_id").toString();
+
+	}
+
+	setActivityId(activityId);
+	setOpenActivity(isOpenActivity);
+	setUnitType(isUnitType);
+	setVariantId(getVariantId());
+
+    }
+
+    public void itineraryParams(Response resp) throws JsonParseException, JsonMappingException, IOException {
+
+	HashMap<String, Object> params = new HashMap<String, Object>();
+
+	AvailabilityParser ap = new AvailabilityParser();
+	System.out.println(resp.asString());
+
+	params = ap.availabilityJsonParser(resp.asString());
+	params.put("activity-id", getActivityId());
+	params.put("rate-id", getRateId());
+	params.put("variant-id", getVariantId());
+	params.remove("min");
+	setItiParams(params);
+    }
+
+    public HashMap<String, Object> getItiParams() {
+	return itiParams;
+    }
+
+    public void setItiParams(HashMap<String, Object> itiParams) {
+	this.itiParams = itiParams;
+    }
+}

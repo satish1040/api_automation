@@ -1,0 +1,41 @@
+package com.cleartrip.local.localapi.search;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.testng.annotations.Test;
+
+import com.cleartrip.local.common.LocalCommonUtil;
+
+public class Features extends LocalCommonUtil {
+
+	ArrayList<String> list = new ArrayList<>();
+	String baseUrl, local, features;
+
+	@Test
+	public void vTtdActivity() throws IOException {
+
+		baseUrl = getLocalDataProperties().getProperty("protocol") + "www"
+				+ getLocalDataProperties().getProperty("baseurl") + getLocalDataProperties().getProperty("domain");
+		local = baseUrl + "/local/" + getLocalDataProperties().getProperty("city");
+		features = local + getLocalUrlProperties().getProperty("features");
+
+		list = LocalCommonUtil.FetchHtmlUrl(features, "local", getLocalDataProperties().getProperty("city"));
+		localApiGetCall(features);
+
+	}
+
+	@Test
+	public void vTtdActivity1st() throws IOException {
+
+		localApiGetCall(local + list.get(4));
+
+	}
+
+	@Test
+	public void vTtdActivity2nd() throws IOException {
+
+		localApiGetCall(local + list.get(6));
+
+	}
+}

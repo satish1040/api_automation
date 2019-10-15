@@ -1,0 +1,32 @@
+{
+    "configid": "999989569",
+    "configType": "SHOP",
+    "configuration": {
+        "KIOSK": {
+            "tillNoMandatory": true,
+            "passcodeNeededForChangingTills": true,
+            "manualAdditionMaxLimit": null,
+            "freeItemEnabled": null,
+            "cafeteriaEnabled": null,
+            "acceptsTableNumber": null,
+            "qsrItemLevelAcceptance": null,
+            "prefersOnlineQSRCashierMode": null,
+            "timezone": null,
+            "refundMethods": "CREDITNOTE,CASH",
+            "acceptsNoOfCovers": null
+        },
+        "DEFAULT": {
+            "tillNoMandatory": null,
+            "passcodeNeededForChangingTills": true,
+            "manualAdditionMaxLimit": null,
+            "freeItemEnabled": null,
+            "cafeteriaEnabled": null,
+            "acceptsTableNumber": null,
+            "qsrItemLevelAcceptance": null,
+            "prefersOnlineQSRCashierMode": null,
+            "timezone": null,
+            "refundMethods": "CREDITNOTE,CASH",
+            "acceptsNoOfCovers": null
+        }
+    }
+}

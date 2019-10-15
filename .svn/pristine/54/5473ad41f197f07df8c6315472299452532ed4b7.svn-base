@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
+<head>
+  <title>Test Results Report - Platform_API_search</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="description" content="TestNG unit test results." />
+  <link href="reportng.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="reportng.js"></script>
+</head>
+<body>
+<h1>Platform_API_search</h1>
+<p>
+  Test duration: 8.244s
+</p>
+
+
+
+  <table class="resultsTable">
+    <tr><th colspan="3" class="header failed">Failed Tests</th></tr>
+          <tr>
+        <td colspan="3" class="group">com.cleartrip.platform.sms.PlatformSMSservice</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  smsservice
+      </td>
+  <td class="duration">
+    1.878s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        Service URL : http://smsapi.cltp.com:9001/r3/sms<br />
+                  </div>
+    
+
+        <a href="javascript:toggleElement('exception-0', 'block')" title="Click to expand/collapse"><b>java.lang.AssertionError: expected [true] but found [false]</b></a><br />
+    <div class="stackTrace" id="exception-0">
+              org.testng.Assert.fail(Assert.java:94)<br />
+              org.testng.Assert.failNotEquals(Assert.java:513)<br />
+              org.testng.Assert.assertTrue(Assert.java:42)<br />
+              org.testng.Assert.assertTrue(Assert.java:52)<br />
+              com.cleartrip.platform.sms.PlatformSMSservice.smsservice(PlatformSMSservice.java:72)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)<br />
+              sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)<br />
+              java.lang.reflect.Method.invoke(Unknown Source)<br />
+              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:104)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:645)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:851)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1177)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)<br />
+              java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)<br />
+              java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)<br />
+              java.lang.Thread.run(Unknown Source)<br />
+                </div>
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.cleartrip.platform.whatsapp.WhatsappwebhookMessage</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  message
+      </td>
+  <td class="duration">
+    0.065s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/message<br />
+                  </div>
+    
+
+        <a href="javascript:toggleElement('exception-1', 'block')" title="Click to expand/collapse"><b>java.lang.AssertionError: expected [true] but found [false]</b></a><br />
+    <div class="stackTrace" id="exception-1">
+              org.testng.Assert.fail(Assert.java:94)<br />
+              org.testng.Assert.failNotEquals(Assert.java:513)<br />
+              org.testng.Assert.assertTrue(Assert.java:42)<br />
+              org.testng.Assert.assertTrue(Assert.java:52)<br />
+              com.cleartrip.platform.whatsapp.WhatsappwebhookMessage.message(WhatsappwebhookMessage.java:54)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)<br />
+              sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)<br />
+              java.lang.reflect.Method.invoke(Unknown Source)<br />
+              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:104)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:645)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:851)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1177)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)<br />
+              java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)<br />
+              java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)<br />
+              java.lang.Thread.run(Unknown Source)<br />
+                </div>
+      </td>
+</tr>
+      </table>
+
+
+  <table class="resultsTable">
+    <tr><th colspan="3" class="header passed">Passed Tests</th></tr>
+          <tr>
+        <td colspan="3" class="group">com.cleartrip.platform.emailservice.EmailserviceEmailPostcall</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  message
+      </td>
+  <td class="duration">
+    0.171s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        Service URL : http://emailapi.cltp.com:9001/r3/email<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.cleartrip.platform.emailservice.EmailserviceSpamscore</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  message
+      </td>
+  <td class="duration">
+    0.108s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        Service URL : http://emailapi.cltp.com:9001/r3/check-spam-score<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.cleartrip.platform.emailservice.EmailserviceforAttachments</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  message
+      </td>
+  <td class="duration">
+    0.085s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        Service URL : http://emailapi.cltp.com:9001/r3/email<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.cleartrip.platform.tripservice.GetCallforTripservice</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  Getcallfortripservice
+      </td>
+  <td class="duration">
+    0.179s
+  </td>
+  <td class="result">
+        
+    
+        
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.cleartrip.platform.tripservice.TripserviceTripsPostcall</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  Tripservicepostcall
+      </td>
+  <td class="duration">
+    0.125s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        Service URL : http://trip-service.cltp.com:9001/r3/trips<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.cleartrip.platform.tripservice.TripserviceTripsPutcall</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  Tripserviceputcall
+      </td>
+  <td class="duration">
+    0.084s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        Service URL : http://trip-service.cltp.com:9001/r3/trips/Q1805170048/%7Bbooking-type%7D/%7Bseq%7D/booking-info-list<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.cleartrip.platform.whatsapp.WhatsappCheckContacts</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  checkContacts
+      </td>
+  <td class="duration">
+    2.193s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/checkContacts<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.cleartrip.platform.whatsapp.WhatsappOptinFlow</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  message
+      </td>
+  <td class="duration">
+    0.088s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/optin<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.cleartrip.platform.whatsapp.WhatsappOptinflowStatus</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  message
+      </td>
+  <td class="duration">
+    0.072s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/optinStatus<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.cleartrip.platform.whatsapp.WhatsappUserMessage</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  message
+      </td>
+  <td class="duration">
+    0.147s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/message<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.cleartrip.platform.whatsapp.WhatsappUserMessageWithAttachments</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  message
+      </td>
+  <td class="duration">
+    3.049s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/message<br />
+                  </div>
+    
+
+      </td>
+</tr>
+      </table>
+  
+</body>
+</html>

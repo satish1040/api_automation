@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="platform" allow-return-values="true" parallel="tests" thread-count="2">
+
+	<listeners>
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+
+	</listeners>
+
+
+	<test name="Sms">
+		<classes>
+			<class name="com.cleartrip.platform.sms.PlatformSMSservice" />
+		</classes>
+	</test>
+
+	<test name="Email">
+		<classes>
+			<class name="" />
+		</classes>
+	</test>
+
+	<test name="Tripservice">
+		<classes>
+			<class name="com.cleartrip.platform.tripservice.GetCallforTripservice" />
+			<class name="com.cleartrip.platform.tripservice.TripserviceTripsPostcall" />
+			<class name="com.cleartrip.platform.tripservice.TripserviceTripsPutcall" />
+		</classes>
+	</test>
+
+	<test name="Whatsappservice">
+		<classes>
+			<class name="com.cleartrip.platform.whatsapp.WhatsappCheckContacts" />
+			<class name="com.cleartrip.platform.whatsapp.WhatsappUserMessage" />
+			<class name="com.cleartrip.platform.whatsapp.WhatsappwebhookMessage" />
+		</classes>
+	</test>
+
+</suite> 
+	

@@ -1,0 +1,5 @@
+package com.cleartrip.local.localapi.booking;
+
+public class CreateItineraryEatout {
+
+}

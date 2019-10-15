@@ -1,0 +1,103 @@
+package com.cleartrip.local.camp.userAccess;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.annotations.Test;
+
+import com.cleartrip.local.common.CampActivity;
+
+public class SCMUser extends CampActivity{
+
+	public HashMap<String, String> values = new HashMap<>();
+	
+
+	@Test
+	public void vAllActivity() {
+		try {
+			values.put("Username", getCampUrl("UserNameSCM"));
+			values.put("Password", getCampUrl("PasswordClear"));
+
+			values.put("url", getCampUrl("allActivity"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void vInventory() {
+		try {
+			values.put("url", getCampUrl("inventory"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vActivityAudit() {
+		try {
+			values.put("url", getCampUrl("activityAudit"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vRating() {
+		try {
+			values.put("url", getCampUrl("rating"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vImportExport() {
+		try {
+			values.put("url", getCampUrl("importExport"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+
+	@Test
+	public void vManageChain() {
+		try {
+			values.put("url", getCampUrl("manageChain"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void vCustomMapping() {
+		try {
+			values.put("url", getCampUrl("customMapping"));
+			vCampUserAcess(values,404);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}

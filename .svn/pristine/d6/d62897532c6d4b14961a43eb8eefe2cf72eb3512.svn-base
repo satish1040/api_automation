@@ -1,0 +1,344 @@
+<html>
+<head>
+<title>TestNG:  Platform_API_search</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Platform_API_search</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>17/2/0</td>
+</tr><tr>
+<td>Started on:</td><td>Fri Sep 14 17:10:59 IST 2018</td>
+</tr>
+<tr><td>Total time:</td><td>9 seconds (9581 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='com.cleartrip.platform.whatsapp.WhatsappCheckContacts.checkContacts()'><b>checkContacts</b><br>Test class: com.cleartrip.platform.whatsapp.WhatsappCheckContacts<br/>
+<a href="#Output-1705869235" onClick='toggleBox("Output-1705869235", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-1705869235" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1705869235">
+Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/checkContacts<br/>
+</div>
+</td>
+<td><div><pre>java.lang.AssertionError: expected [true] but found [false]
+	at com.cleartrip.platform.whatsapp.WhatsappCheckContacts.checkContacts(WhatsappCheckContacts.java:54)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 14 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1705869235", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1705869235'><pre>java.lang.AssertionError: expected [true] but found [false]
+	at org.testng.Assert.fail(Assert.java:94)
+	at org.testng.Assert.failNotEquals(Assert.java:513)
+	at org.testng.Assert.assertTrue(Assert.java:42)
+	at org.testng.Assert.assertTrue(Assert.java:52)
+	at com.cleartrip.platform.whatsapp.WhatsappCheckContacts.checkContacts(WhatsappCheckContacts.java:54)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:104)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:645)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:851)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1177)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>2</td>
+<td>com.cleartrip.platform.whatsapp.WhatsappCheckContacts@394e1a0f</td></tr>
+<tr>
+<td title='com.cleartrip.platform.whatsapp.WhatsappOptinFlow.message()'><b>message</b><br>Test class: com.cleartrip.platform.whatsapp.WhatsappOptinFlow<br/>
+<a href="#Output-1411840897" onClick='toggleBox("Output-1411840897", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-1411840897" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1411840897">
+Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/optin<br/>
+</div>
+</td>
+<td><div><pre>java.lang.AssertionError: expected [true] but found [false]
+	at com.cleartrip.platform.whatsapp.WhatsappOptinFlow.message(WhatsappOptinFlow.java:46)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 14 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1411840897", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1411840897'><pre>java.lang.AssertionError: expected [true] but found [false]
+	at org.testng.Assert.fail(Assert.java:94)
+	at org.testng.Assert.failNotEquals(Assert.java:513)
+	at org.testng.Assert.assertTrue(Assert.java:42)
+	at org.testng.Assert.assertTrue(Assert.java:52)
+	at com.cleartrip.platform.whatsapp.WhatsappOptinFlow.message(WhatsappOptinFlow.java:46)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:104)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:645)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:851)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1177)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>0</td>
+<td>com.cleartrip.platform.whatsapp.WhatsappOptinFlow@5f282abb</td></tr>
+</table><p>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='com.cleartrip.platform.tripservice.GetCallforTripservice.Getcallfortripservice()'><b>Getcallfortripservice</b><br>Test class: com.cleartrip.platform.tripservice.GetCallforTripservice</td>
+<td></td>
+<td>0</td>
+<td>com.cleartrip.platform.tripservice.GetCallforTripservice@53f65459</td></tr>
+<tr>
+<td title='com.cleartrip.platform.tripservice.TripservicePostcall_AIR.TripserviceAirpostcall()'><b>TripserviceAirpostcall</b><br>Test class: com.cleartrip.platform.tripservice.TripservicePostcall_AIR<br/>
+<a href="#Output-1030082998" onClick='toggleBox("Output-1030082998", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-1030082998" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1030082998">
+Service URL : http://trip-service.cltp.com:9001/r3/trips<br/>
+</div>
+</td>
+<td></td>
+<td>0</td>
+<td>com.cleartrip.platform.tripservice.TripservicePostcall_AIR@15d0c81b</td></tr>
+<tr>
+<td title='com.cleartrip.platform.tripservice.TripservcePutcall_Air.Tripserviceairputcall()'><b>Tripserviceairputcall</b><br>Test class: com.cleartrip.platform.tripservice.TripservcePutcall_Air<br/>
+<a href="#Output-921117763" onClick='toggleBox("Output-921117763", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-921117763" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-921117763">
+Service URL : http://trip-service.cltp.com:9001/r3/trips<br/>
+</div>
+</td>
+<td></td>
+<td>0</td>
+<td>com.cleartrip.platform.tripservice.TripservcePutcall_Air@6acdbdf5</td></tr>
+<tr>
+<td title='com.cleartrip.platform.tripservice.TripservicePutcall_Hotel.Tripservicehotelpostcall()'><b>Tripservicehotelpostcall</b><br>Test class: com.cleartrip.platform.tripservice.TripservicePutcall_Hotel<br/>
+<a href="#Output-1951702971" onClick='toggleBox("Output-1951702971", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-1951702971" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1951702971">
+Service URL : http://trip-service.cltp.com:9001/r3/trips<br/>
+</div>
+</td>
+<td></td>
+<td>0</td>
+<td>com.cleartrip.platform.tripservice.TripservicePutcall_Hotel@1786dec2</td></tr>
+<tr>
+<td title='com.cleartrip.platform.tripservice.TripservicePostcall_Hotel.Tripservicehotelpostcall()'><b>Tripservicehotelpostcall</b><br>Test class: com.cleartrip.platform.tripservice.TripservicePostcall_Hotel<br/>
+<a href="#Output-127782384" onClick='toggleBox("Output-127782384", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-127782384" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-127782384">
+Service URL : http://trip-service.cltp.com:9001/r3/trips<br/>
+</div>
+</td>
+<td></td>
+<td>0</td>
+<td>com.cleartrip.platform.tripservice.TripservicePostcall_Hotel@74650e52</td></tr>
+<tr>
+<td title='com.cleartrip.platform.tripservice.TripservicePutcall_Hotel.Tripservicehotelputcall()'><b>Tripservicehotelputcall</b><br>Test class: com.cleartrip.platform.tripservice.TripservicePutcall_Hotel</td>
+<td></td>
+<td>0</td>
+<td>com.cleartrip.platform.tripservice.TripservicePutcall_Hotel@1786dec2</td></tr>
+<tr>
+<td title='com.cleartrip.platform.tripservice.TripservcePutcall_Air.Tripservicehotelputcall()'><b>Tripservicehotelputcall</b><br>Test class: com.cleartrip.platform.tripservice.TripservcePutcall_Air</td>
+<td></td>
+<td>0</td>
+<td>com.cleartrip.platform.tripservice.TripservcePutcall_Air@6acdbdf5</td></tr>
+<tr>
+<td title='com.cleartrip.platform.tripservice.TripserviceTripsPostcall.Tripservicepostcall()'><b>Tripservicepostcall</b><br>Test class: com.cleartrip.platform.tripservice.TripserviceTripsPostcall<br/>
+<a href="#Output-797325775" onClick='toggleBox("Output-797325775", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-797325775" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-797325775">
+Service URL : http://trip-service.cltp.com:9001/r3/trips<br/>
+</div>
+</td>
+<td></td>
+<td>0</td>
+<td>com.cleartrip.platform.tripservice.TripserviceTripsPostcall@3b088d51</td></tr>
+<tr>
+<td title='com.cleartrip.platform.whatsapp.WhatsappUserMessage.message()'><b>message</b><br>Test class: com.cleartrip.platform.whatsapp.WhatsappUserMessage<br/>
+<a href="#Output-1277624754" onClick='toggleBox("Output-1277624754", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-1277624754" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1277624754">
+Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/message<br/>
+</div>
+</td>
+<td></td>
+<td>0</td>
+<td>com.cleartrip.platform.whatsapp.WhatsappUserMessage@27a5f880</td></tr>
+<tr>
+<td title='com.cleartrip.platform.whatsapp.WhatsappOptinflowStatus.message()'><b>message</b><br>Test class: com.cleartrip.platform.whatsapp.WhatsappOptinflowStatus<br/>
+<a href="#Output-436412739" onClick='toggleBox("Output-436412739", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-436412739" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-436412739">
+Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/optinStatus<br/>
+</div>
+</td>
+<td></td>
+<td>0</td>
+<td>com.cleartrip.platform.whatsapp.WhatsappOptinflowStatus@167fdd33</td></tr>
+<tr>
+<td title='com.cleartrip.platform.whatsapp.WhatsappUserMessageWithAttachments.message()'><b>message</b><br>Test class: com.cleartrip.platform.whatsapp.WhatsappUserMessageWithAttachments<br/>
+<a href="#Output-2053005683" onClick='toggleBox("Output-2053005683", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-2053005683" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-2053005683">
+Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/message<br/>
+</div>
+</td>
+<td></td>
+<td>0</td>
+<td>com.cleartrip.platform.whatsapp.WhatsappUserMessageWithAttachments@1e965684</td></tr>
+<tr>
+<td title='com.cleartrip.platform.whatsapp.WhatsappwebhookMessage.message()'><b>message</b><br>Test class: com.cleartrip.platform.whatsapp.WhatsappwebhookMessage<br/>
+<a href="#Output-31675924" onClick='toggleBox("Output-31675924", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-31675924" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-31675924">
+Service URL : https://qa2whatsapp.cleartrip.com/whatsapp/webhook/messages/cleartrip<br/>
+</div>
+</td>
+<td></td>
+<td>1</td>
+<td>com.cleartrip.platform.whatsapp.WhatsappwebhookMessage@1d29cf23</td></tr>
+<tr>
+<td title='com.cleartrip.platform.emailservice.EmailserviceEmailPostcall.message()'><b>message</b><br>Test class: com.cleartrip.platform.emailservice.EmailserviceEmailPostcall<br/>
+<a href="#Output-681280074" onClick='toggleBox("Output-681280074", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-681280074" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-681280074">
+Service URL : http://emailapi.cltp.com:9001/r3/email<br/>
+</div>
+</td>
+<td></td>
+<td>0</td>
+<td>com.cleartrip.platform.emailservice.EmailserviceEmailPostcall@4b1c1ea0</td></tr>
+<tr>
+<td title='com.cleartrip.platform.emailservice.EmailserviceforAttachments.message()'><b>message</b><br>Test class: com.cleartrip.platform.emailservice.EmailserviceforAttachments<br/>
+<a href="#Output-253218162" onClick='toggleBox("Output-253218162", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-253218162" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-253218162">
+Service URL : http://emailapi.cltp.com:9001/r3/email<br/>
+</div>
+</td>
+<td></td>
+<td>0</td>
+<td>com.cleartrip.platform.emailservice.EmailserviceforAttachments@17579e0f</td></tr>
+<tr>
+<td title='com.cleartrip.platform.emailservice.EmailserviceSpamscore.message()'><b>message</b><br>Test class: com.cleartrip.platform.emailservice.EmailserviceSpamscore<br/>
+<a href="#Output-988012733" onClick='toggleBox("Output-988012733", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-988012733" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-988012733">
+Service URL : http://emailapi.cltp.com:9001/r3/check-spam-score<br/>
+</div>
+</td>
+<td></td>
+<td>0</td>
+<td>com.cleartrip.platform.emailservice.EmailserviceSpamscore@4d41cee</td></tr>
+<tr>
+<td title='com.cleartrip.platform.whatsapp.Whatsappdeliveryfeedback.message()'><b>message</b><br>Test class: com.cleartrip.platform.whatsapp.Whatsappdeliveryfeedback<br/>
+<a href="#Output-986383597" onClick='toggleBox("Output-986383597", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-986383597" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-986383597">
+Service URL : http://whatsappapi.cltp.com:9001/r3/whatsapp/message<br/>
+</div>
+</td>
+<td></td>
+<td>6</td>
+<td>com.cleartrip.platform.whatsapp.Whatsappdeliveryfeedback@4d95d2a2</td></tr>
+<tr>
+<td title='com.cleartrip.platform.sms.PlatformSMSservice.smsservice()'><b>smsservice</b><br>Test class: com.cleartrip.platform.sms.PlatformSMSservice<br/>
+<a href="#Output-1027350603" onClick='toggleBox("Output-1027350603", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-1027350603" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1027350603">
+Service URL : http://smsapi.cltp.com:9001/r3/sms<br/>
+</div>
+</td>
+<td></td>
+<td>2</td>
+<td>com.cleartrip.platform.sms.PlatformSMSservice@1f7030a6</td></tr>
+</table><p>
+</body>
+</html>

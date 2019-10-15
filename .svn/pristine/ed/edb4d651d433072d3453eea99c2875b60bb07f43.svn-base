@@ -1,0 +1,30 @@
+package com.cleartrip.common.headers;
+
+import java.util.HashMap;
+
+public class MobileAppHeaders {
+ 
+	public HashMap<String, Object> mobileHeader(){
+		
+		HashMap<String , Object> headers = new HashMap<>();
+		
+			headers.put("api-version", "1.0");
+			headers.put("adv-id", "742c0dcb-2a9d-45cc-a64e-819271d24d90");
+			headers.put("device-id", "ab67b2857ab7eb52");
+			headers.put("Cookie2", "$Version=1");
+			headers.put("app-version", "139");
+			headers.put("ct-ab", "");
+			headers.put("app-version-number", "139");
+			headers.put("device-token", "");
+			headers.put("device-type", "SU-Xiaomi-santoni");
+			headers.put("app-platform", "6.0.1");
+			headers.put("network_type", "WIFI");
+			headers.put("Accept-Encoding", "gzip");
+			headers.put("User-Agent", "Android App Version 17.11.1");
+			headers.put("X-CT-SOURCETYPE", "MOBILE");
+			
+			return headers;			
+		
+	}
+	
+}

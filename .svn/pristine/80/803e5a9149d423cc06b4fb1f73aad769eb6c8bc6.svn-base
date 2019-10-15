@@ -1,0 +1,113 @@
+package com.cleartrip.local.camp.userAccess;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.annotations.Test;
+
+import com.cleartrip.local.common.CampActivity;
+
+public class COPUser extends CampActivity{
+
+	public HashMap<String, String> values = new HashMap<>();
+	
+
+	@Test
+	public void vAllActivity() {
+		try {
+			values.put("Username", getCampUrl("UserNameCOP"));
+			values.put("Password", getCampUrl("PasswordDemo"));
+			values.put("url", getCampUrl("allActivity"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void vprofile() {
+		try {
+			values.put("url", getCampUrl("profile"));
+			vCampUserAcess(values,200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vBankDetail() {
+		try {
+			values.put("url", getCampUrl("bankDetails"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void vTtd() {
+		try {
+			values.put("url", getCampUrl("ttd"));
+			vCampUserAcess(values,200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vInventory() {
+		try {
+			values.put("url", getCampUrl("inventory"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void vBooking() {
+		try {
+			values.put("url", getCampUrl("booking"));
+			vCampUserAcess(values,200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void vRemittance() {
+		try {
+			values.put("url", getCampUrl("remittance"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void vCustomMapping() {
+		try {
+			values.put("url", getCampUrl("customMapping"));
+			vCampUserAcess(values,404);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}

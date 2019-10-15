@@ -1,0 +1,53 @@
+package com.cleartrip.platform.whatsapp;
+
+import static org.testng.Assert.assertTrue;
+
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+public class WhatsappUserMessageWithAttachments extends WhatsappCommon
+{
+
+	@Test(groups="Regression")
+	public void whatsappwebhook(){
+		Response resp ;
+		String url = "http://172.17.12.164:9080/whatsapp/message";
+
+
+		HashMap<String, Object> headers =new HashMap<>();
+		headers = headersForWhatsAppCheckContacts();
+		
+		/*Map<String, Object> params= new HashMap<>();
+		params= paramsForwebHookMesages();*/
+		
+		RestUtil util = new RestUtil();
+		resp = util.paramsForMesagesWithAttachments(params, headers, url);
+		
+		
+		if(resp.statusCode()==202){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+		
+			System.out.println("Status code == "+ url+  "is :: " + resp.statusCode());	
+			
+			
+			ResponseBody body= resp.getBody();
+			String bodyAsString = body.asString();
+			Assert.assertEquals(bodyAsString.contains("messageId"), true ,"Response boday contains messageId");
+		}else{
+
+			System.out.println(resp.asString());
+			assertTrue(false);
+		}
+	}
+	String params = " {" + "\"attachments\": [" + " {" +" \"documentName\": \"Ticket\"," +" \"documentPath\": \"/usr/local/storage/trip_attachments/CleartripHotelBookingPolicy.pdf\"" +	"}" +" ]," +" \"ccid\": \"Q12345\"," +" \"ctUserId\": \"12345\"," +	" \"message\": \"Automation whatsapp message with attachments\"," +	" \"messageType\": \"document/pdf\"," + " \"mobileNumber\": \"7799964888\"" +"}";
+
+	
+}

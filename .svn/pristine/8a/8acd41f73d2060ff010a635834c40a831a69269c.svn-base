@@ -1,0 +1,63 @@
+package com.cleartrip.platform.whatsapp;
+
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.codehaus.groovy.util.ListHashMap;
+//import org.json.JSONArray;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.platform.common.PlatformCommonUtil;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+public class WhatsappwebhookMessage extends WhatsappCommon
+
+{
+
+	@Test(groups={"Regression"})
+	public void message() throws IOException {
+		Response resp;
+		String url = Service_Url("WHATSAPP_WEBHOOK_MESSAGE");
+
+
+		HashMap<String, Object> headers =new HashMap<>();
+		headers = headersForWhatsAppCheckContacts();
+		
+		/*Map<String, Object> params= new HashMap<>();
+		params= paramsForwebHookMesages();*/
+		
+		PlatformCommonUtil util = new PlatformCommonUtil();
+		resp = util.paramsForwebHookMesages(params, headers, url);
+		
+		
+		if(resp.statusCode()==200){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+		
+			System.out.println("Status code == "+ url+  "is :: " + resp.statusCode());
+			
+			ResponseBody body= resp.getBody();
+			String bodyAsString = body.asString();
+			Assert.assertEquals(bodyAsString.contains("messageId"), true ,"Response boday contains messageId");
+			
+			
+	          
+		}else{
+
+			System.out.println(resp.asString());
+			assertTrue(false);
+		}
+	}
+
+	
+	String params = "{" + " \"messages\": [" +"{"+"  " + " " + "  \"from\": \"7799964888\"," +"" +" " + "\"text\":{" + " \"body\": \"string\" " +	" }" +	" " +"  }" +" ]" +"}";
+}

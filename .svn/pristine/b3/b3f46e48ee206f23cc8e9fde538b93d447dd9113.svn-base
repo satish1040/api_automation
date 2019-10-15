@@ -1,0 +1,46 @@
+package com.cleartrip.platform.sms;
+
+import static com.jayway.restassured.RestAssured.given;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.cleartrip.platform.whatsapp.WhatsappCommon;
+import com.jayway.restassured.response.Response;
+
+public class SmsCommon 
+{	
+		
+
+		public HashMap<String, Object> headersForsms(){
+			HashMap<String, Object> headers = new HashMap<>();
+			headers.put("Content-Type", "application/json");
+			return headers;
+
+		}
+	
+	
+	
+		
+		public Response paramsForSMSservice(HashMap<String, Object> params, HashMap<String, Object> headers, String url){
+			Response resp;
+			resp = given().
+					when().
+					log().all().
+					body(params).
+					headers(headers).
+					post(url);
+			return resp;
+		}
+		
+		public HashMap< String, Object> paramsForSMSservice(){
+			HashMap<String,Object> params= new HashMap<>();
+			params.put("mobileNumber", "7799964888");
+			params.put("content","HI this is cleartrip sms service message from automation script");
+			params.put("domain","qa2.cleartrip.com");
+			params.put("id", "Q1234567890");
+			return params;
+		}
+		
+	
+}

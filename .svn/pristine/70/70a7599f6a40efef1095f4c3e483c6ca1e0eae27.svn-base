@@ -1,0 +1,5 @@
+testRail.enabled=true
+testRail.url=https://cltp.testrail.net
+testRail.username=prabhanjan.manoli@cleartrip.com
+testRail.password=Test1234@
+testRail.testPlanId=R117

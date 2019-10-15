@@ -1,0 +1,40 @@
+package com.cleartrip.local.camp.userAccess;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.testng.annotations.Test;
+
+import com.cleartrip.local.common.CampActivity;
+
+public class CMUser extends CampActivity{
+
+	public HashMap<String, String> values = new HashMap<>();
+
+	@Test
+	public void vAllActivity() {
+		try {
+			values.put("Username", getCampUrl("UserNameCM"));
+			values.put("Password", getCampUrl("PasswordDemo"));
+			values.put("url", getCampUrl("allActivity"));
+			vCampUserAcess(values, 200);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void vCustomMapping() {
+		try {
+			values.put("url", getCampUrl("customMapping"));
+			vCampUserAcess(values,404);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}

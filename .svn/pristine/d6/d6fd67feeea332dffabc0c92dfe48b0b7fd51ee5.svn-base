@@ -1,0 +1,184 @@
+package com.cleartrip.common;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
+public class PropertyUtil {
+
+	// Data properties e.g paymentEnabled = true or false
+	private static final String LOCAL_DATA_PROPERTIES_FILE_NAME = "localData.properties";
+	private static final String AIR_DATA_PROPERTIES_FILE_NAME = "airData.properties";
+	private static final String HOTEL_DATA_PROPERTIES_FILE_NAME = "hotelData.properties";
+	private static final String LOCAL_EXTAPI_DATA_PROPERTIES_FILE_NAME = "localExtApiData.properties";
+	private static final String AIR_EXTAPI_DATA_PROPERTIES_FILE_NAME = "airExtApiData.properties";
+	private static final String HOTEL_EXTAPI_DATA_PROPERTIES_FILE_NAME = "hotelExtApiData.properties";
+	private static final String TRAIN_DATA_PROPERTIES_FILE_NAME = "trainsData.properties";
+
+	// Common properties which include URL's like autocomplete URL's
+	private static final String LOCAL_COMMON_PROPERTIES_FILE_NAME = "local.properties";
+	private static final String AIR_COMMON_PROPERTIES_FILE_NAME = "air.properties";
+	private static final String HOTEL_COMMON_PROPERTIES_FILE_NAME = "hotel.properties";
+	private static final String LOCAL_EXTAPI_COMMON_PROPERTIES_FILE_NAME = "localExtApi.properties";
+	private static final String AIR_EXTAPI_COMMON_PROPERTIES_FILE_NAME = "airExtApi.properties";
+	private static final String HOTEL_EXTAPI_COMMON_PROPERTIES_FILE_NAME = "hotelExtApi.properties";
+	private static final String TRAIN_COMMON_PROPERTIES_FILE_NAME = "trains.properties";
+	private static final String CAMP_COMMON_PROPERTIES_FILE_NAME = "campData.properties";
+
+	private static Map<String, Properties> fileToPropertiesMap = new HashMap<>();
+
+	private static String getPropertyFileDirectory(String propertyFileName) {
+		if (propertyFileName.endsWith("Data.properties")) {
+			return "data";
+		} else {
+			return "common";
+		}
+	}
+
+	private static Properties loadProperties(String propertyFileName) throws IOException {
+		String propertyFileBaseDir = System.getProperty("user.dir") + File.separator + "resources" + File.separator
+				+ getPropertyFileDirectory(propertyFileName) + File.separator;
+		String propertyFilePath = propertyFileBaseDir + propertyFileName;
+
+		Properties properties = new Properties();
+		try (FileInputStream file = new FileInputStream(propertyFilePath)) {
+			properties.load(file);
+		}
+
+		return properties;
+	}
+
+	private static Properties getProperties(String propertyFileName) throws IOException {
+		Properties properties = fileToPropertiesMap.get(propertyFileName);
+		if (properties == null) {
+			properties = loadProperties(propertyFileName);
+			fileToPropertiesMap.put(propertyFileName, properties);
+		}
+
+		return properties;
+	}
+
+	public static Properties getLocalDataProperties() throws IOException {
+		return getProperties(LOCAL_DATA_PROPERTIES_FILE_NAME);
+	}
+
+	private static Properties getAirDataProperties() throws IOException {
+		return getProperties(AIR_DATA_PROPERTIES_FILE_NAME);
+	}
+
+	public static Properties getHotelDataProperties() throws IOException {
+		return getProperties(HOTEL_DATA_PROPERTIES_FILE_NAME);
+	}
+
+	public static Properties getLocalExtapiDataProperties() throws IOException {
+		return getProperties(LOCAL_EXTAPI_DATA_PROPERTIES_FILE_NAME);
+	}
+
+	public static Properties getAirExtapiDataProperties() throws IOException {
+		return getProperties(AIR_EXTAPI_DATA_PROPERTIES_FILE_NAME);
+	}
+
+	public static Properties getHotelExtapiDataProperties() throws IOException {
+		return getProperties(HOTEL_EXTAPI_DATA_PROPERTIES_FILE_NAME);
+	}
+
+	public static Properties getTrainDataProperties() throws IOException {
+		return getProperties(TRAIN_DATA_PROPERTIES_FILE_NAME);
+	}
+
+	public static String getLocalData(String key) throws IOException {
+		return getLocalDataProperties().getProperty(key);
+	}
+
+	public static String getAirData(String key) throws IOException {
+		return getAirDataProperties().getProperty(key);
+	}
+
+	public static String getHotelData(String key) throws IOException {
+		return getHotelDataProperties().getProperty(key);
+	}
+
+	public static String getLocalExtapiData(String key) throws IOException {
+		return getLocalExtapiDataProperties().getProperty(key);
+	}
+
+	public static String getAirExtapiData(String key) throws IOException {
+		return getAirExtapiDataProperties().getProperty(key);
+	}
+
+	public static String getHotelExtapiData(String key) throws IOException {
+		return getHotelExtapiDataProperties().getProperty(key);
+	}
+
+	public static String getTrainData(String key) throws IOException {
+		return getTrainDataProperties().getProperty(key);
+	}
+
+	public static Properties getLocalUrlProperties() throws IOException {
+		return getProperties(LOCAL_COMMON_PROPERTIES_FILE_NAME);
+	}
+
+	private static Properties getAirUrlProperties() throws IOException {
+		return getProperties(AIR_COMMON_PROPERTIES_FILE_NAME);
+	}
+
+	public static Properties getHotelUrlProperties() throws IOException {
+		return getProperties(HOTEL_COMMON_PROPERTIES_FILE_NAME);
+	}
+
+	public static Properties getLocalExtapiUrlProperties() throws IOException {
+		return getProperties(LOCAL_EXTAPI_COMMON_PROPERTIES_FILE_NAME);
+	}
+
+	public static Properties getAirExtapiUrlProperties() throws IOException {
+		return getProperties(AIR_EXTAPI_COMMON_PROPERTIES_FILE_NAME);
+	}
+
+	public static Properties getHotelExtapiUrlProperties() throws IOException {
+		return getProperties(HOTEL_EXTAPI_COMMON_PROPERTIES_FILE_NAME);
+	}
+
+	public static Properties getTrainUrlProperties() throws IOException {
+		return getProperties(TRAIN_COMMON_PROPERTIES_FILE_NAME);
+	}
+	
+	public static Properties getCampUrlProperties() throws IOException {
+		return getProperties(CAMP_COMMON_PROPERTIES_FILE_NAME);
+	}
+
+	public static String getLocalUrl(String key) throws IOException {
+		return getLocalUrlProperties().getProperty(key);
+	}
+
+	public static String getAirUrl(String key) throws IOException {
+		return getAirUrlProperties().getProperty(key);
+	}
+
+	public static String getHotelUrl(String key) throws IOException {
+		return getHotelUrlProperties().getProperty(key);
+	}
+
+	public static String getLocalExtapiUrl(String key) throws IOException {
+		return getLocalExtapiUrlProperties().getProperty(key);
+	}
+
+	public static String getAirExtapiUrl(String key) throws IOException {
+		return getAirExtapiUrlProperties().getProperty(key);
+	}
+
+	public static String getHotelExtapiUrl(String key) throws IOException {
+		return getHotelExtapiUrlProperties().getProperty(key);
+	}
+
+	public static String getTrainUrl(String key) throws IOException {
+		return getTrainUrlProperties().getProperty(key);
+	}
+	
+	public static String getCampUrl(String key) throws IOException {
+		return getCampUrlProperties().getProperty(key);
+	}
+	
+}

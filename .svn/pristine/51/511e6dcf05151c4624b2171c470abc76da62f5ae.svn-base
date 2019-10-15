@@ -1,0 +1,63 @@
+package com.cleartrip.platform.whatsapp;
+
+import static org.testng.Assert.assertTrue;
+
+import java.util.HashMap;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.cleartrip.common.RestUtil;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
+
+public class WhatsappOptinFlow  extends WhatsappCommon
+{
+
+	@Test
+	public void message()
+	{
+		Response resp;
+		String url = "http://172.17.12.164:9080/whatsapp/optin";
+
+		HashMap<String, Object> headers =new HashMap<>();
+		headers = headersForWhatsappUserMessage();
+
+		HashMap<String, Object> params= new HashMap<>();
+		params= paramsForOptinflow();
+
+
+		RestUtil util  = new RestUtil();
+		resp = util.whatsAppRestApiMessage(params, headers, url);
+
+		if(resp.statusCode()==200){
+			assertTrue(true);
+			System.out.println("Test case passed");
+			System.out.println(resp.asString());
+			System.out.println("Status code == "+ url + "is :: " + resp.statusCode());
+			
+			ResponseBody body= resp.getBody();
+			String bodyAsString = body.asString();
+			Assert.assertEquals(bodyAsString.contains("requestId"), true ,"Response boday contains requestId");
+
+		}else{
+			assertTrue(false);
+			System.err.println("Script failed");
+		}
+	}
+		public HashMap< String, Object> paramsForOptinflow(){
+			HashMap<String,Object> params= new HashMap<>();
+			params.put("ctUserId", "string");
+			params.put("mobileNumber", "917799964888");
+			params.put("whatsappUsername","917799964888");
+			params.put("requestType","optin");
+			params.put("Domain", "cleartrip.com");
+			params.put("countryCode","91");
+			return params;
+
+
+
+		}
+
+	}
+

@@ -1,0 +1,88 @@
+
+package com.cleartrip.local.common ;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+    "type",
+    "crc",
+    "inv",
+    "ts"
+})
+public class MyPojo {
+
+    @JsonProperty("type")
+    private String type;
+    
+    @JsonProperty("crc")
+    private String crc;
+    
+    @JsonProperty("inv")
+    private List<Inv> inv = null;
+    
+    @JsonProperty("ts")
+    private Ts ts;
+    
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    @JsonProperty("type")
+    public String getType() {
+        return type;
+    }
+
+    @JsonProperty("type")
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @JsonProperty("crc")
+    public String getCrc() {
+        return crc;
+    }
+
+    @JsonProperty("crc")
+    public void setCrc(String crc) {
+        this.crc = crc;
+    }
+
+    @JsonProperty("inv")
+    public List<Inv> getInv() {
+        return inv;
+    }
+
+    @JsonProperty("inv")
+    public void setInv(List<Inv> inv) {
+        this.inv = inv;
+    }
+
+    @JsonProperty("ts")
+    public Ts getTs() {
+        return ts;
+    }
+
+    @JsonProperty("ts")
+    public void setTs(Ts ts) {
+        this.ts = ts;
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
+    }
+
+}

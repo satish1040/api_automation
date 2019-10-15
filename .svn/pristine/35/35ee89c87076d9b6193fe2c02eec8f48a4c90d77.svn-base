@@ -1,0 +1,55 @@
+package com.cleartrip.air.in.search;
+
+import static com.jayway.restassured.RestAssured.given;
+import static org.testng.Assert.assertEquals;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
+
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.cleartrip.air.common.AirCommonUtil;
+import com.cleartrip.common.RestUtil;
+import com.cleartrip.common.dataproviders.AirInDataProvider;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.parsing.Parser;
+import com.jayway.restassured.response.Response;
+
+public class DomRoundTripSameDaySearchTest extends AirCommonUtil{
+
+	Response resp;
+	
+	@Test(dataProviderClass=AirInDataProvider.class, dataProvider="domrtsssearch")
+	public void domRoundTripSamedaySearch(HashMap<String, Object> params) throws IOException{{
+	
+		RestAssured.defaultParser = Parser.JSON;
+		String depart_date=putSamedayDate();
+		Response resp;
+		
+	
+  
+    HashMap<String, Object> commonUrlProperties = new HashMap<String,Object>();
+	commonUrlProperties = commonAir("flightsearch", "get", false);
+	
+	HashMap<String, Object> headers = new HashMap<String,Object>();
+	
+	params.put("depart_date",depart_date);
+	params.put("return_date",depart_date);
+	
+	resp = RestUtil.httpMethod(params,commonUrlProperties,headers);
+	//Assert.assertEquals(resp.statusCode(),200);
+	Assert.assertEquals(resp.statusCode(),200, Thread.currentThread().getStackTrace()[1].getMethodName() + " is FAILED");
+	//System.out.println(resp.asString());
+	
+	String fareKey = resp.then().extract().path("fare.1.R.fk");
+	System.out.println("fareKey: " +Thread.currentThread().getStackTrace()[1].getMethodName()+" - " +fareKey);
+	
+	
+	Reporter.log(Thread.currentThread().getStackTrace()[1].getMethodName() + " is completed");
+	
+	
+}
+}}
