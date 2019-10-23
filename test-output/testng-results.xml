@@ -2,23 +2,16 @@
 <testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="1604" started-at="2019-10-15T08:22:12Z" finished-at="2019-10-15T08:22:13Z">
+  <suite name="Default suite" duration-ms="4156" started-at="2019-10-22T17:01:27Z" finished-at="2019-10-22T17:01:31Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="1604" started-at="2019-10-15T08:22:12Z" finished-at="2019-10-15T08:22:13Z">
-      <class name="com.perpule.api.customerdetails.StartCustomerDetails">
-        <test-method status="PASS" signature="debugTest(java.lang.String)[pri:0, instance:com.perpule.api.customerdetails.StartCustomerDetails@2b98378d]" name="debugTest" duration-ms="1585" started-at="2019-10-15T13:52:12Z" data-provider="debug" finished-at="2019-10-15T13:52:13Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[7996424956]]>
-              </value>
-            </param>
-          </params>
+    <test name="Default test" duration-ms="4156" started-at="2019-10-22T17:01:27Z" finished-at="2019-10-22T17:01:31Z">
+      <class name="com.perpule.api.createStaff.UltraPos_CreateStaff">
+        <test-method status="PASS" signature="staffCreation()[pri:0, instance:com.perpule.api.createStaff.UltraPos_CreateStaff@4b9e13df]" name="staffCreation" duration-ms="4139" started-at="2019-10-22T22:31:27Z" finished-at="2019-10-22T22:31:31Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- debugTest -->
-      </class> <!-- com.perpule.api.customerdetails.StartCustomerDetails -->
+        </test-method> <!-- staffCreation -->
+      </class> <!-- com.perpule.api.createStaff.UltraPos_CreateStaff -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
