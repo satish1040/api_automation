@@ -16,7 +16,7 @@ public class GetDetails extends UltraPOSCommonUtil{
 		String mobileNo = getProp("mobile","common");
 		String baseurl = "prodUrl";
 		String propertyUrl = "CustomerDetailsUrl";
-		String url = urlBuilderWithMobile(baseurl, propertyUrl, mobileNo);
+		String url = urlBuilderWithParam(baseurl, propertyUrl, mobileNo);
 		Response response = getRequest(url);
 		assertSuccessStatus(response);
 		JSONObject data = new JSONObject(response.body().asString());
@@ -84,7 +84,7 @@ public class GetDetails extends UltraPOSCommonUtil{
 	public void validateOTP() throws Exception {
 		String mobileNo = getProp("mobile","common");
 		String baseurl = getBaseUrl();
-		String getUrl = urlBuilderWithMobile(baseurl, "getOTP", mobileNo);
+		String getUrl = urlBuilderWithParam(baseurl, "getOTP", mobileNo);
 		String validateUrl = urlBuilder(baseurl, "validateOTP");
 		Response getResponse = getRequest(getUrl);
 		assertSuccessStatus(getResponse);
