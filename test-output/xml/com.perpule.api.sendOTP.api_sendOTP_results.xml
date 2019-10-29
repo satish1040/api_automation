@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Send OTP"
+           tests="1"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="6.287">
+  <properties />
+  
+  
+            <testcase name="startGetOTP" time="6.287" classname="com.perpule.api.sendOTP.api_sendOTP" />
+      
+</testsuite>

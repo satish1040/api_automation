@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="1" guice-stage="DEVELOPMENT" name="Failed suite [Product Bar Sanity Check]" parallel="tests" allow-return-values="true">
+  <listeners>
+    <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+    <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+  </listeners>
+  <test name="Create Staff(failed)" parallel="tests">
+    <classes>
+      <class name="com.perpule.api.createStaff.UltraPos_CreateStaff">
+        <methods>
+          <include name="staffCreation"/>
+        </methods>
+      </class> <!-- com.perpule.api.createStaff.UltraPos_CreateStaff -->
+    </classes>
+  </test> <!-- Create Staff(failed) -->
+  <test name="Update Stuff(failed)" parallel="tests">
+    <classes>
+      <class name="com.perpule.api.staffDetailsUpdate.UltraPos_StaffDeatilsUpdate">
+        <methods>
+          <include name="staffUpdate"/>
+        </methods>
+      </class> <!-- com.perpule.api.staffDetailsUpdate.UltraPos_StaffDeatilsUpdate -->
+    </classes>
+  </test> <!-- Update Stuff(failed) -->
+  <test name="Staff Details(failed)" parallel="tests">
+    <classes>
+      <class name="com.perpule.api.staffDetails.UltraPos_StaffDeatils">
+        <methods>
+          <include name="staffDetails"/>
+        </methods>
+      </class> <!-- com.perpule.api.staffDetails.UltraPos_StaffDeatils -->
+    </classes>
+  </test> <!-- Staff Details(failed) -->
+</suite> <!-- Failed suite [Product Bar Sanity Check] -->

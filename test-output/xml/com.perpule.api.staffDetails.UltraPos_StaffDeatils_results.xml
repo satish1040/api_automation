@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Staff Details"
+           tests="1"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="0.704">
+  <properties />
+  
+  
+            <testcase name="staffDetails" time="0.704" classname="com.perpule.api.staffDetails.UltraPos_StaffDeatils" />
+      
+</testsuite>

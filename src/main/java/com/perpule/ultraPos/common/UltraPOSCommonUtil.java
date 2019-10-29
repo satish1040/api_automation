@@ -3,6 +3,8 @@ package com.perpule.ultraPos.common;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Properties;
@@ -48,8 +50,10 @@ public class UltraPOSCommonUtil {
 				path = "resources/url.properties";
 			}else if (propFile.contentEquals("common")){
 				path = "resources/common.properties";
+			}else if (propFile.contentEquals("token")){
+				path = "resources/token.properties";
 			} else {
-				System.out.println("Wrong file name");
+				System.out.println("Wrong properties file name");
 			}
 			Properties prop = new Properties();
 			File configFile = new File(path);
@@ -66,8 +70,18 @@ public class UltraPOSCommonUtil {
 		}
 		return propStr;
 	}
-
-
+	
+	
+	//	### 	Properties file writer 		###
+	
+	public void writeProp(String key, String token) throws IOException {
+		Properties prop = new Properties();
+		InputStream in = new FileInputStream("resources/token.properties");
+		prop.load(in);
+		prop.setProperty(key, token);
+		prop.store(new FileOutputStream("resources/token.properties"), null);
+	}
+	
 
 	//  ####  Get request   ###
 
@@ -76,6 +90,14 @@ public class UltraPOSCommonUtil {
 		return response;
 	}	
 
+	
+	
+	//  ####  Get request with authorization token  ###
+
+	public Response getRequestWithAuthToken(String url, String token) {
+		Response response = given().header("Authorization", token).when().get(url);
+		return response;
+	}	
 
 
 	//  ####  Post request   ###
@@ -112,10 +134,24 @@ public class UltraPOSCommonUtil {
 
 	//  ####  Post request with authorization token   ###
 
-	public Response postRequestWithAuthToken(String url, HashMap<String, String> hmap) {
+	public Response postRequestWithAuthToken(String url, String token, HashMap<String, String> hmap) {
 		Response response = null;
 		try {
-			response = given().header("Authorization", "Bearer j7LRZPK1d0E16qoAxFV8wx3WsMLAM90wVDaOr4y2").contentType(ContentType.URLENC.withCharset("UTF-8")).formParams(hmap).post(url);
+			response = given().header("Authorization", token).contentType(ContentType.URLENC.withCharset("UTF-8")).formParams(hmap).post(url);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+
+	}
+	
+	
+	//  ####  Post request with only authorization token   ###
+
+	public Response authPostRequest(String url, String token) {
+		Response response = null;
+		try {
+			response = given().header("Authorization", token).contentType(ContentType.URLENC.withCharset("UTF-8")).post(url);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -127,11 +163,34 @@ public class UltraPOSCommonUtil {
 
 	//  ####  Post request with parsing json data inside body   ###
 
-	public Response postRequestWithJsonData(String url, JSONObject jObj) {
+	public Response postRequestWithJsonData(String url, String token, JSONObject jObj) {
 		Response response = null;
 		try {
+			if(token == null) {
 			response = given().contentType(ContentType.JSON).body(jObj.toString()).post(url);
 			//.then() .statusCode(200) .extract() .response();
+			}else {
+				response = given().header("Authorization", token).contentType(ContentType.JSON).body(jObj.toString()).post(url);	
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+
+	}
+	
+	
+	//  ####  Patch request with parsing json data inside body   ###
+
+	public Response patchRequestWithJsonData(String url, String token, JSONObject jObj) {
+		Response response = null;
+		try {
+			if(token == null) {
+			response = given().contentType(ContentType.JSON).body(jObj.toString()).patch(url);
+			//.then() .statusCode(200) .extract() .response();
+			}else {
+				response = given().header("Authorization", token).contentType(ContentType.JSON).body(jObj.toString()).patch(url);	
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -146,4 +205,21 @@ public class UltraPOSCommonUtil {
 	public void assertSuccessStatus(Response response) {
 		response.then().assertThat().statusCode(200);
 	}
+	
+	
+	
+	//  ###   Verify Status Code 201     ###
+
+	public void assertSuccessStatus201(Response response) {
+		response.then().assertThat().statusCode(201);
+	}
+	
+	
+	//  ###   Verify Status Code 204     ###
+
+	public void assertSuccessStatus204(Response response) {
+		response.then().assertThat().statusCode(204);
+	}
+	
+	
 }

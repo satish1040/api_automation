@@ -3,11 +3,11 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="com.perpule.api.sendOTP.api_sendOTP">
+      <class name="cart.Additem">
         <methods>
-          <include name="verifyLogin"/>
+          <include name="addItem"/>
         </methods>
-      </class> <!-- com.perpule.api.sendOTP.api_sendOTP -->
+      </class> <!-- cart.Additem -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Create Staff"
+           tests="1"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="2.075">
+  <properties />
+  
+  
+            <testcase name="staffCreation" time="2.075" classname="com.perpule.api.createStaff.UltraPos_CreateStaff" />
+      
+</testsuite>

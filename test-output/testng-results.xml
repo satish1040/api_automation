@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="4156" started-at="2019-10-22T17:01:27Z" finished-at="2019-10-22T17:01:31Z">
+  <suite name="Default suite" duration-ms="2136" started-at="2019-10-29T15:16:41Z" finished-at="2019-10-29T15:16:44Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="4156" started-at="2019-10-22T17:01:27Z" finished-at="2019-10-22T17:01:31Z">
-      <class name="com.perpule.api.createStaff.UltraPos_CreateStaff">
-        <test-method status="PASS" signature="staffCreation()[pri:0, instance:com.perpule.api.createStaff.UltraPos_CreateStaff@4b9e13df]" name="staffCreation" duration-ms="4139" started-at="2019-10-22T22:31:27Z" finished-at="2019-10-22T22:31:31Z">
+    <test name="Default test" duration-ms="2136" started-at="2019-10-29T15:16:41Z" finished-at="2019-10-29T15:16:44Z">
+      <class name="cart.Additem">
+        <test-method status="PASS" signature="addItem()[pri:0, instance:cart.Additem@4b9e13df]" name="addItem" duration-ms="2117" started-at="2019-10-29T20:46:41Z" finished-at="2019-10-29T20:46:44Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- staffCreation -->
-      </class> <!-- com.perpule.api.createStaff.UltraPos_CreateStaff -->
+        </test-method> <!-- addItem -->
+      </class> <!-- cart.Additem -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
