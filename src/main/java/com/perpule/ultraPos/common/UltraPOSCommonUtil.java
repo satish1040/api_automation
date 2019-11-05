@@ -179,6 +179,19 @@ public class UltraPOSCommonUtil {
 
 	}
 	
+	public Response paymentRequest(String url, String token, JSONObject jObj) {
+		Response response = null;
+		try {
+			String json = ("["+jObj.toString()+"]");
+			response = given().header("Authorization", token).contentType(ContentType.JSON).when().body(json).post(url);	
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+
+	}
+	
 	
 	//  ####  Patch request with parsing json data inside body   ###
 

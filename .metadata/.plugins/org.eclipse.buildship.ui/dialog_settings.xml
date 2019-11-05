@@ -2,7 +2,7 @@
 <section name="Workbench">
 	<section name="org.eclipse.buildship.ui.wizard.project.import">
 		<item key="apply_working_sets" value="false"/>
-		<item key="project_location" value="/Users/ats/Desktop/MyWorks/WorkSpace/ApiAutomation"/>
+		<item key="project_location" value="/Users/ats/Desktop/REST_API_Automation/gradle"/>
 		<list key="working_sets">
 		</list>
 	</section>

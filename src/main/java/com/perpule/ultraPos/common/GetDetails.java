@@ -1,5 +1,10 @@
 package com.perpule.ultraPos.common;
+import static io.restassured.RestAssured.given;
+
 import java.util.HashMap;
+import java.util.concurrent.ThreadLocalRandom;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.testng.Assert;
 
@@ -7,6 +12,7 @@ import com.perpule.api.utils.CompletePaymentUtils;
 import com.perpule.api.utils.appUpdateUtils;
 import com.perpule.api.utils.loginUtils;
 
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 public class GetDetails extends UltraPOSCommonUtil{
@@ -55,9 +61,9 @@ public class GetDetails extends UltraPOSCommonUtil{
 		System.out.println("Authorization token stored successfully");
 
 	}
-	
-	
-	
+
+
+
 	public void createStaff() throws Exception {
 		HashMap<String, String> hsMap = loginUtils.createStaffMap();
 		String baseurl = getBaseUrl();
@@ -69,8 +75,8 @@ public class GetDetails extends UltraPOSCommonUtil{
 		System.out.println("Staff created successfully");	
 
 	}
-	
-	
+
+
 	public void staff() throws Exception {
 		String baseurl = getBaseUrl();
 		String propertyUrl = "staffDetails";
@@ -81,9 +87,9 @@ public class GetDetails extends UltraPOSCommonUtil{
 		System.out.println("Staff details retrived successfully");	
 
 	}
-	
-	
-	
+
+
+
 	public void staffUpdate() throws Exception {
 		JSONObject Object = new JSONObject(getProp("staffUpdateJson","common"));
 		String baseurl = getBaseUrl();
@@ -95,8 +101,8 @@ public class GetDetails extends UltraPOSCommonUtil{
 		System.out.println("Staff role updated successfully");	
 
 	}
-	
-	
+
+
 	public void sendOTP() throws Exception {
 		JSONObject Object = loginUtils.getJson();
 		String baseurl = getBaseUrl();
@@ -109,8 +115,8 @@ public class GetDetails extends UltraPOSCommonUtil{
 		Thread.sleep(5000);
 
 	}
-	
-	
+
+
 	public void validateOTP() throws Exception {
 		String mobileNo = getProp("mobile","common");
 		String baseurl = getBaseUrl();
@@ -128,31 +134,111 @@ public class GetDetails extends UltraPOSCommonUtil{
 		Response response = postRequestWithJsonData(validateUrl, token, Object);
 		assertSuccessStatus(response);
 		System.out.println("OTP submitted and validated successfully");
-		 	
+
 
 	}
-	
-	
+
+
+	public void login() throws Exception {
+		JSONObject Object = loginUtils.loginJson();
+		String baseurl = "preProdDbaseurl";
+		String propertyUrl = "login";
+		String token = null;
+		String url = urlBuilder(baseurl, propertyUrl);
+		Response response = postRequestWithJsonData(url, token, Object);
+		assertSuccessStatus(response);
+		JSONObject data = new JSONObject(response.body().asString());
+		token = "Token " + String.valueOf(data.get("token"));
+		writeProp("authTokenCart", token);
+		JSONObject staff = data.getJSONObject("staff");
+		int shopId = staff.getInt("shop_id");
+		writeProp("shopId", String.valueOf(shopId));
+		System.out.println("Login success for shopId " + shopId + " with authorization token " +String.valueOf(data.get("token")));
+
+	}
+
+
+	public void logout() throws Exception {
+		String baseurl = "preProdDbaseurl";
+		String propertyUrl = "logout";
+		String token = getProp("authTokenCart","token");
+		String url = urlBuilder(baseurl, propertyUrl);
+		Response response = getRequestWithAuthToken(url, token);
+		assertSuccessStatus(response);
+		System.out.println("Logout success");	
+
+	}
+
+
+	public void cartCreate() throws Exception {
+		JSONObject Object = loginUtils.createCartJson();
+		String baseurl = getProp("preProdDbaseurl","url");		// Dashboard Base Url
+		String propertyUrl = getProp("createCart","url");
+		String url = baseurl+propertyUrl;
+		String token = getProp("authTokenCart","token");
+		Response response = postRequestWithJsonData(url, token, Object);
+		assertSuccessStatus201(response);
+		JSONObject data = new JSONObject(response.body().asString());
+		String cartId = String.valueOf(data.get("id"));
+		writeProp("cartId", cartId);
+		System.out.println("Cart id " +cartId+ " is ready for customer " + getProp("mobile","common"));
+
+	}
+
+
 	public void addItem() throws Exception {
 		JSONObject Object = loginUtils.addItemJson();
+		Object.put("scanned_barcode", "100000375");
 		String baseurl = getProp("preProdDbaseurl","url");		// Dashboard Base Url
 		String cartUrl = getProp("cart","url");
 		String cartId = getProp("cartId","token");
 		String propertyUrl = getProp("addItem","url");
 		String url = baseurl+cartUrl+cartId+propertyUrl;
-		System.out.println(url);
 		String token = getProp("authTokenCart","token");
 		Response response = postRequestWithJsonData(url, token, Object);
 		assertSuccessStatus201(response);
-		System.out.println("Item added to cart successfully");
 		JSONObject data = new JSONObject(response.body().asString());
 		String itemId = String.valueOf(data.get("id"));
 		writeProp("itemId", itemId);
-		System.out.println("Item id " +itemId+ ", saved in properties");
+		System.out.println("Item id " +itemId+ " added to cart successfully");
 
 	}
-	
-	
+
+
+	public void addMultipleItems() throws Exception {
+		JSONObject searchObj = new JSONObject(searchByName(getProp("searchByName","token"), getProp("shopId","token")));
+		JSONArray resultArray = searchObj.getJSONArray("result");
+		for(int i = 0; i <= resultArray.length()-1; i++) {
+			JSONObject obj = resultArray.getJSONObject(i);
+			JSONArray barcodeArray = obj.getJSONArray("barcodes");
+			String barcode = barcodeArray.getString(0);
+			JSONObject Object = loginUtils.addItemJson();
+			Object.put("scanned_barcode", barcode);
+			int quantity = ThreadLocalRandom.current().nextInt(1, 5 + 1);
+			Object.put("quantity", quantity);
+			String baseurl = getProp("preProdDbaseurl","url");		// Dashboard Base Url
+			String cartUrl = getProp("cart","url");
+			String cartId = getProp("cartId","token");
+			String propertyUrl = getProp("addItem","url");
+			String url = baseurl+cartUrl+cartId+propertyUrl;
+			String token = getProp("authTokenCart","token");
+			Response response = given().header("Authorization", token).contentType(ContentType.JSON).body(Object.toString()).post(url);//postRequestWithJsonData(url, token, Object);
+			if(response.getStatusCode() == 201) {
+			assertSuccessStatus201(response);
+			JSONObject data = new JSONObject(response.body().asString());
+			String itemId = String.valueOf(data.get("id"));
+			System.out.println("Item id : " +itemId+ ", Quantity : " +quantity+ " added to cart successfully");
+			}else if(response.getStatusCode() == 404) {
+				System.out.println("Barcode id : " + barcode + " is not available for the shopId : " + getProp("shopId","token"));
+			}else {
+				System.out.println("Invalid Response");
+			}
+			
+		}
+
+	}
+
+
 	public void verifyToken() throws Exception {
 		String baseurl = "preProdDbaseurl";
 		String propertyUrl = "verifyToken";
@@ -163,8 +249,8 @@ public class GetDetails extends UltraPOSCommonUtil{
 		System.out.println("Token validated successfully");	
 
 	}
-	
-	
+
+
 	public void changeQuantity() throws Exception {
 		JSONObject Object = loginUtils.quantity();
 		String baseurl = getProp("preProdDbaseurl","url");		// Dashboard Base Url
@@ -178,8 +264,8 @@ public class GetDetails extends UltraPOSCommonUtil{
 		System.out.println("Item quantity changed successfully");
 
 	}
-	
-	
+
+
 	public void cartHold() throws Exception {
 		String baseurl = getProp("preProdDbaseurl","url");		// Dashboard Base Url
 		String cartUrl = getProp("cart","url");
@@ -189,11 +275,24 @@ public class GetDetails extends UltraPOSCommonUtil{
 		String token = getProp("authTokenCart","token");
 		Response response = authPostRequest(url, token);
 		assertSuccessStatus(response);
-		System.out.println("Cart id " +getProp("cartId","token")+ " holded successfully");
+		System.out.println("Cart id " + cartId + " holded successfully");
 
 	}
-	
-	
+
+
+	public void cartRecall() throws Exception {
+		String baseurl = getProp("preProdDbaseurl","url");		// Dashboard Base Url
+		String cartId = getProp("cartId","token");
+		String propertyUrl = getProp("recallCart","url").replace("#", cartId);
+		String url = baseurl+propertyUrl;
+		String token = getProp("authTokenCart","token");
+		Response response = authPostRequest(url, token);
+		assertSuccessStatus(response);
+		System.out.println("Cart id " + cartId + " recalled successfully");
+
+	}
+
+
 	public void clearCart() throws Exception {
 		JSONObject Object = loginUtils.addItemJson();
 		String baseurl = getProp("preProdDbaseurl","url");		// Dashboard Base Url
@@ -204,11 +303,12 @@ public class GetDetails extends UltraPOSCommonUtil{
 		String token = getProp("authTokenCart","token");
 		Response response = postRequestWithJsonData(url, token, Object);
 		assertSuccessStatus204(response);
-		System.out.println("Cart cleared successfully");
+		System.out.println("Cart id " +getProp("cartId","token")+ " cleared successfully");
+
 
 	}
-	
-	
+
+
 	public void getVoid() throws Exception {
 		JSONObject Object = loginUtils.voidLine();
 		String baseurl = getProp("preProdDbaseurl","url");		// Dashboard Base Url
@@ -221,6 +321,44 @@ public class GetDetails extends UltraPOSCommonUtil{
 		Response response = patchRequestWithJsonData(url, token, Object);
 		assertSuccessStatus(response);
 		System.out.println("Item id " +itemId+ " voided successfully");
+
+	}
+
+
+	public void checkout() throws Exception {
+		JSONObject Object = loginUtils.checkout();
+		String baseurl = getProp("preProdDbaseurl","url");		// Dashboard Base Url
+		String propertyUrl = getProp("checkout","url");
+		String url = baseurl+propertyUrl;
+		String token = getProp("authTokenCart","token");
+		Response response = postRequestWithJsonData(url, token, Object);
+		assertSuccessStatus201(response);
+		JSONObject data = new JSONObject(response.body().asString());
+		String amount = String.valueOf(data.get("total"));
+		String orderId = String.valueOf(data.get("id"));
+		writeProp("orderId", orderId);
+		writeProp("amount", String.valueOf(Math.round(Float.parseFloat((amount)))));
+		System.out.println("Total payable amount for orderID: " + orderId + " is Rs. " + amount + "/-");
+
+	}
+
+
+	public void payment() throws Exception {
+		JSONObject Object = loginUtils.payment();
+		String baseurl = getProp("preProdDbaseurl","url");		// Dashboard Base Url
+		String bulk = getProp("bulkCreate","url").replace("#", getProp("orderId","token"));
+		String propertyUrl = getProp("payment","url").replace("#", getProp("orderId","token"));
+		String bulkUrl = baseurl+bulk;
+		String paymentUrl = baseurl+propertyUrl;
+		String token = getProp("authTokenCart","token");
+		Response bulkResponse = paymentRequest(bulkUrl, token, Object);
+		assertSuccessStatus201(bulkResponse);
+		System.out.println("Bulk created successfully for the order id :" + getProp("orderId","token"));
+		Response paymentResponse = paymentRequest(paymentUrl, token, Object);
+		assertSuccessStatus(paymentResponse);
+		JSONObject data = new JSONObject(paymentResponse.body().asString());
+		String status = String.valueOf(data.get("status"));
+		System.out.println("Order status : " + status);
 
 	}
 
@@ -247,6 +385,20 @@ public class GetDetails extends UltraPOSCommonUtil{
 		Response response = postRequestWithFormData(url, hsMap);
 		assertSuccessStatus(response);
 		//System.out.println(response.body().asString());
+
+	}
+
+
+	public String searchByName(String name, String shopId) {
+		String baseurl = getProp("preProdDbaseurl","url");		// Dashboard Base Url
+		String searchUrl = getProp("searchName","url").replace("$", name).replace("#", shopId);
+		String url = baseurl+searchUrl;
+		String token = getProp("authTokenCart","token");
+		Response response = getRequestWithAuthToken(url, token);
+		assertSuccessStatus(response);
+		String data = response.asString();
+		System.out.println("Searched items with name "+ name +" for shop id "+shopId);
+		return data;
 
 	}
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Sanity_Start"
+           tests="1"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="20.707">
+  <properties />
+  
+  
+            <testcase name="sanity" time="20.707" classname="dpos.user.Sanity_ProductBar" />
+      
+</testsuite>

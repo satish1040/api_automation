@@ -8,44 +8,11 @@
 	</listeners>
 
 
-	<test name="Login">
-		<classes>
-		 	  <class name="com.perpule.api.loginCheck.UltraPos_LoginCheck" />
-		</classes>
-	</test>
-	
-	
-	<test name="Send OTP">
-		<classes>
-		 	  <class name="com.perpule.api.sendOTP.api_sendOTP" />
-		</classes>
-	</test>
-	
-	
-	<test name="Validate OTP">
+	<test name="Sanity_Start">
 		<classes>
 		 	  <class name="com.perpule.api.validateOTP.api_validateOTP" />
-		</classes>
-	</test>
 	
-	
-	<test name="Create Staff">
-		<classes>
-		 	  <class name="com.perpule.api.createStaff.UltraPos_CreateStaff" />
-		</classes>
-	</test>
-	
-	
-	<test name="Update Stuff">
-		<classes>
-		 	  <class name="com.perpule.api.staffDetailsUpdate.UltraPos_StaffDeatilsUpdate" />
-	    </classes>
-	</test>
-	
-	
-	<test name="Staff Details">
-		<classes>
-		 	  <class name="com.perpule.api.staffDetails.UltraPos_StaffDeatils" />
+		 	  <class name="dpos.user.Sanity_ProductBar" />
 		</classes>
 	</test>
 	

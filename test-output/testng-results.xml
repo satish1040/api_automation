@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="2136" started-at="2019-10-29T15:16:41Z" finished-at="2019-10-29T15:16:44Z">
+  <suite name="Product Bar Sanity Check" duration-ms="20723" started-at="2019-11-04T17:42:32Z" finished-at="2019-11-04T17:42:52Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="2136" started-at="2019-10-29T15:16:41Z" finished-at="2019-10-29T15:16:44Z">
-      <class name="cart.Additem">
-        <test-method status="PASS" signature="addItem()[pri:0, instance:cart.Additem@4b9e13df]" name="addItem" duration-ms="2117" started-at="2019-10-29T20:46:41Z" finished-at="2019-10-29T20:46:44Z">
+    <test name="Sanity_Start" duration-ms="20723" started-at="2019-11-04T17:42:32Z" finished-at="2019-11-04T17:42:52Z">
+      <class name="dpos.user.Sanity_ProductBar">
+        <test-method status="PASS" signature="sanity()[pri:0, instance:dpos.user.Sanity_ProductBar@79be0360]" name="sanity" duration-ms="20707" started-at="2019-11-04T23:12:32Z" finished-at="2019-11-04T23:12:52Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- addItem -->
-      </class> <!-- cart.Additem -->
-    </test> <!-- Default test -->
-  </suite> <!-- Default suite -->
+        </test-method> <!-- sanity -->
+      </class> <!-- dpos.user.Sanity_ProductBar -->
+    </test> <!-- Sanity_Start -->
+  </suite> <!-- Product Bar Sanity Check -->
 </testng-results>
