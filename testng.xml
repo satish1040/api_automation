@@ -10,8 +10,6 @@
 
 	<test name="Sanity_Start">
 		<classes>
-		 	  <class name="com.perpule.api.validateOTP.api_validateOTP" />
-	
 		 	  <class name="dpos.user.Sanity_ProductBar" />
 		</classes>
 	</test>
