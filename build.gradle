@@ -50,6 +50,7 @@ run {
 
 test {
 	useTestNG()
+	ignoreFailures = true
 }
 
 
